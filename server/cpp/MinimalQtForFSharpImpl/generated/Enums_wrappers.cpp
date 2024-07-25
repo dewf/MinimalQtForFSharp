@@ -81,6 +81,14 @@ namespace Enums
         auto tag = ni_popInt32();
         return (TextFormat)tag;
     }
+    void QDayOfWeek__push(QDayOfWeek value) {
+        ni_pushInt32((int32_t)value);
+    }
+
+    QDayOfWeek QDayOfWeek__pop() {
+        auto tag = ni_popInt32();
+        return (QDayOfWeek)tag;
+    }
     void TextInteractionFlags__push(TextInteractionFlags value) {
         ni_pushInt32(value);
     }

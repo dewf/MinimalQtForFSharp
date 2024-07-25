@@ -259,6 +259,29 @@ namespace Org.Whatever.MinimalQtForFSharp
             var ret = NativeImplClient.PopInt32();
             return (TextFormat)ret;
         }
+        public enum QDayOfWeek
+        {
+            Monday = 1,
+            Tuesday = 2,
+            Wednesday = 3,
+            Thursday = 4,
+            Friday = 5,
+            Saturday = 6,
+            Sunday = 7
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void QDayOfWeek__Push(QDayOfWeek value)
+        {
+            NativeImplClient.PushInt32((int)value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static QDayOfWeek QDayOfWeek__Pop()
+        {
+            var ret = NativeImplClient.PopInt32();
+            return (QDayOfWeek)ret;
+        }
         [Flags]
         public enum TextInteractionFlags
         {

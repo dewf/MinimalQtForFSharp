@@ -34,6 +34,9 @@ namespace Enums
     void TextFormat__push(TextFormat value);
     TextFormat TextFormat__pop();
 
+    void QDayOfWeek__push(QDayOfWeek value);
+    QDayOfWeek QDayOfWeek__pop();
+
     void TextInteractionFlags__push(TextInteractionFlags value);
     TextInteractionFlags TextInteractionFlags__pop();
 

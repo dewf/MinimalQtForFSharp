@@ -57,6 +57,10 @@ add_library(MinimalQtForFSharpImpl STATIC
     ../generated/BoxLayout_wrappers.cpp
     ../BoxLayout.cpp
 
+    ../generated/CalendarWidget.h
+    ../generated/CalendarWidget_wrappers.cpp
+    ../CalendarWidget.cpp
+
     ../generated/ComboBox.h
     ../generated/ComboBox_wrappers.cpp
     ../ComboBox.cpp
@@ -69,6 +73,11 @@ add_library(MinimalQtForFSharpImpl STATIC
     ../generated/Cursor_wrappers.cpp
     ../CursorInternal.h
     ../Cursor.cpp
+
+    ../generated/Date.h
+    ../generated/Date_wrappers.cpp
+    ../DateInternal.h
+    ../Date.cpp
 
     ../generated/Dialog.h
     ../generated/Dialog_wrappers.cpp

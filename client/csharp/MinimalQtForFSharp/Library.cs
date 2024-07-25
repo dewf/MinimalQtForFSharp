@@ -27,6 +27,8 @@ public static class Library
         SizePolicy.__Init();
         Widget.__Init();
         BoxLayout.__Init();
+        Date.__Init();
+        CalendarWidget.__Init();
         Variant.__Init();
         ModelIndex.__Init();
         PersistentModelIndex.__Init();
@@ -110,6 +112,8 @@ public static class Library
         PersistentModelIndex.__Shutdown();
         ModelIndex.__Shutdown();
         Variant.__Shutdown();
+        CalendarWidget.__Shutdown();
+        Date.__Shutdown();
         BoxLayout.__Shutdown();
         Widget.__Shutdown();
         SizePolicy.__Shutdown();

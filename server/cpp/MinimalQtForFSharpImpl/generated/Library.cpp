@@ -13,6 +13,8 @@
 #include "SizePolicy_wrappers.h"
 #include "Widget_wrappers.h"
 #include "BoxLayout_wrappers.h"
+#include "Date_wrappers.h"
+#include "CalendarWidget_wrappers.h"
 #include "Variant_wrappers.h"
 #include "ModelIndex_wrappers.h"
 #include "PersistentModelIndex_wrappers.h"
@@ -69,6 +71,8 @@ extern "C" int nativeLibraryInit() {
     ::SizePolicy::__register();
     ::Widget::__register();
     ::BoxLayout::__register();
+    ::Date::__register();
+    ::CalendarWidget::__register();
     ::Variant::__register();
     ::ModelIndex::__register();
     ::PersistentModelIndex::__register();
