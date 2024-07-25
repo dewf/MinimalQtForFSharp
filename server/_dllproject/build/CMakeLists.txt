@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.14)
 if(WIN32)
     set(CMAKE_PREFIX_PATH "C:/Qt/6.7.2/msvc2019_64/lib/cmake")
 elseif(LINUX)
-    set(CMAKE_PREFIX_PATH "~/Qt/lib/cmake")
-    # set(CMAKE_PREFIX_PATH "~/Qt/6.7.2/gcc_64/lib/cmake")
+    set(CMAKE_PREFIX_PATH "~/Qt/lib/cmake")                # self-compiled from Qt source
+    # set(CMAKE_PREFIX_PATH "~/Qt/6.7.2/gcc_64/lib/cmake") # binaries from Qt installer - note: NOT WORKING
 elseif(APPLE)
     set(CMAKE_PREFIX_PATH "~/Qt/6.7.2/macos/lib/cmake")
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
