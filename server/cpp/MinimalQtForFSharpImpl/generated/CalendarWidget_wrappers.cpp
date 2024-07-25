@@ -279,6 +279,11 @@ namespace CalendarWidget
         Handle_setNavigationBarVisible(_this, visible);
     }
 
+    void Handle_selectedDate__wrapper() {
+        auto _this = Handle__pop();
+        OwnedHandle__push(Handle_selectedDate(_this));
+    }
+
     void Handle_setSelectedDate__wrapper() {
         auto _this = Handle__pop();
         auto selected = Date::Deferred__pop();
@@ -324,6 +329,7 @@ namespace CalendarWidget
         ni_registerModuleMethod(m, "Handle_setMaximumDate", &Handle_setMaximumDate__wrapper);
         ni_registerModuleMethod(m, "Handle_setMinimumDate", &Handle_setMinimumDate__wrapper);
         ni_registerModuleMethod(m, "Handle_setNavigationBarVisible", &Handle_setNavigationBarVisible__wrapper);
+        ni_registerModuleMethod(m, "Handle_selectedDate", &Handle_selectedDate__wrapper);
         ni_registerModuleMethod(m, "Handle_setSelectedDate", &Handle_setSelectedDate__wrapper);
         ni_registerModuleMethod(m, "Handle_setSelectionMode", &Handle_setSelectionMode__wrapper);
         ni_registerModuleMethod(m, "Handle_setVerticalHeaderFormat", &Handle_setVerticalHeaderFormat__wrapper);

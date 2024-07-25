@@ -56,6 +56,8 @@ namespace CalendarWidget
 
     void Handle_setNavigationBarVisible__wrapper();
 
+    void Handle_selectedDate__wrapper();
+
     void Handle_setSelectedDate__wrapper();
 
     void Handle_setSelectionMode__wrapper();

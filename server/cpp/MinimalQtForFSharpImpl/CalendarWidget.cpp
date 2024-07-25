@@ -104,6 +104,10 @@ namespace CalendarWidget
         THIS->setNavigationBarVisible(visible);
     }
 
+    Date::OwnedHandleRef Handle_selectedDate(HandleRef _this) {
+        return (Date::OwnedHandleRef)new QDate(THIS->selectedDate());
+    }
+
     void Handle_setSelectedDate(HandleRef _this, std::shared_ptr<Date::Deferred::Base> selected) {
         THIS->setSelectedDate(Date::fromDeferred(selected));
     }

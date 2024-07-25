@@ -29,6 +29,7 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static ModuleMethodHandle _handle_setMaximumDate;
         internal static ModuleMethodHandle _handle_setMinimumDate;
         internal static ModuleMethodHandle _handle_setNavigationBarVisible;
+        internal static ModuleMethodHandle _handle_selectedDate;
         internal static ModuleMethodHandle _handle_setSelectedDate;
         internal static ModuleMethodHandle _handle_setSelectionMode;
         internal static ModuleMethodHandle _handle_setVerticalHeaderFormat;
@@ -349,6 +350,12 @@ namespace Org.Whatever.MinimalQtForFSharp
                 Handle__Push(this);
                 NativeImplClient.InvokeModuleMethod(_handle_setNavigationBarVisible);
             }
+            public OwnedHandle SelectedDate()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_selectedDate);
+                return OwnedHandle__Pop();
+            }
             public void SetSelectedDate(Date.Deferred selected)
             {
                 Date.Deferred__Push(selected, false);
@@ -401,6 +408,7 @@ namespace Org.Whatever.MinimalQtForFSharp
             _handle_setMaximumDate = NativeImplClient.GetModuleMethod(_module, "Handle_setMaximumDate");
             _handle_setMinimumDate = NativeImplClient.GetModuleMethod(_module, "Handle_setMinimumDate");
             _handle_setNavigationBarVisible = NativeImplClient.GetModuleMethod(_module, "Handle_setNavigationBarVisible");
+            _handle_selectedDate = NativeImplClient.GetModuleMethod(_module, "Handle_selectedDate");
             _handle_setSelectedDate = NativeImplClient.GetModuleMethod(_module, "Handle_setSelectedDate");
             _handle_setSelectionMode = NativeImplClient.GetModuleMethod(_module, "Handle_setSelectionMode");
             _handle_setVerticalHeaderFormat = NativeImplClient.GetModuleMethod(_module, "Handle_setVerticalHeaderFormat");
