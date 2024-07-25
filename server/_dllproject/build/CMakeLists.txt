@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.14)
 
 if(WIN32)
-    set(CMAKE_PREFIX_PATH "C:/Qt/6.7.2/msvc2019_64/lib/cmake")
+    set(CMAKE_PREFIX_PATH "C:/Qt/6.7.2/msvc2019_64/lib/cmake") # binaries from Qt installer
 elseif(LINUX)
-    set(CMAKE_PREFIX_PATH "~/Qt/lib/cmake")                # self-compiled from Qt source
-    # set(CMAKE_PREFIX_PATH "~/Qt/6.7.2/gcc_64/lib/cmake") # binaries from Qt installer - note: NOT WORKING
+    set(CMAKE_PREFIX_PATH "~/Qt/lib/cmake")                # self-compiled from Qt source (comment out if using system version - but be certain system version is 6.7.2 or greater!)
+#    set(CMAKE_PREFIX_PATH "~/Qt/6.7.2/gcc_64/lib/cmake")  # binaries from Qt installer - note: NOT WORKING
 elseif(APPLE)
-    set(CMAKE_PREFIX_PATH "~/Qt/6.7.2/macos/lib/cmake")
-    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+    set(CMAKE_PREFIX_PATH "~/Qt/6.7.2/macos/lib/cmake")    # binaries from Qt installer (comment out if using homebrew version)
+#    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 endif()
 
 project(MinimalQtForFSharpServer LANGUAGES CXX)
