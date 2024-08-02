@@ -78,7 +78,23 @@ namespace LineEdit
 
     void Handle_setText__wrapper();
 
+    void Handle_text__wrapper();
+
     void Handle_isUndoAvailable__wrapper();
+
+    void Handle_clear__wrapper();
+
+    void Handle_copy__wrapper();
+
+    void Handle_cut__wrapper();
+
+    void Handle_paste__wrapper();
+
+    void Handle_redo__wrapper();
+
+    void Handle_selectAll__wrapper();
+
+    void Handle_undo__wrapper();
 
     void Handle_setSignalMask__wrapper();
 

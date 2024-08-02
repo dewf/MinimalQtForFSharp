@@ -350,9 +350,49 @@ namespace LineEdit
         Handle_setText(_this, text);
     }
 
+    void Handle_text__wrapper() {
+        auto _this = Handle__pop();
+        pushStringInternal(Handle_text(_this));
+    }
+
     void Handle_isUndoAvailable__wrapper() {
         auto _this = Handle__pop();
         ni_pushBool(Handle_isUndoAvailable(_this));
+    }
+
+    void Handle_clear__wrapper() {
+        auto _this = Handle__pop();
+        Handle_clear(_this);
+    }
+
+    void Handle_copy__wrapper() {
+        auto _this = Handle__pop();
+        Handle_copy(_this);
+    }
+
+    void Handle_cut__wrapper() {
+        auto _this = Handle__pop();
+        Handle_cut(_this);
+    }
+
+    void Handle_paste__wrapper() {
+        auto _this = Handle__pop();
+        Handle_paste(_this);
+    }
+
+    void Handle_redo__wrapper() {
+        auto _this = Handle__pop();
+        Handle_redo(_this);
+    }
+
+    void Handle_selectAll__wrapper() {
+        auto _this = Handle__pop();
+        Handle_selectAll(_this);
+    }
+
+    void Handle_undo__wrapper() {
+        auto _this = Handle__pop();
+        Handle_undo(_this);
     }
 
     void Handle_setSignalMask__wrapper() {
@@ -393,7 +433,15 @@ namespace LineEdit
         ni_registerModuleMethod(m, "Handle_isRedoAvailable", &Handle_isRedoAvailable__wrapper);
         ni_registerModuleMethod(m, "Handle_selectedText", &Handle_selectedText__wrapper);
         ni_registerModuleMethod(m, "Handle_setText", &Handle_setText__wrapper);
+        ni_registerModuleMethod(m, "Handle_text", &Handle_text__wrapper);
         ni_registerModuleMethod(m, "Handle_isUndoAvailable", &Handle_isUndoAvailable__wrapper);
+        ni_registerModuleMethod(m, "Handle_clear", &Handle_clear__wrapper);
+        ni_registerModuleMethod(m, "Handle_copy", &Handle_copy__wrapper);
+        ni_registerModuleMethod(m, "Handle_cut", &Handle_cut__wrapper);
+        ni_registerModuleMethod(m, "Handle_paste", &Handle_paste__wrapper);
+        ni_registerModuleMethod(m, "Handle_redo", &Handle_redo__wrapper);
+        ni_registerModuleMethod(m, "Handle_selectAll", &Handle_selectAll__wrapper);
+        ni_registerModuleMethod(m, "Handle_undo", &Handle_undo__wrapper);
         ni_registerModuleMethod(m, "Handle_setSignalMask", &Handle_setSignalMask__wrapper);
         ni_registerModuleMethod(m, "Handle_dispose", &Handle_dispose__wrapper);
         auto signalHandler = ni_registerInterface(m, "SignalHandler");

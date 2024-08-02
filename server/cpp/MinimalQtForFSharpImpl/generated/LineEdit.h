@@ -88,7 +88,15 @@ namespace LineEdit
     bool Handle_isRedoAvailable(HandleRef _this);
     std::string Handle_selectedText(HandleRef _this);
     void Handle_setText(HandleRef _this, std::string text);
+    std::string Handle_text(HandleRef _this);
     bool Handle_isUndoAvailable(HandleRef _this);
+    void Handle_clear(HandleRef _this);
+    void Handle_copy(HandleRef _this);
+    void Handle_cut(HandleRef _this);
+    void Handle_paste(HandleRef _this);
+    void Handle_redo(HandleRef _this);
+    void Handle_selectAll(HandleRef _this);
+    void Handle_undo(HandleRef _this);
     void Handle_setSignalMask(HandleRef _this, SignalMask mask);
     void Handle_dispose(HandleRef _this);
     HandleRef create(std::shared_ptr<SignalHandler> handler);

@@ -39,7 +39,15 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static ModuleMethodHandle _handle_isRedoAvailable;
         internal static ModuleMethodHandle _handle_selectedText;
         internal static ModuleMethodHandle _handle_setText;
+        internal static ModuleMethodHandle _handle_text;
         internal static ModuleMethodHandle _handle_isUndoAvailable;
+        internal static ModuleMethodHandle _handle_clear;
+        internal static ModuleMethodHandle _handle_copy;
+        internal static ModuleMethodHandle _handle_cut;
+        internal static ModuleMethodHandle _handle_paste;
+        internal static ModuleMethodHandle _handle_redo;
+        internal static ModuleMethodHandle _handle_selectAll;
+        internal static ModuleMethodHandle _handle_undo;
         internal static ModuleMethodHandle _handle_setSignalMask;
         internal static ModuleMethodHandle _handle_dispose;
         internal static InterfaceHandle _signalHandler;
@@ -411,11 +419,52 @@ namespace Org.Whatever.MinimalQtForFSharp
                 Handle__Push(this);
                 NativeImplClient.InvokeModuleMethod(_handle_setText);
             }
+            public string Text()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_text);
+                return NativeImplClient.PopString();
+            }
             public bool IsUndoAvailable()
             {
                 Handle__Push(this);
                 NativeImplClient.InvokeModuleMethod(_handle_isUndoAvailable);
                 return NativeImplClient.PopBool();
+            }
+            public void Clear()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_clear);
+            }
+            public void Copy()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_copy);
+            }
+            public void Cut()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_cut);
+            }
+            public void Paste()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_paste);
+            }
+            public void Redo()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_redo);
+            }
+            public void SelectAll()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_selectAll);
+            }
+            public void Undo()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_undo);
             }
             public void SetSignalMask(SignalMask mask)
             {
@@ -462,7 +511,15 @@ namespace Org.Whatever.MinimalQtForFSharp
             _handle_isRedoAvailable = NativeImplClient.GetModuleMethod(_module, "Handle_isRedoAvailable");
             _handle_selectedText = NativeImplClient.GetModuleMethod(_module, "Handle_selectedText");
             _handle_setText = NativeImplClient.GetModuleMethod(_module, "Handle_setText");
+            _handle_text = NativeImplClient.GetModuleMethod(_module, "Handle_text");
             _handle_isUndoAvailable = NativeImplClient.GetModuleMethod(_module, "Handle_isUndoAvailable");
+            _handle_clear = NativeImplClient.GetModuleMethod(_module, "Handle_clear");
+            _handle_copy = NativeImplClient.GetModuleMethod(_module, "Handle_copy");
+            _handle_cut = NativeImplClient.GetModuleMethod(_module, "Handle_cut");
+            _handle_paste = NativeImplClient.GetModuleMethod(_module, "Handle_paste");
+            _handle_redo = NativeImplClient.GetModuleMethod(_module, "Handle_redo");
+            _handle_selectAll = NativeImplClient.GetModuleMethod(_module, "Handle_selectAll");
+            _handle_undo = NativeImplClient.GetModuleMethod(_module, "Handle_undo");
             _handle_setSignalMask = NativeImplClient.GetModuleMethod(_module, "Handle_setSignalMask");
             _handle_dispose = NativeImplClient.GetModuleMethod(_module, "Handle_dispose");
             _signalHandler = NativeImplClient.GetInterface(_module, "SignalHandler");

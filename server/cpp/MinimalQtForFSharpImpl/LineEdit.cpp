@@ -158,8 +158,40 @@ namespace LineEdit
         THIS->setText(QString::fromStdString(text));
     }
 
+    std::string Handle_text(HandleRef _this) {
+        return THIS->text().toStdString();
+    }
+
     bool Handle_isUndoAvailable(HandleRef _this) {
         return THIS->isUndoAvailable();
+    }
+
+    void Handle_clear(HandleRef _this) {
+        THIS->clear();
+    }
+
+    void Handle_copy(HandleRef _this) {
+        THIS->copy();
+    }
+
+    void Handle_cut(HandleRef _this) {
+        THIS->cut();
+    }
+
+    void Handle_paste(HandleRef _this) {
+        THIS->paste();
+    }
+
+    void Handle_redo(HandleRef _this) {
+        THIS->redo();
+    }
+
+    void Handle_selectAll(HandleRef _this) {
+        THIS->selectAll();
+    }
+
+    void Handle_undo(HandleRef _this) {
+        THIS->undo();
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {

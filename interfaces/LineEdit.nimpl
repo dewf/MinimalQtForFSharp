@@ -39,6 +39,7 @@ interface SignalHandler {
 enum EchoMode { Normal, NoEcho, Password, PasswordEchoOnEdit }
 
 opaque Handle extends Widget.Handle {
+    // properties:
     bool hasAcceptableInput();          // read-only
     void setAlignment(Alignment align);
     void setClearButtonEnabled(bool enabled);
@@ -61,7 +62,17 @@ opaque Handle extends Widget.Handle {
     bool isRedoAvailable();             // read-only
     string selectedText();              // read-only
     void setText(string text);
+    string text();
     bool isUndoAvailable();             // read-only
+
+    // slots:
+    void clear();
+    void copy();
+    void cut();
+    void paste();
+    void redo();
+    void selectAll();
+    void undo();
     
     void setSignalMask(SignalMask mask);
 }
