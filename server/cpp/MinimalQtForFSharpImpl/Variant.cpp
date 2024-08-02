@@ -39,6 +39,10 @@ namespace Variant
             variant = QVariant();
         }
 
+        void onFromBool(const Deferred::FromBool *fromBool) override {
+            variant = fromBool->value;
+        }
+
         void onFromString(const Deferred::FromString *fromString) override {
             variant = QString::fromStdString(fromString->value);
         }

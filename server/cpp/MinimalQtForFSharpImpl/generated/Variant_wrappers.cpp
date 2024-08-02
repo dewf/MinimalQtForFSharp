@@ -59,25 +59,30 @@ namespace Variant
             // kind:
             ni_pushInt32(0);
         }
+        void onFromBool(const Deferred::FromBool* fromBool) override {
+            ni_pushBool(fromBool->value);
+            // kind:
+            ni_pushInt32(1);
+        }
         void onFromString(const Deferred::FromString* fromString) override {
             pushStringInternal(fromString->value);
             // kind:
-            ni_pushInt32(1);
+            ni_pushInt32(2);
         }
         void onFromInt(const Deferred::FromInt* fromInt) override {
             ni_pushInt32(fromInt->value);
             // kind:
-            ni_pushInt32(2);
+            ni_pushInt32(3);
         }
         void onFromIcon(const Deferred::FromIcon* fromIcon) override {
             Icon::Deferred__push(fromIcon->value, isReturn);
             // kind:
-            ni_pushInt32(3);
+            ni_pushInt32(4);
         }
         void onFromColor(const Deferred::FromColor* fromColor) override {
             Color::Deferred__push(fromColor->value, isReturn);
             // kind:
-            ni_pushInt32(4);
+            ni_pushInt32(5);
         }
     };
 
@@ -94,21 +99,26 @@ namespace Variant
             break;
         }
         case 1: {
+            auto value = ni_popBool();
+            __ret = new Deferred::FromBool(value);
+            break;
+        }
+        case 2: {
             auto value = popStringInternal();
             __ret = new Deferred::FromString(value);
             break;
         }
-        case 2: {
+        case 3: {
             auto value = ni_popInt32();
             __ret = new Deferred::FromInt(value);
             break;
         }
-        case 3: {
+        case 4: {
             auto value = Icon::Deferred__pop();
             __ret = new Deferred::FromIcon(value);
             break;
         }
-        case 4: {
+        case 5: {
             auto value = Color::Deferred__pop();
             __ret = new Deferred::FromColor(value);
             break;

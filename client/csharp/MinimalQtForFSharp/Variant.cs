@@ -114,10 +114,11 @@ namespace Org.Whatever.MinimalQtForFSharp
                 return NativeImplClient.PopInt32() switch
                 {
                     0 => Empty.PopDerived(),
-                    1 => FromString.PopDerived(),
-                    2 => FromInt.PopDerived(),
-                    3 => FromIcon.PopDerived(),
-                    4 => FromColor.PopDerived(),
+                    1 => FromBool.PopDerived(),
+                    2 => FromString.PopDerived(),
+                    3 => FromInt.PopDerived(),
+                    4 => FromIcon.PopDerived(),
+                    5 => FromColor.PopDerived(),
                     _ => throw new Exception("Deferred.Pop() - unknown tag!")
                 };
             }
@@ -133,6 +134,21 @@ namespace Org.Whatever.MinimalQtForFSharp
                     return new Empty();
                 }
             }
+            public sealed record FromBool(bool Value) : Deferred
+            {
+                public bool Value { get; } = Value;
+                internal override void Push(bool isReturn)
+                {
+                    NativeImplClient.PushBool(Value);
+                    // kind
+                    NativeImplClient.PushInt32(1);
+                }
+                internal static FromBool PopDerived()
+                {
+                    var value = NativeImplClient.PopBool();
+                    return new FromBool(value);
+                }
+            }
             public sealed record FromString(string Value) : Deferred
             {
                 public string Value { get; } = Value;
@@ -140,7 +156,7 @@ namespace Org.Whatever.MinimalQtForFSharp
                 {
                     NativeImplClient.PushString(Value);
                     // kind
-                    NativeImplClient.PushInt32(1);
+                    NativeImplClient.PushInt32(2);
                 }
                 internal static FromString PopDerived()
                 {
@@ -155,7 +171,7 @@ namespace Org.Whatever.MinimalQtForFSharp
                 {
                     NativeImplClient.PushInt32(Value);
                     // kind
-                    NativeImplClient.PushInt32(2);
+                    NativeImplClient.PushInt32(3);
                 }
                 internal static FromInt PopDerived()
                 {
@@ -170,7 +186,7 @@ namespace Org.Whatever.MinimalQtForFSharp
                 {
                     Icon.Deferred__Push(Value, isReturn);
                     // kind
-                    NativeImplClient.PushInt32(3);
+                    NativeImplClient.PushInt32(4);
                 }
                 internal static FromIcon PopDerived()
                 {
@@ -185,7 +201,7 @@ namespace Org.Whatever.MinimalQtForFSharp
                 {
                     Color.Deferred__Push(Value, isReturn);
                     // kind
-                    NativeImplClient.PushInt32(4);
+                    NativeImplClient.PushInt32(5);
                 }
                 internal static FromColor PopDerived()
                 {

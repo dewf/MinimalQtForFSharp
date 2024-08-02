@@ -35,6 +35,7 @@ namespace Variant
 
     namespace Deferred {
         class Empty;
+        class FromBool;
         class FromString;
         class FromInt;
         class FromIcon;
@@ -43,6 +44,7 @@ namespace Variant
         class Visitor {
         public:
             virtual void onEmpty(const Empty* empty) = 0;
+            virtual void onFromBool(const FromBool* fromBool) = 0;
             virtual void onFromString(const FromString* fromString) = 0;
             virtual void onFromInt(const FromInt* fromInt) = 0;
             virtual void onFromIcon(const FromIcon* fromIcon) = 0;
@@ -59,6 +61,15 @@ namespace Variant
             Empty() {}
             void accept(Visitor* visitor) override {
                 visitor->onEmpty(this);
+            }
+        };
+
+        class FromBool : public Base {
+        public:
+            const bool value;
+            FromBool(bool value) : value(value) {}
+            void accept(Visitor* visitor) override {
+                visitor->onFromBool(this);
             }
         };
 

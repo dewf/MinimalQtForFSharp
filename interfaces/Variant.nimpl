@@ -3,7 +3,7 @@ module Variant;
 import Icon;
 import PaintResources; // for color, brush, etc (deferred)
 
-// @nodispose // temporarily removed because our codegen sucks and we're inheriting for OnwedHandle
+// @nodispose // temporarily removed because our codegen sucks and we're inheriting for OwnedHandle
 opaque Handle {
     bool isValid();
     string toString2(); // toString() is a C# thing
@@ -18,6 +18,7 @@ opaque OwnedHandle extends Handle;
 
 sumtype Deferred {
     Empty,
+    FromBool(bool value),
     FromString(string value),
     FromInt(int value),
     FromIcon(Icon.Deferred value),
