@@ -61,6 +61,11 @@ opaque Interior extends Handle { // this opaque allows the method delegate to ca
 
     void beginResetModel();
     void endResetModel();
+
+    // TODO: setSignalMask
+    // but perhaps we need a SubHandle that's one level above this, would be more correct
+    // because in theory you might not actually want/need an Interior handle
+    // or maybe Interior should be SubclassedHandle
 }
 
 flags ItemFlags {
