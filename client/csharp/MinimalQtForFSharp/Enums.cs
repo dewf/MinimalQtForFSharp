@@ -472,6 +472,25 @@ namespace Org.Whatever.MinimalQtForFSharp
             var ret = NativeImplClient.PopUInt32();
             return (InputMethodHints)ret;
         }
+        public enum CheckState
+        {
+            Unchecked,
+            PartiallyChecked,
+            Checked
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void CheckState__Push(CheckState value)
+        {
+            NativeImplClient.PushInt32((int)value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static CheckState CheckState__Pop()
+        {
+            var ret = NativeImplClient.PopInt32();
+            return (CheckState)ret;
+        }
         public enum ItemDataRole
         {
             DisplayRole = 0,

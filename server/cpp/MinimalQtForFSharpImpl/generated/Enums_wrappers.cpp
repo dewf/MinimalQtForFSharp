@@ -149,6 +149,14 @@ namespace Enums
     InputMethodHints InputMethodHints__pop() {
         return ni_popUInt32();
     }
+    void CheckState__push(CheckState value) {
+        ni_pushInt32((int32_t)value);
+    }
+
+    CheckState CheckState__pop() {
+        auto tag = ni_popInt32();
+        return (CheckState)tag;
+    }
     void ItemDataRole__push(ItemDataRole value) {
         ni_pushInt32((int32_t)value);
     }

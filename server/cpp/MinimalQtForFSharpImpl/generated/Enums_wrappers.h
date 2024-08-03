@@ -61,6 +61,9 @@ namespace Enums
     void InputMethodHints__push(InputMethodHints value);
     InputMethodHints InputMethodHints__pop();
 
+    void CheckState__push(CheckState value);
+    CheckState CheckState__pop();
+
     void ItemDataRole__push(ItemDataRole value);
     ItemDataRole ItemDataRole__pop();
 

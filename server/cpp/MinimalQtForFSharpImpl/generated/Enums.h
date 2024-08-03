@@ -226,6 +226,12 @@ namespace Enums
         ImhExclusiveInputMask = 0xffff0000
     };
 
+    enum class CheckState {
+        Unchecked,
+        PartiallyChecked,
+        Checked
+    };
+
     enum class ItemDataRole {
         DisplayRole = 0,
         DecorationRole = 1,

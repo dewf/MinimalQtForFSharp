@@ -217,6 +217,12 @@ flags InputMethodHints : uint32 {
     ImhExclusiveInputMask = 0xffff0000
 }
 
+enum CheckState {
+    Unchecked,
+    PartiallyChecked,
+    Checked
+}
+
 enum ItemDataRole {
     DisplayRole = 0,
     DecorationRole = 1,
