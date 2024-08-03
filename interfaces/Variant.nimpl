@@ -2,15 +2,37 @@ module Variant;
 
 import Icon;
 import PaintResources; // for color, brush, etc (deferred)
+import Enums;
+
+sumtype ServerValue {
+    Bool(bool value),
+    String(string value),
+    Int(int value),
+
+    // for other things (Icon, Color, etc), we need:
+    // 1) Owned-handle versions of these
+    // 2) virtual dtors perhaps? in any case, all cases of a sumtype must fully dispose when disposed from the base type
+    // alternatively we could use refcounted interfaces, but seeing as we've been avoiding those everywhere else ...
+    
+    // as-yet-unsupported:
+    Unknown
+}
 
 // @nodispose // temporarily removed because our codegen sucks and we're inheriting for OwnedHandle
 opaque Handle {
     bool isValid();
+
+    bool toBool();
     string toString2(); // toString() is a C# thing
     int toInt();
+
+    // convenience function, special values for toInt()
+    CheckState toCheckState();
     
     // no toIcon() yet, because ownership is murky (Icon is currently @nodispose) [TODO: need an Icon.OwnedHandle, similar to how we're dealing with ModelIndex]
     // same for toColor()
+
+    ServerValue toServerValue();
 }
 
 // see long note in ModelIndex module
@@ -21,6 +43,7 @@ sumtype Deferred {
     FromBool(bool value),
     FromString(string value),
     FromInt(int value),
+    FromCheckState(CheckState value), // convenience for int 0/1/2
     FromIcon(Icon.Deferred value),
     FromColor(Color.Deferred value)
 }

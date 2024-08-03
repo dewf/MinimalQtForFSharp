@@ -3,15 +3,23 @@
 
 namespace Variant
 {
+    void ServerValue__push(std::shared_ptr<ServerValue::Base> value, bool isReturn);
+    std::shared_ptr<ServerValue::Base> ServerValue__pop();
 
     void Handle__push(HandleRef value);
     HandleRef Handle__pop();
 
     void Handle_isValid__wrapper();
 
+    void Handle_toBool__wrapper();
+
     void Handle_toString2__wrapper();
 
     void Handle_toInt__wrapper();
+
+    void Handle_toCheckState__wrapper();
+
+    void Handle_toServerValue__wrapper();
 
     void Handle_dispose__wrapper();
 

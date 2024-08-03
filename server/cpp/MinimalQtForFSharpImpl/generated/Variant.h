@@ -15,6 +15,8 @@
 using namespace ::Icon;
 #include "PaintResources.h"
 using namespace ::PaintResources;
+#include "Enums.h"
+using namespace ::Enums;
 
 namespace Variant
 {
@@ -22,13 +24,74 @@ namespace Variant
     struct __Handle; typedef struct __Handle* HandleRef;
     struct __OwnedHandle; typedef struct __OwnedHandle* OwnedHandleRef; // extends HandleRef
 
+    namespace ServerValue {
+        class Base;
+    }
     namespace Deferred {
         class Base;
     }
 
+    namespace ServerValue {
+        class Bool;
+        class String;
+        class Int;
+        class Unknown;
+
+        class Visitor {
+        public:
+            virtual void onBool(const Bool* value) = 0;
+            virtual void onString(const String* value) = 0;
+            virtual void onInt(const Int* value) = 0;
+            virtual void onUnknown(const Unknown* value) = 0;
+        };
+
+        class Base {
+        public:
+            virtual void accept(Visitor* visitor) = 0;
+        };
+
+        class Bool : public Base {
+        public:
+            const bool value;
+            Bool(bool value) : value(value) {}
+            void accept(Visitor* visitor) override {
+                visitor->onBool(this);
+            }
+        };
+
+        class String : public Base {
+        public:
+            const std::string value;
+            String(std::string value) : value(value) {}
+            void accept(Visitor* visitor) override {
+                visitor->onString(this);
+            }
+        };
+
+        class Int : public Base {
+        public:
+            const int32_t value;
+            Int(int32_t value) : value(value) {}
+            void accept(Visitor* visitor) override {
+                visitor->onInt(this);
+            }
+        };
+
+        class Unknown : public Base {
+        public:
+            Unknown() {}
+            void accept(Visitor* visitor) override {
+                visitor->onUnknown(this);
+            }
+        };
+    }
+
     bool Handle_isValid(HandleRef _this);
+    bool Handle_toBool(HandleRef _this);
     std::string Handle_toString2(HandleRef _this);
     int32_t Handle_toInt(HandleRef _this);
+    Enums::CheckState Handle_toCheckState(HandleRef _this);
+    std::shared_ptr<ServerValue::Base> Handle_toServerValue(HandleRef _this);
     void Handle_dispose(HandleRef _this);
 
     void OwnedHandle_dispose(OwnedHandleRef _this);
@@ -38,17 +101,19 @@ namespace Variant
         class FromBool;
         class FromString;
         class FromInt;
+        class FromCheckState;
         class FromIcon;
         class FromColor;
 
         class Visitor {
         public:
-            virtual void onEmpty(const Empty* empty) = 0;
-            virtual void onFromBool(const FromBool* fromBool) = 0;
-            virtual void onFromString(const FromString* fromString) = 0;
-            virtual void onFromInt(const FromInt* fromInt) = 0;
-            virtual void onFromIcon(const FromIcon* fromIcon) = 0;
-            virtual void onFromColor(const FromColor* fromColor) = 0;
+            virtual void onEmpty(const Empty* value) = 0;
+            virtual void onFromBool(const FromBool* value) = 0;
+            virtual void onFromString(const FromString* value) = 0;
+            virtual void onFromInt(const FromInt* value) = 0;
+            virtual void onFromCheckState(const FromCheckState* value) = 0;
+            virtual void onFromIcon(const FromIcon* value) = 0;
+            virtual void onFromColor(const FromColor* value) = 0;
         };
 
         class Base {
@@ -88,6 +153,15 @@ namespace Variant
             FromInt(int32_t value) : value(value) {}
             void accept(Visitor* visitor) override {
                 visitor->onFromInt(this);
+            }
+        };
+
+        class FromCheckState : public Base {
+        public:
+            const Enums::CheckState value;
+            FromCheckState(Enums::CheckState value) : value(value) {}
+            void accept(Visitor* visitor) override {
+                visitor->onFromCheckState(this);
             }
         };
 

@@ -12,12 +12,49 @@ namespace Variant
         return THIS->isValid();
     }
 
+    bool Handle_toBool(HandleRef _this) {
+        return THIS->toBool();
+    }
+
     std::string Handle_toString2(HandleRef _this) {
         return THIS->toString().toStdString();
     }
 
     int32_t Handle_toInt(HandleRef _this) {
         return THIS->toInt();
+    }
+
+    CheckState Handle_toCheckState(HandleRef _this) {
+        switch ((Qt::CheckState)THIS->toInt()) {
+            case Qt::Unchecked:
+                return CheckState::Unchecked;
+            case Qt::PartiallyChecked:
+                return CheckState::PartiallyChecked;
+            case Qt::Checked:
+                return CheckState::Checked;
+            default:
+                printf("Variant::Handle_toCheckState - unknown input value %d\n", THIS->toInt());
+        }
+        return CheckState::Unchecked;
+    }
+
+    std::shared_ptr<ServerValue::Base> Handle_toServerValue(HandleRef _this) {
+        ServerValue::Base *value;
+        switch((QMetaType::Type)THIS->typeId()) {
+            case QMetaType::Bool:
+                value = new ServerValue::Bool(THIS->toBool());
+                break;
+            case QMetaType::Int:
+                value = new ServerValue::Int(THIS->toInt());
+                break;
+            case QMetaType::QString:
+                value = new ServerValue::String(THIS->toString().toStdString());
+                break;
+            default:
+                value = new ServerValue::Unknown();
+                break;
+        }
+        return std::shared_ptr<ServerValue::Base>(value);
     }
 
     void Handle_dispose(HandleRef _this) {
@@ -35,28 +72,32 @@ namespace Variant
     public:
         explicit FromDeferred(QVariant &variant) : variant(variant) {}
 
-        void onEmpty(const Deferred::Empty *empty) override {
+        void onEmpty(const Deferred::Empty *value) override {
             variant = QVariant();
         }
 
-        void onFromBool(const Deferred::FromBool *fromBool) override {
-            variant = fromBool->value;
+        void onFromBool(const Deferred::FromBool *value) override {
+            variant = value->value;
         }
 
-        void onFromString(const Deferred::FromString *fromString) override {
-            variant = QString::fromStdString(fromString->value);
+        void onFromString(const Deferred::FromString *value) override {
+            variant = QString::fromStdString(value->value);
         }
 
-        void onFromInt(const Deferred::FromInt *fromInt) override {
-            variant = fromInt->value;
+        void onFromInt(const Deferred::FromInt *value) override {
+            variant = value->value;
         }
 
-        void onFromIcon(const Deferred::FromIcon *fromIcon) override {
-            variant = Icon::fromDeferred(fromIcon->value);
+        void onFromCheckState(const Deferred::FromCheckState *value) override {
+            variant = (int)value->value;
         }
 
-        void onFromColor(const Deferred::FromColor *fromColor) override {
-            variant = Color::fromDeferred(fromColor->value);
+        void onFromIcon(const Deferred::FromIcon *value) override {
+            variant = Icon::fromDeferred(value->value);
+        }
+
+        void onFromColor(const Deferred::FromColor *value) override {
+            variant = Color::fromDeferred(value->value);
         }
     };
 
