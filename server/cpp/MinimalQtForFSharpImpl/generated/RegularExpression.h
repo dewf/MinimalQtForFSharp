@@ -36,8 +36,8 @@ namespace RegularExpression
 
         class Visitor {
         public:
-            virtual void onEmpty(const Empty* empty) = 0;
-            virtual void onRegex(const Regex* regex) = 0;
+            virtual void onEmpty(const Empty* value) = 0;
+            virtual void onRegex(const Regex* value) = 0;
         };
 
         class Base {

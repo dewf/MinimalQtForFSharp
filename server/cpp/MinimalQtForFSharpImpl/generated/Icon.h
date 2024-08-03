@@ -194,9 +194,9 @@ namespace Icon
 
         class Visitor {
         public:
-            virtual void onEmpty(const Empty* empty) = 0;
-            virtual void onFromThemeIcon(const FromThemeIcon* fromThemeIcon) = 0;
-            virtual void onFromFilename(const FromFilename* fromFilename) = 0;
+            virtual void onEmpty(const Empty* value) = 0;
+            virtual void onFromThemeIcon(const FromThemeIcon* value) = 0;
+            virtual void onFromFilename(const FromFilename* value) = 0;
         };
 
         class Base {

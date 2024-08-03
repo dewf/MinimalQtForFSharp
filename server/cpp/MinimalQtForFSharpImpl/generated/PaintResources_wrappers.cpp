@@ -30,38 +30,38 @@ namespace PaintResources
             bool isReturn;
         public:
             Deferred_PushVisitor(bool isReturn) : isReturn(isReturn) {}
-            void onFromConstant(const Deferred::FromConstant* fromConstant) override {
-                Constant__push(fromConstant->name);
+            void onFromConstant(const Deferred::FromConstant* fromConstantValue) override {
+                Constant__push(fromConstantValue->name);
                 // kind:
                 ni_pushInt32(0);
             }
-            void onFromRGB(const Deferred::FromRGB* fromRGB) override {
-                ni_pushInt32(fromRGB->b);
-                ni_pushInt32(fromRGB->g);
-                ni_pushInt32(fromRGB->r);
+            void onFromRGB(const Deferred::FromRGB* fromRGBValue) override {
+                ni_pushInt32(fromRGBValue->b);
+                ni_pushInt32(fromRGBValue->g);
+                ni_pushInt32(fromRGBValue->r);
                 // kind:
                 ni_pushInt32(1);
             }
-            void onFromRGBA(const Deferred::FromRGBA* fromRGBA) override {
-                ni_pushInt32(fromRGBA->a);
-                ni_pushInt32(fromRGBA->b);
-                ni_pushInt32(fromRGBA->g);
-                ni_pushInt32(fromRGBA->r);
+            void onFromRGBA(const Deferred::FromRGBA* fromRGBAValue) override {
+                ni_pushInt32(fromRGBAValue->a);
+                ni_pushInt32(fromRGBAValue->b);
+                ni_pushInt32(fromRGBAValue->g);
+                ni_pushInt32(fromRGBAValue->r);
                 // kind:
                 ni_pushInt32(2);
             }
-            void onFromRGBF(const Deferred::FromRGBF* fromRGBF) override {
-                ni_pushFloat(fromRGBF->b);
-                ni_pushFloat(fromRGBF->g);
-                ni_pushFloat(fromRGBF->r);
+            void onFromRGBF(const Deferred::FromRGBF* fromRGBFValue) override {
+                ni_pushFloat(fromRGBFValue->b);
+                ni_pushFloat(fromRGBFValue->g);
+                ni_pushFloat(fromRGBFValue->r);
                 // kind:
                 ni_pushInt32(3);
             }
-            void onFromRGBAF(const Deferred::FromRGBAF* fromRGBAF) override {
-                ni_pushFloat(fromRGBAF->a);
-                ni_pushFloat(fromRGBAF->b);
-                ni_pushFloat(fromRGBAF->g);
-                ni_pushFloat(fromRGBAF->r);
+            void onFromRGBAF(const Deferred::FromRGBAF* fromRGBAFValue) override {
+                ni_pushFloat(fromRGBAFValue->a);
+                ni_pushFloat(fromRGBAFValue->b);
+                ni_pushFloat(fromRGBAFValue->g);
+                ni_pushFloat(fromRGBAFValue->r);
                 // kind:
                 ni_pushInt32(4);
             }

@@ -21,19 +21,19 @@ namespace KeySequence
         bool isReturn;
     public:
         Deferred_PushVisitor(bool isReturn) : isReturn(isReturn) {}
-        void onFromString(const Deferred::FromString* fromString) override {
-            pushStringInternal(fromString->s);
+        void onFromString(const Deferred::FromString* fromStringValue) override {
+            pushStringInternal(fromStringValue->s);
             // kind:
             ni_pushInt32(0);
         }
-        void onFromStandard(const Deferred::FromStandard* fromStandard) override {
-            StandardKey__push(fromStandard->key);
+        void onFromStandard(const Deferred::FromStandard* fromStandardValue) override {
+            StandardKey__push(fromStandardValue->key);
             // kind:
             ni_pushInt32(1);
         }
-        void onFromKey(const Deferred::FromKey* fromKey) override {
-            Modifiers__push(fromKey->modifiers);
-            Key__push(fromKey->key);
+        void onFromKey(const Deferred::FromKey* fromKeyValue) override {
+            Modifiers__push(fromKeyValue->modifiers);
+            Key__push(fromKeyValue->key);
             // kind:
             ni_pushInt32(2);
         }

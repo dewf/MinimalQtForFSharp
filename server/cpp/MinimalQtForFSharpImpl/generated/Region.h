@@ -30,7 +30,7 @@ namespace Region
 
         class Visitor {
         public:
-            virtual void onTodo(const Todo* todo) = 0;
+            virtual void onTodo(const Todo* value) = 0;
         };
 
         class Base {

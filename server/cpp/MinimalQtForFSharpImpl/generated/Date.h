@@ -37,7 +37,7 @@ namespace Date
 
         class Visitor {
         public:
-            virtual void onFromYearMonthDay(const FromYearMonthDay* fromYearMonthDay) = 0;
+            virtual void onFromYearMonthDay(const FromYearMonthDay* value) = 0;
         };
 
         class Base {

@@ -102,9 +102,9 @@ namespace KeySequence
 
         class Visitor {
         public:
-            virtual void onFromString(const FromString* fromString) = 0;
-            virtual void onFromStandard(const FromStandard* fromStandard) = 0;
-            virtual void onFromKey(const FromKey* fromKey) = 0;
+            virtual void onFromString(const FromString* value) = 0;
+            virtual void onFromStandard(const FromStandard* value) = 0;
+            virtual void onFromKey(const FromKey* value) = 0;
         };
 
         class Base {

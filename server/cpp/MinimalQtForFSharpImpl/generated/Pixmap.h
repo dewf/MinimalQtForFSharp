@@ -23,7 +23,7 @@ namespace Pixmap
 
         class Visitor {
         public:
-            virtual void onEmpty(const Empty* empty) = 0;
+            virtual void onEmpty(const Empty* value) = 0;
         };
 
         class Base {

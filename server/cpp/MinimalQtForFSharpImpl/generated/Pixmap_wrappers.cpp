@@ -10,7 +10,7 @@ namespace Pixmap
         bool isReturn;
     public:
         Deferred_PushVisitor(bool isReturn) : isReturn(isReturn) {}
-        void onEmpty(const Deferred::Empty* empty) override {
+        void onEmpty(const Deferred::Empty* emptyValue) override {
             // kind:
             ni_pushInt32(0);
         }

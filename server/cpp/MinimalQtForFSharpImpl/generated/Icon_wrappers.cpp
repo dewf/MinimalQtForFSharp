@@ -41,17 +41,17 @@ namespace Icon
         bool isReturn;
     public:
         Deferred_PushVisitor(bool isReturn) : isReturn(isReturn) {}
-        void onEmpty(const Deferred::Empty* empty) override {
+        void onEmpty(const Deferred::Empty* emptyValue) override {
             // kind:
             ni_pushInt32(0);
         }
-        void onFromThemeIcon(const Deferred::FromThemeIcon* fromThemeIcon) override {
-            ThemeIcon__push(fromThemeIcon->themeIcon);
+        void onFromThemeIcon(const Deferred::FromThemeIcon* fromThemeIconValue) override {
+            ThemeIcon__push(fromThemeIconValue->themeIcon);
             // kind:
             ni_pushInt32(1);
         }
-        void onFromFilename(const Deferred::FromFilename* fromFilename) override {
-            pushStringInternal(fromFilename->filename);
+        void onFromFilename(const Deferred::FromFilename* fromFilenameValue) override {
+            pushStringInternal(fromFilenameValue->filename);
             // kind:
             ni_pushInt32(2);
         }

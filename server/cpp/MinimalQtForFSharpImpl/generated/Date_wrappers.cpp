@@ -51,10 +51,10 @@ namespace Date
         bool isReturn;
     public:
         Deferred_PushVisitor(bool isReturn) : isReturn(isReturn) {}
-        void onFromYearMonthDay(const Deferred::FromYearMonthDay* fromYearMonthDay) override {
-            ni_pushInt32(fromYearMonthDay->day);
-            ni_pushInt32(fromYearMonthDay->month);
-            ni_pushInt32(fromYearMonthDay->year);
+        void onFromYearMonthDay(const Deferred::FromYearMonthDay* fromYearMonthDayValue) override {
+            ni_pushInt32(fromYearMonthDayValue->day);
+            ni_pushInt32(fromYearMonthDayValue->month);
+            ni_pushInt32(fromYearMonthDayValue->year);
             // kind:
             ni_pushInt32(0);
         }

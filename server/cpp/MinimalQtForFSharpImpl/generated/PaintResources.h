@@ -64,11 +64,11 @@ namespace PaintResources
 
             class Visitor {
             public:
-                virtual void onFromConstant(const FromConstant* fromConstant) = 0;
-                virtual void onFromRGB(const FromRGB* fromRGB) = 0;
-                virtual void onFromRGBA(const FromRGBA* fromRGBA) = 0;
-                virtual void onFromRGBF(const FromRGBF* fromRGBF) = 0;
-                virtual void onFromRGBAF(const FromRGBAF* fromRGBAF) = 0;
+                virtual void onFromConstant(const FromConstant* value) = 0;
+                virtual void onFromRGB(const FromRGB* value) = 0;
+                virtual void onFromRGBA(const FromRGBA* value) = 0;
+                virtual void onFromRGBF(const FromRGBF* value) = 0;
+                virtual void onFromRGBAF(const FromRGBAF* value) = 0;
             };
 
             class Base {

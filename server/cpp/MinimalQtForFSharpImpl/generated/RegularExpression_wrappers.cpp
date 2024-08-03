@@ -17,13 +17,13 @@ namespace RegularExpression
         bool isReturn;
     public:
         Deferred_PushVisitor(bool isReturn) : isReturn(isReturn) {}
-        void onEmpty(const Deferred::Empty* empty) override {
+        void onEmpty(const Deferred::Empty* emptyValue) override {
             // kind:
             ni_pushInt32(0);
         }
-        void onRegex(const Deferred::Regex* regex) override {
-            PatternOptions__push(regex->opts);
-            pushStringInternal(regex->pattern);
+        void onRegex(const Deferred::Regex* regexValue) override {
+            PatternOptions__push(regexValue->opts);
+            pushStringInternal(regexValue->pattern);
             // kind:
             ni_pushInt32(1);
         }

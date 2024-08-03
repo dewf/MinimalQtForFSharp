@@ -41,7 +41,7 @@ namespace SizePolicy
         bool isReturn;
     public:
         Deferred_PushVisitor(bool isReturn) : isReturn(isReturn) {}
-        void onTodo(const Deferred::Todo* todo) override {
+        void onTodo(const Deferred::Todo* todoValue) override {
             // kind:
             ni_pushInt32(0);
         }

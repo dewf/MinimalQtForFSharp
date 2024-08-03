@@ -35,9 +35,9 @@ namespace ModelIndex
 
         class Visitor {
         public:
-            virtual void onEmpty(const Empty* empty) = 0;
-            virtual void onFromHandle(const FromHandle* fromHandle) = 0;
-            virtual void onFromOwned(const FromOwned* fromOwned) = 0;
+            virtual void onEmpty(const Empty* value) = 0;
+            virtual void onFromHandle(const FromHandle* value) = 0;
+            virtual void onFromOwned(const FromOwned* value) = 0;
         };
 
         class Base {

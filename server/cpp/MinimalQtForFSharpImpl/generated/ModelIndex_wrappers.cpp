@@ -49,17 +49,17 @@ namespace ModelIndex
         bool isReturn;
     public:
         Deferred_PushVisitor(bool isReturn) : isReturn(isReturn) {}
-        void onEmpty(const Deferred::Empty* empty) override {
+        void onEmpty(const Deferred::Empty* emptyValue) override {
             // kind:
             ni_pushInt32(0);
         }
-        void onFromHandle(const Deferred::FromHandle* fromHandle) override {
-            Handle__push(fromHandle->handle);
+        void onFromHandle(const Deferred::FromHandle* fromHandleValue) override {
+            Handle__push(fromHandleValue->handle);
             // kind:
             ni_pushInt32(1);
         }
-        void onFromOwned(const Deferred::FromOwned* fromOwned) override {
-            OwnedHandle__push(fromOwned->owned);
+        void onFromOwned(const Deferred::FromOwned* fromOwnedValue) override {
+            OwnedHandle__push(fromOwnedValue->owned);
             // kind:
             ni_pushInt32(2);
         }
