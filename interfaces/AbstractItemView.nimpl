@@ -7,6 +7,7 @@ import Icon;
 import AbstractScrollArea;
 import AbstractItemModel;
 import ModelIndex;
+import AbstractItemDelegate;
 
 namedbits SignalMask extends AbstractScrollArea.SignalMask {
     Activated,
@@ -101,4 +102,8 @@ opaque Handle extends AbstractScrollArea.Handle {
     void setVerticalScrollMode(ScrollMode mode);
 
     void setModel(AbstractItemModel.Handle model);
+
+    void setItemDelegate(AbstractItemDelegate.Handle itemDelegate);
+    void setItemDelegateForColumn(int column, AbstractItemDelegate.Handle itemDelegate);
+    void setItemDelegateForRow(int row, AbstractItemDelegate.Handle itemDelegate);
 }

@@ -20,6 +20,16 @@ namespace ModelIndex
         return THIS->column();
     }
 
+    Variant::OwnedHandleRef Handle_data(HandleRef _this) {
+        auto value = THIS->data();
+        return (Variant::OwnedHandleRef) new QVariant(value);
+    }
+
+    Variant::OwnedHandleRef Handle_data(HandleRef _this, ItemDataRole role) {
+        auto value = THIS->data((Qt::ItemDataRole)role);
+        return (Variant::OwnedHandleRef) new QVariant(value);
+    }
+
     void Handle_dispose(HandleRef _this) {
         // method only exists due to codegen deficiency
         printf("QModelIndex Handle_dispose - you should never see this, and it needs to be removed (via @nodispose) Handle isn't owned (vs. OwnedHandle)\n");

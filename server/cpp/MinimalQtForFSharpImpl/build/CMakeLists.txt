@@ -21,6 +21,10 @@ add_library(MinimalQtForFSharpImpl STATIC
     ../generated/AbstractButton_wrappers.cpp
     ../AbstractButton.cpp
 
+    ../generated/AbstractItemDelegate.h
+    ../generated/AbstractItemDelegate_wrappers.cpp
+    ../AbstractItemDelegate.cpp
+
     ../generated/AbstractItemModel.h
     ../generated/AbstractItemModel_wrappers.cpp
     ../AbstractItemModel.cpp
@@ -222,6 +226,18 @@ add_library(MinimalQtForFSharpImpl STATIC
     ../generated/StatusBar.h
     ../generated/StatusBar_wrappers.cpp
     ../StatusBar.cpp
+
+    ../generated/StyledItemDelegate.h
+    ../generated/StyledItemDelegate_wrappers.cpp
+    ../StyledItemDelegate.cpp
+
+    ../generated/StyleOption.h
+    ../generated/StyleOption_wrappers.cpp
+    ../StyleOption.cpp
+
+    ../generated/StyleOptionViewItem.h
+    ../generated/StyleOptionViewItem_wrappers.cpp
+    ../StyleOptionViewItem.cpp
 
     ../generated/TabWidget.h
     ../generated/TabWidget_wrappers.cpp

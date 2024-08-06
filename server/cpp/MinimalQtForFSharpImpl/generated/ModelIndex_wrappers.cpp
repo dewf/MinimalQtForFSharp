@@ -2,6 +2,12 @@
 #include "ModelIndex_wrappers.h"
 #include "ModelIndex.h"
 
+#include "Variant_wrappers.h"
+using namespace ::Variant;
+
+#include "Enums_wrappers.h"
+using namespace ::Enums;
+
 namespace ModelIndex
 {
     void Handle__push(HandleRef value) {
@@ -25,6 +31,17 @@ namespace ModelIndex
     void Handle_column__wrapper() {
         auto _this = Handle__pop();
         ni_pushInt32(Handle_column(_this));
+    }
+
+    void Handle_data__wrapper() {
+        auto _this = Handle__pop();
+        Variant::OwnedHandle__push(Handle_data(_this));
+    }
+
+    void Handle_data_overload1__wrapper() {
+        auto _this = Handle__pop();
+        auto role = ItemDataRole__pop();
+        Variant::OwnedHandle__push(Handle_data(_this, role));
     }
 
     void Handle_dispose__wrapper() {
@@ -98,6 +115,8 @@ namespace ModelIndex
         ni_registerModuleMethod(m, "Handle_isValid", &Handle_isValid__wrapper);
         ni_registerModuleMethod(m, "Handle_row", &Handle_row__wrapper);
         ni_registerModuleMethod(m, "Handle_column", &Handle_column__wrapper);
+        ni_registerModuleMethod(m, "Handle_data", &Handle_data__wrapper);
+        ni_registerModuleMethod(m, "Handle_data_overload1", &Handle_data_overload1__wrapper);
         ni_registerModuleMethod(m, "Handle_dispose", &Handle_dispose__wrapper);
         ni_registerModuleMethod(m, "OwnedHandle_dispose", &OwnedHandle_dispose__wrapper);
         return 0; // = OK

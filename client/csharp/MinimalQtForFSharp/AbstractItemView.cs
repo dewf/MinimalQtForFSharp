@@ -15,6 +15,7 @@ using static Org.Whatever.MinimalQtForFSharp.Icon;
 using static Org.Whatever.MinimalQtForFSharp.AbstractScrollArea;
 using static Org.Whatever.MinimalQtForFSharp.AbstractItemModel;
 using static Org.Whatever.MinimalQtForFSharp.ModelIndex;
+using static Org.Whatever.MinimalQtForFSharp.AbstractItemDelegate;
 
 namespace Org.Whatever.MinimalQtForFSharp
 {
@@ -38,6 +39,9 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static ModuleMethodHandle _handle_setTextElideMode;
         internal static ModuleMethodHandle _handle_setVerticalScrollMode;
         internal static ModuleMethodHandle _handle_setModel;
+        internal static ModuleMethodHandle _handle_setItemDelegate;
+        internal static ModuleMethodHandle _handle_setItemDelegateForColumn;
+        internal static ModuleMethodHandle _handle_setItemDelegateForRow;
         internal static InterfaceHandle _signalHandler;
         internal static InterfaceMethodHandle _signalHandler_destroyed;
         internal static InterfaceMethodHandle _signalHandler_objectNameChanged;
@@ -466,6 +470,26 @@ namespace Org.Whatever.MinimalQtForFSharp
                 Handle__Push(this);
                 NativeImplClient.InvokeModuleMethod(_handle_setModel);
             }
+            public void SetItemDelegate(AbstractItemDelegate.Handle itemDelegate)
+            {
+                AbstractItemDelegate.Handle__Push(itemDelegate);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_setItemDelegate);
+            }
+            public void SetItemDelegateForColumn(int column, AbstractItemDelegate.Handle itemDelegate)
+            {
+                AbstractItemDelegate.Handle__Push(itemDelegate);
+                NativeImplClient.PushInt32(column);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_setItemDelegateForColumn);
+            }
+            public void SetItemDelegateForRow(int row, AbstractItemDelegate.Handle itemDelegate)
+            {
+                AbstractItemDelegate.Handle__Push(itemDelegate);
+                NativeImplClient.PushInt32(row);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_setItemDelegateForRow);
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -502,6 +526,9 @@ namespace Org.Whatever.MinimalQtForFSharp
             _handle_setTextElideMode = NativeImplClient.GetModuleMethod(_module, "Handle_setTextElideMode");
             _handle_setVerticalScrollMode = NativeImplClient.GetModuleMethod(_module, "Handle_setVerticalScrollMode");
             _handle_setModel = NativeImplClient.GetModuleMethod(_module, "Handle_setModel");
+            _handle_setItemDelegate = NativeImplClient.GetModuleMethod(_module, "Handle_setItemDelegate");
+            _handle_setItemDelegateForColumn = NativeImplClient.GetModuleMethod(_module, "Handle_setItemDelegateForColumn");
+            _handle_setItemDelegateForRow = NativeImplClient.GetModuleMethod(_module, "Handle_setItemDelegateForRow");
             _signalHandler = NativeImplClient.GetInterface(_module, "SignalHandler");
             _signalHandler_destroyed = NativeImplClient.GetInterfaceMethod(_signalHandler, "destroyed");
             _signalHandler_objectNameChanged = NativeImplClient.GetInterfaceMethod(_signalHandler, "objectNameChanged");

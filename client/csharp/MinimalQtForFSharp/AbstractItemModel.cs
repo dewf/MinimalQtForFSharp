@@ -12,6 +12,7 @@ using static Org.Whatever.MinimalQtForFSharp.Object;
 using static Org.Whatever.MinimalQtForFSharp.Enums;
 using static Org.Whatever.MinimalQtForFSharp.ModelIndex;
 using static Org.Whatever.MinimalQtForFSharp.PersistentModelIndex;
+using static Org.Whatever.MinimalQtForFSharp.Variant;
 
 namespace Org.Whatever.MinimalQtForFSharp
 {
@@ -44,6 +45,8 @@ namespace Org.Whatever.MinimalQtForFSharp
         }
         internal static ModuleMethodHandle _handle_index;
         internal static ModuleMethodHandle _handle_index_overload1;
+        internal static ModuleMethodHandle _handle_setData;
+        internal static ModuleMethodHandle _handle_setData_overload1;
         internal static InterfaceHandle _signalHandler;
         internal static InterfaceMethodHandle _signalHandler_destroyed;
         internal static InterfaceMethodHandle _signalHandler_objectNameChanged;
@@ -392,22 +395,39 @@ namespace Org.Whatever.MinimalQtForFSharp
             internal Handle(IntPtr nativeHandle) : base(nativeHandle)
             {
             }
-            public OwnedHandle Index(int row, int column)
+            public ModelIndex.OwnedHandle Index(int row, int column)
             {
                 NativeImplClient.PushInt32(column);
                 NativeImplClient.PushInt32(row);
                 Handle__Push(this);
                 NativeImplClient.InvokeModuleMethod(_handle_index);
-                return OwnedHandle__Pop();
+                return ModelIndex.OwnedHandle__Pop();
             }
-            public OwnedHandle Index(int row, int column, Deferred parent)
+            public ModelIndex.OwnedHandle Index(int row, int column, ModelIndex.Deferred parent)
             {
-                Deferred__Push(parent, false);
+                ModelIndex.Deferred__Push(parent, false);
                 NativeImplClient.PushInt32(column);
                 NativeImplClient.PushInt32(row);
                 Handle__Push(this);
                 NativeImplClient.InvokeModuleMethod(_handle_index_overload1);
-                return OwnedHandle__Pop();
+                return ModelIndex.OwnedHandle__Pop();
+            }
+            public bool SetData(ModelIndex.Deferred index, Variant.Deferred value)
+            {
+                Variant.Deferred__Push(value, false);
+                ModelIndex.Deferred__Push(index, false);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_setData);
+                return NativeImplClient.PopBool();
+            }
+            public bool SetData(ModelIndex.Deferred index, Variant.Deferred value, ItemDataRole role)
+            {
+                ItemDataRole__Push(role);
+                Variant.Deferred__Push(value, false);
+                ModelIndex.Deferred__Push(index, false);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_setData_overload1);
+                return NativeImplClient.PopBool();
             }
         }
 
@@ -430,6 +450,8 @@ namespace Org.Whatever.MinimalQtForFSharp
             // assign module handles
             _handle_index = NativeImplClient.GetModuleMethod(_module, "Handle_index");
             _handle_index_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_index_overload1");
+            _handle_setData = NativeImplClient.GetModuleMethod(_module, "Handle_setData");
+            _handle_setData_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_setData_overload1");
             _signalHandler = NativeImplClient.GetInterface(_module, "SignalHandler");
             _signalHandler_destroyed = NativeImplClient.GetInterfaceMethod(_signalHandler, "destroyed");
             _signalHandler_objectNameChanged = NativeImplClient.GetInterfaceMethod(_signalHandler, "objectNameChanged");

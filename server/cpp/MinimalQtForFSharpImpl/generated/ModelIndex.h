@@ -11,6 +11,11 @@
 #include <optional>
 #include "../support/result.h"
 
+#include "Variant.h"
+using namespace ::Variant;
+#include "Enums.h"
+using namespace ::Enums;
+
 namespace ModelIndex
 {
 
@@ -24,6 +29,8 @@ namespace ModelIndex
     bool Handle_isValid(HandleRef _this);
     int32_t Handle_row(HandleRef _this);
     int32_t Handle_column(HandleRef _this);
+    Variant::OwnedHandleRef Handle_data(HandleRef _this);
+    Variant::OwnedHandleRef Handle_data(HandleRef _this, Enums::ItemDataRole role);
     void Handle_dispose(HandleRef _this);
 
     void OwnedHandle_dispose(OwnedHandleRef _this);

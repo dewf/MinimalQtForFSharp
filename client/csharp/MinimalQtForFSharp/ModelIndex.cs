@@ -8,6 +8,9 @@ using CSharpFunctionalExtensions;
 using Org.Whatever.MinimalQtForFSharp.Support;
 using ModuleHandle = Org.Whatever.MinimalQtForFSharp.Support.ModuleHandle;
 
+using static Org.Whatever.MinimalQtForFSharp.Variant;
+using static Org.Whatever.MinimalQtForFSharp.Enums;
+
 namespace Org.Whatever.MinimalQtForFSharp
 {
     public static class ModelIndex
@@ -16,6 +19,8 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static ModuleMethodHandle _handle_isValid;
         internal static ModuleMethodHandle _handle_row;
         internal static ModuleMethodHandle _handle_column;
+        internal static ModuleMethodHandle _handle_data;
+        internal static ModuleMethodHandle _handle_data_overload1;
         internal static ModuleMethodHandle _handle_dispose;
         internal static ModuleMethodHandle _ownedHandle_dispose;
         public class Handle : IDisposable, IComparable
@@ -60,6 +65,19 @@ namespace Org.Whatever.MinimalQtForFSharp
                 Handle__Push(this);
                 NativeImplClient.InvokeModuleMethod(_handle_column);
                 return NativeImplClient.PopInt32();
+            }
+            public Variant.OwnedHandle Data()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_data);
+                return Variant.OwnedHandle__Pop();
+            }
+            public Variant.OwnedHandle Data(ItemDataRole role)
+            {
+                ItemDataRole__Push(role);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_data_overload1);
+                return Variant.OwnedHandle__Pop();
             }
         }
 
@@ -179,6 +197,8 @@ namespace Org.Whatever.MinimalQtForFSharp
             _handle_isValid = NativeImplClient.GetModuleMethod(_module, "Handle_isValid");
             _handle_row = NativeImplClient.GetModuleMethod(_module, "Handle_row");
             _handle_column = NativeImplClient.GetModuleMethod(_module, "Handle_column");
+            _handle_data = NativeImplClient.GetModuleMethod(_module, "Handle_data");
+            _handle_data_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_data_overload1");
             _handle_dispose = NativeImplClient.GetModuleMethod(_module, "Handle_dispose");
             _ownedHandle_dispose = NativeImplClient.GetModuleMethod(_module, "OwnedHandle_dispose");
 

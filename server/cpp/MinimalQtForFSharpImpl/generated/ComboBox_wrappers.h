@@ -49,6 +49,8 @@ namespace ComboBox
 
     void Handle_currentData_overload1__wrapper();
 
+    void Handle_currentIndex__wrapper();
+
     void Handle_setCurrentIndex__wrapper();
 
     void Handle_setCurrentText__wrapper();
@@ -90,6 +92,8 @@ namespace ComboBox
     void Handle_dispose__wrapper();
 
     void create__wrapper();
+
+    void downcastFrom__wrapper();
 
     int __register();
 }

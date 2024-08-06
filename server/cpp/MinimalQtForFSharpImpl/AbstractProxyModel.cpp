@@ -13,9 +13,9 @@ namespace AbstractProxyModel
         THIS->setSourceModel((QAbstractItemModel*)sourceModel);
     }
 
-    OwnedHandleRef Handle_mapToSource(HandleRef _this, std::shared_ptr<Deferred::Base> proxyIndex) {
+    ModelIndex::OwnedHandleRef Handle_mapToSource(HandleRef _this, std::shared_ptr<ModelIndex::Deferred::Base> proxyIndex) {
         auto retValue = THIS->mapToSource(ModelIndex::fromDeferred(proxyIndex));
         // most model indexes are pointers to stack-allocated stuff on the C++ side, but this one we are responsible for!
-        return (OwnedHandleRef) new QModelIndex(retValue);
+        return (ModelIndex::OwnedHandleRef) new QModelIndex(retValue);
     }
 }

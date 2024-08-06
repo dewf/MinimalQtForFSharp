@@ -99,6 +99,10 @@ namespace ComboBox
         return (Variant::OwnedHandleRef) new QVariant(ret);
     }
 
+    int32_t Handle_currentIndex(HandleRef _this) {
+        return THIS->currentIndex();
+    }
+
     void Handle_setCurrentIndex(HandleRef _this, int32_t index) {
         THIS->setCurrentIndex(index);
     }
@@ -181,6 +185,10 @@ namespace ComboBox
 
     HandleRef create(std::shared_ptr<SignalHandler> handler) {
         return (HandleRef) new ComboBoxWithHandler(std::move(handler));
+    }
+
+    HandleRef downcastFrom(Widget::HandleRef widget) {
+        return (HandleRef)widget;
     }
 }
 

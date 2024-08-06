@@ -44,6 +44,7 @@ public static class Library
         LineEdit.__Init();
         AbstractListModel.__Init();
         AbstractScrollArea.__Init();
+        AbstractItemDelegate.__Init();
         AbstractItemView.__Init();
         ListView.__Init();
         Menu.__Init();
@@ -66,6 +67,9 @@ public static class Library
         AbstractProxyModel.__Init();
         RegularExpression.__Init();
         SortFilterProxyModel.__Init();
+        StyleOption.__Init();
+        StyleOptionViewItem.__Init();
+        StyledItemDelegate.__Init();
         Timer.__Init();
         TreeView.__Init();
     }
@@ -75,6 +79,9 @@ public static class Library
         // module static shutdowns (if any, might be empty)
         TreeView.__Shutdown();
         Timer.__Shutdown();
+        StyledItemDelegate.__Shutdown();
+        StyleOptionViewItem.__Shutdown();
+        StyleOption.__Shutdown();
         SortFilterProxyModel.__Shutdown();
         RegularExpression.__Shutdown();
         AbstractProxyModel.__Shutdown();
@@ -97,6 +104,7 @@ public static class Library
         Menu.__Shutdown();
         ListView.__Shutdown();
         AbstractItemView.__Shutdown();
+        AbstractItemDelegate.__Shutdown();
         AbstractScrollArea.__Shutdown();
         AbstractListModel.__Shutdown();
         LineEdit.__Shutdown();

@@ -85,6 +85,7 @@ namespace ComboBox
     int32_t Handle_count(HandleRef _this);
     Variant::OwnedHandleRef Handle_currentData(HandleRef _this);
     Variant::OwnedHandleRef Handle_currentData(HandleRef _this, Enums::ItemDataRole role);
+    int32_t Handle_currentIndex(HandleRef _this);
     void Handle_setCurrentIndex(HandleRef _this, int32_t index);
     void Handle_setCurrentText(HandleRef _this, std::string text);
     void Handle_setDuplicatesEnabled(HandleRef _this, bool enabled);
@@ -106,4 +107,5 @@ namespace ComboBox
     void Handle_setSignalMask(HandleRef _this, SignalMask mask);
     void Handle_dispose(HandleRef _this);
     HandleRef create(std::shared_ptr<SignalHandler> handler);
+    HandleRef downcastFrom(Widget::HandleRef widget);
 }

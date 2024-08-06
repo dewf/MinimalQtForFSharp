@@ -30,6 +30,7 @@
 #include "LineEdit_wrappers.h"
 #include "AbstractListModel_wrappers.h"
 #include "AbstractScrollArea_wrappers.h"
+#include "AbstractItemDelegate_wrappers.h"
 #include "AbstractItemView_wrappers.h"
 #include "ListView_wrappers.h"
 #include "Menu_wrappers.h"
@@ -52,6 +53,9 @@
 #include "AbstractProxyModel_wrappers.h"
 #include "RegularExpression_wrappers.h"
 #include "SortFilterProxyModel_wrappers.h"
+#include "StyleOption_wrappers.h"
+#include "StyleOptionViewItem_wrappers.h"
+#include "StyledItemDelegate_wrappers.h"
 #include "Timer_wrappers.h"
 #include "TreeView_wrappers.h"
 
@@ -88,6 +92,7 @@ extern "C" int nativeLibraryInit() {
     ::LineEdit::__register();
     ::AbstractListModel::__register();
     ::AbstractScrollArea::__register();
+    ::AbstractItemDelegate::__register();
     ::AbstractItemView::__register();
     ::ListView::__register();
     ::Menu::__register();
@@ -110,6 +115,9 @@ extern "C" int nativeLibraryInit() {
     ::AbstractProxyModel::__register();
     ::RegularExpression::__register();
     ::SortFilterProxyModel::__register();
+    ::StyleOption::__register();
+    ::StyleOptionViewItem::__register();
+    ::StyledItemDelegate::__register();
     ::Timer::__register();
     ::TreeView::__register();
     // should we do module inits here as well?

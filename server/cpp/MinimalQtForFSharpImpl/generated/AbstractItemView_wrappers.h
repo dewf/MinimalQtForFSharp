@@ -86,5 +86,11 @@ namespace AbstractItemView
 
     void Handle_setModel__wrapper();
 
+    void Handle_setItemDelegate__wrapper();
+
+    void Handle_setItemDelegateForColumn__wrapper();
+
+    void Handle_setItemDelegateForRow__wrapper();
+
     int __register();
 }

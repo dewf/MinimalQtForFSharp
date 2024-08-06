@@ -19,6 +19,8 @@ using namespace ::Enums;
 using namespace ::ModelIndex;
 #include "PersistentModelIndex.h"
 using namespace ::PersistentModelIndex;
+#include "Variant.h"
+using namespace ::Variant;
 
 namespace AbstractItemModel
 {
@@ -83,4 +85,6 @@ namespace AbstractItemModel
 
     ModelIndex::OwnedHandleRef Handle_index(HandleRef _this, int32_t row, int32_t column);
     ModelIndex::OwnedHandleRef Handle_index(HandleRef _this, int32_t row, int32_t column, std::shared_ptr<ModelIndex::Deferred::Base> parent);
+    bool Handle_setData(HandleRef _this, std::shared_ptr<ModelIndex::Deferred::Base> index, std::shared_ptr<Variant::Deferred::Base> value);
+    bool Handle_setData(HandleRef _this, std::shared_ptr<ModelIndex::Deferred::Base> index, std::shared_ptr<Variant::Deferred::Base> value, Enums::ItemDataRole role);
 }

@@ -25,6 +25,8 @@ using namespace ::AbstractScrollArea;
 using namespace ::AbstractItemModel;
 #include "ModelIndex.h"
 using namespace ::ModelIndex;
+#include "AbstractItemDelegate.h"
+using namespace ::AbstractItemDelegate;
 
 namespace AbstractItemView
 {
@@ -123,4 +125,7 @@ namespace AbstractItemView
     void Handle_setTextElideMode(HandleRef _this, Enums::TextElideMode mode);
     void Handle_setVerticalScrollMode(HandleRef _this, ScrollMode mode);
     void Handle_setModel(HandleRef _this, AbstractItemModel::HandleRef model);
+    void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate::HandleRef itemDelegate);
+    void Handle_setItemDelegateForColumn(HandleRef _this, int32_t column, AbstractItemDelegate::HandleRef itemDelegate);
+    void Handle_setItemDelegateForRow(HandleRef _this, int32_t row, AbstractItemDelegate::HandleRef itemDelegate);
 }

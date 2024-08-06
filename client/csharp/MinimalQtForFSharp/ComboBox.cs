@@ -24,9 +24,11 @@ namespace Org.Whatever.MinimalQtForFSharp
 
         // built-in array type: string[]
         internal static ModuleMethodHandle _create;
+        internal static ModuleMethodHandle _downcastFrom;
         internal static ModuleMethodHandle _handle_count;
         internal static ModuleMethodHandle _handle_currentData;
         internal static ModuleMethodHandle _handle_currentData_overload1;
+        internal static ModuleMethodHandle _handle_currentIndex;
         internal static ModuleMethodHandle _handle_setCurrentIndex;
         internal static ModuleMethodHandle _handle_setCurrentText;
         internal static ModuleMethodHandle _handle_setDuplicatesEnabled;
@@ -65,6 +67,13 @@ namespace Org.Whatever.MinimalQtForFSharp
         {
             SignalHandler__Push(handler, false);
             NativeImplClient.InvokeModuleMethod(_create);
+            return Handle__Pop();
+        }
+
+        public static Handle DowncastFrom(Widget.Handle widget)
+        {
+            Widget.Handle__Push(widget);
+            NativeImplClient.InvokeModuleMethod(_downcastFrom);
             return Handle__Pop();
         }
         [Flags]
@@ -346,6 +355,12 @@ namespace Org.Whatever.MinimalQtForFSharp
                 NativeImplClient.InvokeModuleMethod(_handle_currentData_overload1);
                 return OwnedHandle__Pop();
             }
+            public int CurrentIndex()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_currentIndex);
+                return NativeImplClient.PopInt32();
+            }
             public void SetCurrentIndex(int index)
             {
                 NativeImplClient.PushInt32(index);
@@ -482,9 +497,11 @@ namespace Org.Whatever.MinimalQtForFSharp
             _module = NativeImplClient.GetModule("ComboBox");
             // assign module handles
             _create = NativeImplClient.GetModuleMethod(_module, "create");
+            _downcastFrom = NativeImplClient.GetModuleMethod(_module, "downcastFrom");
             _handle_count = NativeImplClient.GetModuleMethod(_module, "Handle_count");
             _handle_currentData = NativeImplClient.GetModuleMethod(_module, "Handle_currentData");
             _handle_currentData_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_currentData_overload1");
+            _handle_currentIndex = NativeImplClient.GetModuleMethod(_module, "Handle_currentIndex");
             _handle_setCurrentIndex = NativeImplClient.GetModuleMethod(_module, "Handle_setCurrentIndex");
             _handle_setCurrentText = NativeImplClient.GetModuleMethod(_module, "Handle_setCurrentText");
             _handle_setDuplicatesEnabled = NativeImplClient.GetModuleMethod(_module, "Handle_setDuplicatesEnabled");

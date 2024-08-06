@@ -23,6 +23,9 @@ using namespace ::AbstractItemModel;
 #include "ModelIndex_wrappers.h"
 using namespace ::ModelIndex;
 
+#include "AbstractItemDelegate_wrappers.h"
+using namespace ::AbstractItemDelegate;
+
 namespace AbstractItemView
 {
     ni_InterfaceMethodRef signalHandler_destroyed;
@@ -385,6 +388,26 @@ namespace AbstractItemView
         Handle_setModel(_this, model);
     }
 
+    void Handle_setItemDelegate__wrapper() {
+        auto _this = Handle__pop();
+        auto itemDelegate = AbstractItemDelegate::Handle__pop();
+        Handle_setItemDelegate(_this, itemDelegate);
+    }
+
+    void Handle_setItemDelegateForColumn__wrapper() {
+        auto _this = Handle__pop();
+        auto column = ni_popInt32();
+        auto itemDelegate = AbstractItemDelegate::Handle__pop();
+        Handle_setItemDelegateForColumn(_this, column, itemDelegate);
+    }
+
+    void Handle_setItemDelegateForRow__wrapper() {
+        auto _this = Handle__pop();
+        auto row = ni_popInt32();
+        auto itemDelegate = AbstractItemDelegate::Handle__pop();
+        Handle_setItemDelegateForRow(_this, row, itemDelegate);
+    }
+
     int __register() {
         auto m = ni_registerModule("AbstractItemView");
         ni_registerModuleMethod(m, "Handle_setAlternatingRowColors", &Handle_setAlternatingRowColors__wrapper);
@@ -404,6 +427,9 @@ namespace AbstractItemView
         ni_registerModuleMethod(m, "Handle_setTextElideMode", &Handle_setTextElideMode__wrapper);
         ni_registerModuleMethod(m, "Handle_setVerticalScrollMode", &Handle_setVerticalScrollMode__wrapper);
         ni_registerModuleMethod(m, "Handle_setModel", &Handle_setModel__wrapper);
+        ni_registerModuleMethod(m, "Handle_setItemDelegate", &Handle_setItemDelegate__wrapper);
+        ni_registerModuleMethod(m, "Handle_setItemDelegateForColumn", &Handle_setItemDelegateForColumn__wrapper);
+        ni_registerModuleMethod(m, "Handle_setItemDelegateForRow", &Handle_setItemDelegateForRow__wrapper);
         auto signalHandler = ni_registerInterface(m, "SignalHandler");
         signalHandler_destroyed = ni_registerInterfaceMethod(signalHandler, "destroyed", &SignalHandler_destroyed__wrapper);
         signalHandler_objectNameChanged = ni_registerInterfaceMethod(signalHandler, "objectNameChanged", &SignalHandler_objectNameChanged__wrapper);

@@ -74,4 +74,16 @@ namespace AbstractItemView
     void Handle_setModel(HandleRef _this, AbstractItemModel::HandleRef model) {
         THIS->setModel((QAbstractItemModel*)model);
     }
+
+    void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate::HandleRef itemDelegate) {
+        THIS->setItemDelegate((QAbstractItemDelegate*)itemDelegate);
+    }
+
+    void Handle_setItemDelegateForColumn(HandleRef _this, int32_t column, AbstractItemDelegate::HandleRef itemDelegate) {
+        THIS->setItemDelegateForColumn(column, (QAbstractItemDelegate*)itemDelegate);
+    }
+
+    void Handle_setItemDelegateForRow(HandleRef _this, int32_t row, AbstractItemDelegate::HandleRef itemDelegate) {
+        THIS->setItemDelegateForRow(row, (QAbstractItemDelegate*)itemDelegate);
+    }
 }

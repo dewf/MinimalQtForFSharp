@@ -14,6 +14,9 @@ using namespace ::ModelIndex;
 #include "PersistentModelIndex_wrappers.h"
 using namespace ::PersistentModelIndex;
 
+#include "Variant_wrappers.h"
+using namespace ::Variant;
+
 namespace AbstractItemModel
 {
     void __PersistentModelIndex_Handle_Array__push(std::vector<PersistentModelIndex::HandleRef> items, bool isReturn) {
@@ -443,21 +446,38 @@ namespace AbstractItemModel
         auto _this = Handle__pop();
         auto row = ni_popInt32();
         auto column = ni_popInt32();
-        OwnedHandle__push(Handle_index(_this, row, column));
+        ModelIndex::OwnedHandle__push(Handle_index(_this, row, column));
     }
 
     void Handle_index_overload1__wrapper() {
         auto _this = Handle__pop();
         auto row = ni_popInt32();
         auto column = ni_popInt32();
-        auto parent = Deferred__pop();
-        OwnedHandle__push(Handle_index(_this, row, column, parent));
+        auto parent = ModelIndex::Deferred__pop();
+        ModelIndex::OwnedHandle__push(Handle_index(_this, row, column, parent));
+    }
+
+    void Handle_setData__wrapper() {
+        auto _this = Handle__pop();
+        auto index = ModelIndex::Deferred__pop();
+        auto value = Variant::Deferred__pop();
+        ni_pushBool(Handle_setData(_this, index, value));
+    }
+
+    void Handle_setData_overload1__wrapper() {
+        auto _this = Handle__pop();
+        auto index = ModelIndex::Deferred__pop();
+        auto value = Variant::Deferred__pop();
+        auto role = ItemDataRole__pop();
+        ni_pushBool(Handle_setData(_this, index, value, role));
     }
 
     int __register() {
         auto m = ni_registerModule("AbstractItemModel");
         ni_registerModuleMethod(m, "Handle_index", &Handle_index__wrapper);
         ni_registerModuleMethod(m, "Handle_index_overload1", &Handle_index_overload1__wrapper);
+        ni_registerModuleMethod(m, "Handle_setData", &Handle_setData__wrapper);
+        ni_registerModuleMethod(m, "Handle_setData_overload1", &Handle_setData_overload1__wrapper);
         auto signalHandler = ni_registerInterface(m, "SignalHandler");
         signalHandler_destroyed = ni_registerInterfaceMethod(signalHandler, "destroyed", &SignalHandler_destroyed__wrapper);
         signalHandler_objectNameChanged = ni_registerInterfaceMethod(signalHandler, "objectNameChanged", &SignalHandler_objectNameChanged__wrapper);

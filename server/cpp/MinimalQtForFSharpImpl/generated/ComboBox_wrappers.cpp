@@ -279,6 +279,11 @@ namespace ComboBox
         OwnedHandle__push(Handle_currentData(_this, role));
     }
 
+    void Handle_currentIndex__wrapper() {
+        auto _this = Handle__pop();
+        ni_pushInt32(Handle_currentIndex(_this));
+    }
+
     void Handle_setCurrentIndex__wrapper() {
         auto _this = Handle__pop();
         auto index = ni_popInt32();
@@ -405,12 +410,19 @@ namespace ComboBox
         Handle__push(create(handler));
     }
 
+    void downcastFrom__wrapper() {
+        auto widget = Widget::Handle__pop();
+        Handle__push(downcastFrom(widget));
+    }
+
     int __register() {
         auto m = ni_registerModule("ComboBox");
         ni_registerModuleMethod(m, "create", &create__wrapper);
+        ni_registerModuleMethod(m, "downcastFrom", &downcastFrom__wrapper);
         ni_registerModuleMethod(m, "Handle_count", &Handle_count__wrapper);
         ni_registerModuleMethod(m, "Handle_currentData", &Handle_currentData__wrapper);
         ni_registerModuleMethod(m, "Handle_currentData_overload1", &Handle_currentData_overload1__wrapper);
+        ni_registerModuleMethod(m, "Handle_currentIndex", &Handle_currentIndex__wrapper);
         ni_registerModuleMethod(m, "Handle_setCurrentIndex", &Handle_setCurrentIndex__wrapper);
         ni_registerModuleMethod(m, "Handle_setCurrentText", &Handle_setCurrentText__wrapper);
         ni_registerModuleMethod(m, "Handle_setDuplicatesEnabled", &Handle_setDuplicatesEnabled__wrapper);

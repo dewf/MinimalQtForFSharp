@@ -13,6 +13,10 @@ namespace ModelIndex
 
     void Handle_column__wrapper();
 
+    void Handle_data__wrapper();
+
+    void Handle_data_overload1__wrapper();
+
     void Handle_dispose__wrapper();
 
     void OwnedHandle__push(OwnedHandleRef value);

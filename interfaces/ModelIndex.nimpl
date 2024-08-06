@@ -1,10 +1,16 @@
 module ModelIndex;
 
+import Variant;
+import Enums;
+
 // should be @nodispose but that requires some codegen work because OwnedHandle inherits and needs the _disposed field + IDisposable
 opaque Handle {
     bool isValid();
     int row();
     int column();
+
+    Variant.OwnedHandle data();
+    Variant.OwnedHandle data(ItemDataRole role);
 }
 
 // Owned handle, for rare instances when we need to manually invoke methods returning ModelIndex
