@@ -8,6 +8,9 @@ using namespace ::Icon;
 #include "PaintResources_wrappers.h"
 using namespace ::PaintResources;
 
+#include "Common_wrappers.h"
+using namespace ::Common;
+
 #include "Enums_wrappers.h"
 using namespace ::Enums;
 
@@ -100,6 +103,11 @@ namespace Variant
         ni_pushInt32(Handle_toInt(_this));
     }
 
+    void Handle_toSize__wrapper() {
+        auto _this = Handle__pop();
+        Size__push(Handle_toSize(_this), true);
+    }
+
     void Handle_toCheckState__wrapper() {
         auto _this = Handle__pop();
         CheckState__push(Handle_toCheckState(_this));
@@ -156,15 +164,20 @@ namespace Variant
             // kind:
             ni_pushInt32(4);
         }
+        void onFromSize(const Deferred::FromSize* fromSizeValue) override {
+            Size__push(fromSizeValue->size, isReturn);
+            // kind:
+            ni_pushInt32(5);
+        }
         void onFromIcon(const Deferred::FromIcon* fromIconValue) override {
             Icon::Deferred__push(fromIconValue->value, isReturn);
             // kind:
-            ni_pushInt32(5);
+            ni_pushInt32(6);
         }
         void onFromColor(const Deferred::FromColor* fromColorValue) override {
             Color::Deferred__push(fromColorValue->value, isReturn);
             // kind:
-            ni_pushInt32(6);
+            ni_pushInt32(7);
         }
     };
 
@@ -201,11 +214,16 @@ namespace Variant
             break;
         }
         case 5: {
+            auto size = Size__pop();
+            __ret = new Deferred::FromSize(size);
+            break;
+        }
+        case 6: {
             auto value = Icon::Deferred__pop();
             __ret = new Deferred::FromIcon(value);
             break;
         }
-        case 6: {
+        case 7: {
             auto value = Color::Deferred__pop();
             __ret = new Deferred::FromColor(value);
             break;
@@ -222,6 +240,7 @@ namespace Variant
         ni_registerModuleMethod(m, "Handle_toBool", &Handle_toBool__wrapper);
         ni_registerModuleMethod(m, "Handle_toString2", &Handle_toString2__wrapper);
         ni_registerModuleMethod(m, "Handle_toInt", &Handle_toInt__wrapper);
+        ni_registerModuleMethod(m, "Handle_toSize", &Handle_toSize__wrapper);
         ni_registerModuleMethod(m, "Handle_toCheckState", &Handle_toCheckState__wrapper);
         ni_registerModuleMethod(m, "Handle_toServerValue", &Handle_toServerValue__wrapper);
         ni_registerModuleMethod(m, "Handle_dispose", &Handle_dispose__wrapper);

@@ -56,6 +56,7 @@
 #include "StyleOption_wrappers.h"
 #include "StyleOptionViewItem_wrappers.h"
 #include "StyledItemDelegate_wrappers.h"
+#include "TabBar_wrappers.h"
 #include "Timer_wrappers.h"
 #include "TreeView_wrappers.h"
 
@@ -118,6 +119,7 @@ extern "C" int nativeLibraryInit() {
     ::StyleOption::__register();
     ::StyleOptionViewItem::__register();
     ::StyledItemDelegate::__register();
+    ::TabBar::__register();
     ::Timer::__register();
     ::TreeView::__register();
     // should we do module inits here as well?

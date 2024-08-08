@@ -1,6 +1,6 @@
 #include "../support/NativeImplServer.h"
-#include "TreeView_wrappers.h"
-#include "TreeView.h"
+#include "TabBar_wrappers.h"
+#include "TabBar.h"
 
 #include "Object_wrappers.h"
 using namespace ::Object;
@@ -11,31 +11,24 @@ using namespace ::Common;
 #include "Icon_wrappers.h"
 using namespace ::Icon;
 
+#include "Widget_wrappers.h"
+using namespace ::Widget;
+
 #include "Enums_wrappers.h"
 using namespace ::Enums;
 
-#include "AbstractItemView_wrappers.h"
-using namespace ::AbstractItemView;
-
-#include "ModelIndex_wrappers.h"
-using namespace ::ModelIndex;
-
-namespace TreeView
+namespace TabBar
 {
     ni_InterfaceMethodRef signalHandler_destroyed;
     ni_InterfaceMethodRef signalHandler_objectNameChanged;
     ni_InterfaceMethodRef signalHandler_customContextMenuRequested;
     ni_InterfaceMethodRef signalHandler_windowIconChanged;
     ni_InterfaceMethodRef signalHandler_windowTitleChanged;
-    ni_InterfaceMethodRef signalHandler_activated;
-    ni_InterfaceMethodRef signalHandler_clicked;
-    ni_InterfaceMethodRef signalHandler_doubleClicked;
-    ni_InterfaceMethodRef signalHandler_entered;
-    ni_InterfaceMethodRef signalHandler_iconSizeChanged;
-    ni_InterfaceMethodRef signalHandler_pressed;
-    ni_InterfaceMethodRef signalHandler_viewportEntered;
-    ni_InterfaceMethodRef signalHandler_collapsed;
-    ni_InterfaceMethodRef signalHandler_expanded;
+    ni_InterfaceMethodRef signalHandler_currentChanged;
+    ni_InterfaceMethodRef signalHandler_tabBarClicked;
+    ni_InterfaceMethodRef signalHandler_tabBarDoubleClicked;
+    ni_InterfaceMethodRef signalHandler_tabCloseRequested;
+    ni_InterfaceMethodRef signalHandler_tabMoved;
     void SignalMask__push(SignalMask value) {
         ni_pushInt32(value);
     }
@@ -88,40 +81,26 @@ namespace TreeView
             pushStringInternal(title);
             invokeMethod(signalHandler_windowTitleChanged);
         }
-        void activated(ModelIndex::HandleRef index) override {
-            ModelIndex::Handle__push(index);
-            invokeMethod(signalHandler_activated);
+        void currentChanged(int32_t index) override {
+            ni_pushInt32(index);
+            invokeMethod(signalHandler_currentChanged);
         }
-        void clicked(ModelIndex::HandleRef index) override {
-            ModelIndex::Handle__push(index);
-            invokeMethod(signalHandler_clicked);
+        void tabBarClicked(int32_t index) override {
+            ni_pushInt32(index);
+            invokeMethod(signalHandler_tabBarClicked);
         }
-        void doubleClicked(ModelIndex::HandleRef index) override {
-            ModelIndex::Handle__push(index);
-            invokeMethod(signalHandler_doubleClicked);
+        void tabBarDoubleClicked(int32_t index) override {
+            ni_pushInt32(index);
+            invokeMethod(signalHandler_tabBarDoubleClicked);
         }
-        void entered(ModelIndex::HandleRef index) override {
-            ModelIndex::Handle__push(index);
-            invokeMethod(signalHandler_entered);
+        void tabCloseRequested(int32_t index) override {
+            ni_pushInt32(index);
+            invokeMethod(signalHandler_tabCloseRequested);
         }
-        void iconSizeChanged(Size size) override {
-            Size__push(size, false);
-            invokeMethod(signalHandler_iconSizeChanged);
-        }
-        void pressed(ModelIndex::HandleRef index) override {
-            ModelIndex::Handle__push(index);
-            invokeMethod(signalHandler_pressed);
-        }
-        void viewportEntered() override {
-            invokeMethod(signalHandler_viewportEntered);
-        }
-        void collapsed(ModelIndex::HandleRef index) override {
-            ModelIndex::Handle__push(index);
-            invokeMethod(signalHandler_collapsed);
-        }
-        void expanded(ModelIndex::HandleRef index) override {
-            ModelIndex::Handle__push(index);
-            invokeMethod(signalHandler_expanded);
+        void tabMoved(int32_t fromIndex, int32_t toIndex) override {
+            ni_pushInt32(toIndex);
+            ni_pushInt32(fromIndex);
+            invokeMethod(signalHandler_tabMoved);
         }
     };
 
@@ -196,66 +175,64 @@ namespace TreeView
         inst->windowTitleChanged(title);
     }
 
-    void SignalHandler_activated__wrapper(int serverID) {
+    void SignalHandler_currentChanged__wrapper(int serverID) {
         auto wrapper = std::static_pointer_cast<ServerSignalHandlerWrapper>(ServerObject::getByID(serverID));
         auto inst = wrapper->rawInterface;
-        auto index = ModelIndex::Handle__pop();
-        inst->activated(index);
+        auto index = ni_popInt32();
+        inst->currentChanged(index);
     }
 
-    void SignalHandler_clicked__wrapper(int serverID) {
+    void SignalHandler_tabBarClicked__wrapper(int serverID) {
         auto wrapper = std::static_pointer_cast<ServerSignalHandlerWrapper>(ServerObject::getByID(serverID));
         auto inst = wrapper->rawInterface;
-        auto index = ModelIndex::Handle__pop();
-        inst->clicked(index);
+        auto index = ni_popInt32();
+        inst->tabBarClicked(index);
     }
 
-    void SignalHandler_doubleClicked__wrapper(int serverID) {
+    void SignalHandler_tabBarDoubleClicked__wrapper(int serverID) {
         auto wrapper = std::static_pointer_cast<ServerSignalHandlerWrapper>(ServerObject::getByID(serverID));
         auto inst = wrapper->rawInterface;
-        auto index = ModelIndex::Handle__pop();
-        inst->doubleClicked(index);
+        auto index = ni_popInt32();
+        inst->tabBarDoubleClicked(index);
     }
 
-    void SignalHandler_entered__wrapper(int serverID) {
+    void SignalHandler_tabCloseRequested__wrapper(int serverID) {
         auto wrapper = std::static_pointer_cast<ServerSignalHandlerWrapper>(ServerObject::getByID(serverID));
         auto inst = wrapper->rawInterface;
-        auto index = ModelIndex::Handle__pop();
-        inst->entered(index);
+        auto index = ni_popInt32();
+        inst->tabCloseRequested(index);
     }
 
-    void SignalHandler_iconSizeChanged__wrapper(int serverID) {
+    void SignalHandler_tabMoved__wrapper(int serverID) {
         auto wrapper = std::static_pointer_cast<ServerSignalHandlerWrapper>(ServerObject::getByID(serverID));
         auto inst = wrapper->rawInterface;
-        auto size = Size__pop();
-        inst->iconSizeChanged(size);
+        auto fromIndex = ni_popInt32();
+        auto toIndex = ni_popInt32();
+        inst->tabMoved(fromIndex, toIndex);
+    }
+    void ButtonPosition__push(ButtonPosition value) {
+        ni_pushInt32((int32_t)value);
     }
 
-    void SignalHandler_pressed__wrapper(int serverID) {
-        auto wrapper = std::static_pointer_cast<ServerSignalHandlerWrapper>(ServerObject::getByID(serverID));
-        auto inst = wrapper->rawInterface;
-        auto index = ModelIndex::Handle__pop();
-        inst->pressed(index);
+    ButtonPosition ButtonPosition__pop() {
+        auto tag = ni_popInt32();
+        return (ButtonPosition)tag;
+    }
+    void SelectionBehavior__push(SelectionBehavior value) {
+        ni_pushInt32((int32_t)value);
     }
 
-    void SignalHandler_viewportEntered__wrapper(int serverID) {
-        auto wrapper = std::static_pointer_cast<ServerSignalHandlerWrapper>(ServerObject::getByID(serverID));
-        auto inst = wrapper->rawInterface;
-        inst->viewportEntered();
+    SelectionBehavior SelectionBehavior__pop() {
+        auto tag = ni_popInt32();
+        return (SelectionBehavior)tag;
+    }
+    void Shape__push(Shape value) {
+        ni_pushInt32((int32_t)value);
     }
 
-    void SignalHandler_collapsed__wrapper(int serverID) {
-        auto wrapper = std::static_pointer_cast<ServerSignalHandlerWrapper>(ServerObject::getByID(serverID));
-        auto inst = wrapper->rawInterface;
-        auto index = ModelIndex::Handle__pop();
-        inst->collapsed(index);
-    }
-
-    void SignalHandler_expanded__wrapper(int serverID) {
-        auto wrapper = std::static_pointer_cast<ServerSignalHandlerWrapper>(ServerObject::getByID(serverID));
-        auto inst = wrapper->rawInterface;
-        auto index = ModelIndex::Handle__pop();
-        inst->expanded(index);
+    Shape Shape__pop() {
+        auto tag = ni_popInt32();
+        return (Shape)tag;
     }
     void Handle__push(HandleRef value) {
         ni_pushPtr(value);
@@ -265,76 +242,110 @@ namespace TreeView
         return (HandleRef)ni_popPtr();
     }
 
-    void Handle_setAllColumnsShowFocus__wrapper() {
+    void Handle_setAutoHide__wrapper() {
         auto _this = Handle__pop();
         auto value = ni_popBool();
-        Handle_setAllColumnsShowFocus(_this, value);
+        Handle_setAutoHide(_this, value);
     }
 
-    void Handle_setAnimated__wrapper() {
+    void Handle_setChangeCurrentOnDrag__wrapper() {
         auto _this = Handle__pop();
         auto value = ni_popBool();
-        Handle_setAnimated(_this, value);
+        Handle_setChangeCurrentOnDrag(_this, value);
     }
 
-    void Handle_setAutoExpandDelay__wrapper() {
+    void Handle_count__wrapper() {
+        auto _this = Handle__pop();
+        ni_pushInt32(Handle_count(_this));
+    }
+
+    void Handle_setCurrentIndex__wrapper() {
         auto _this = Handle__pop();
         auto value = ni_popInt32();
-        Handle_setAutoExpandDelay(_this, value);
+        Handle_setCurrentIndex(_this, value);
     }
 
-    void Handle_setExpandsOnDoubleClick__wrapper() {
+    void Handle_currentIndex__wrapper() {
+        auto _this = Handle__pop();
+        ni_pushInt32(Handle_currentIndex(_this));
+    }
+
+    void Handle_setDocumentMode__wrapper() {
         auto _this = Handle__pop();
         auto value = ni_popBool();
-        Handle_setExpandsOnDoubleClick(_this, value);
+        Handle_setDocumentMode(_this, value);
     }
 
-    void Handle_setHeaderHidden__wrapper() {
+    void Handle_setDrawBase__wrapper() {
         auto _this = Handle__pop();
         auto value = ni_popBool();
-        Handle_setHeaderHidden(_this, value);
+        Handle_setDrawBase(_this, value);
     }
 
-    void Handle_setIndentation__wrapper() {
+    void Handle_setElideMode__wrapper() {
         auto _this = Handle__pop();
-        auto value = ni_popInt32();
-        Handle_setIndentation(_this, value);
+        auto mode = TextElideMode__pop();
+        Handle_setElideMode(_this, mode);
     }
 
-    void Handle_setItemsExpandable__wrapper() {
-        auto _this = Handle__pop();
-        auto value = ni_popBool();
-        Handle_setItemsExpandable(_this, value);
-    }
-
-    void Handle_setRootIsDecorated__wrapper() {
+    void Handle_setExpanding__wrapper() {
         auto _this = Handle__pop();
         auto value = ni_popBool();
-        Handle_setRootIsDecorated(_this, value);
+        Handle_setExpanding(_this, value);
     }
 
-    void Handle_setSortingEnabled__wrapper() {
+    void Handle_setIconSize__wrapper() {
+        auto _this = Handle__pop();
+        auto size = Size__pop();
+        Handle_setIconSize(_this, size);
+    }
+
+    void Handle_setMovable__wrapper() {
         auto _this = Handle__pop();
         auto value = ni_popBool();
-        Handle_setSortingEnabled(_this, value);
+        Handle_setMovable(_this, value);
     }
 
-    void Handle_setUniformRowHeights__wrapper() {
+    void Handle_setSelectionBehaviorOnRemove__wrapper() {
+        auto _this = Handle__pop();
+        auto value = SelectionBehavior__pop();
+        Handle_setSelectionBehaviorOnRemove(_this, value);
+    }
+
+    void Handle_setShape__wrapper() {
+        auto _this = Handle__pop();
+        auto shape = Shape__pop();
+        Handle_setShape(_this, shape);
+    }
+
+    void Handle_setTabsClosable__wrapper() {
         auto _this = Handle__pop();
         auto value = ni_popBool();
-        Handle_setUniformRowHeights(_this, value);
+        Handle_setTabsClosable(_this, value);
     }
 
-    void Handle_setWordWrap__wrapper() {
+    void Handle_setUsesScrollButtons__wrapper() {
         auto _this = Handle__pop();
         auto value = ni_popBool();
-        Handle_setWordWrap(_this, value);
+        Handle_setUsesScrollButtons(_this, value);
     }
 
-    void Handle_resizeColumnToContents__wrapper() {
+    void Handle_removeAllTabs__wrapper() {
         auto _this = Handle__pop();
-        auto column = ni_popInt32();
-        Handle_resizeColumnToContents(_this, column);
+        Handle_removeAllTabs(_this);
+    }
+
+    void Handle_addTab__wrapper() {
+        auto _this = Handle__pop();
+        auto text = popStringInternal();
+        ni_pushInt32(Handle_addTab(_this, text));
+    }
+
+    void Handle_addTab_overload1__wrapper() {
+        auto _this = Handle__pop();
+        auto icon = Deferred__pop();
+        auto text = popStringInternal();
+        ni_pushInt32(Handle_addTab(_this, icon, text));
     }
 
     void Handle_setSignalMask__wrapper() {
@@ -354,20 +365,26 @@ namespace TreeView
     }
 
     int __register() {
-        auto m = ni_registerModule("TreeView");
+        auto m = ni_registerModule("TabBar");
         ni_registerModuleMethod(m, "create", &create__wrapper);
-        ni_registerModuleMethod(m, "Handle_setAllColumnsShowFocus", &Handle_setAllColumnsShowFocus__wrapper);
-        ni_registerModuleMethod(m, "Handle_setAnimated", &Handle_setAnimated__wrapper);
-        ni_registerModuleMethod(m, "Handle_setAutoExpandDelay", &Handle_setAutoExpandDelay__wrapper);
-        ni_registerModuleMethod(m, "Handle_setExpandsOnDoubleClick", &Handle_setExpandsOnDoubleClick__wrapper);
-        ni_registerModuleMethod(m, "Handle_setHeaderHidden", &Handle_setHeaderHidden__wrapper);
-        ni_registerModuleMethod(m, "Handle_setIndentation", &Handle_setIndentation__wrapper);
-        ni_registerModuleMethod(m, "Handle_setItemsExpandable", &Handle_setItemsExpandable__wrapper);
-        ni_registerModuleMethod(m, "Handle_setRootIsDecorated", &Handle_setRootIsDecorated__wrapper);
-        ni_registerModuleMethod(m, "Handle_setSortingEnabled", &Handle_setSortingEnabled__wrapper);
-        ni_registerModuleMethod(m, "Handle_setUniformRowHeights", &Handle_setUniformRowHeights__wrapper);
-        ni_registerModuleMethod(m, "Handle_setWordWrap", &Handle_setWordWrap__wrapper);
-        ni_registerModuleMethod(m, "Handle_resizeColumnToContents", &Handle_resizeColumnToContents__wrapper);
+        ni_registerModuleMethod(m, "Handle_setAutoHide", &Handle_setAutoHide__wrapper);
+        ni_registerModuleMethod(m, "Handle_setChangeCurrentOnDrag", &Handle_setChangeCurrentOnDrag__wrapper);
+        ni_registerModuleMethod(m, "Handle_count", &Handle_count__wrapper);
+        ni_registerModuleMethod(m, "Handle_setCurrentIndex", &Handle_setCurrentIndex__wrapper);
+        ni_registerModuleMethod(m, "Handle_currentIndex", &Handle_currentIndex__wrapper);
+        ni_registerModuleMethod(m, "Handle_setDocumentMode", &Handle_setDocumentMode__wrapper);
+        ni_registerModuleMethod(m, "Handle_setDrawBase", &Handle_setDrawBase__wrapper);
+        ni_registerModuleMethod(m, "Handle_setElideMode", &Handle_setElideMode__wrapper);
+        ni_registerModuleMethod(m, "Handle_setExpanding", &Handle_setExpanding__wrapper);
+        ni_registerModuleMethod(m, "Handle_setIconSize", &Handle_setIconSize__wrapper);
+        ni_registerModuleMethod(m, "Handle_setMovable", &Handle_setMovable__wrapper);
+        ni_registerModuleMethod(m, "Handle_setSelectionBehaviorOnRemove", &Handle_setSelectionBehaviorOnRemove__wrapper);
+        ni_registerModuleMethod(m, "Handle_setShape", &Handle_setShape__wrapper);
+        ni_registerModuleMethod(m, "Handle_setTabsClosable", &Handle_setTabsClosable__wrapper);
+        ni_registerModuleMethod(m, "Handle_setUsesScrollButtons", &Handle_setUsesScrollButtons__wrapper);
+        ni_registerModuleMethod(m, "Handle_removeAllTabs", &Handle_removeAllTabs__wrapper);
+        ni_registerModuleMethod(m, "Handle_addTab", &Handle_addTab__wrapper);
+        ni_registerModuleMethod(m, "Handle_addTab_overload1", &Handle_addTab_overload1__wrapper);
         ni_registerModuleMethod(m, "Handle_setSignalMask", &Handle_setSignalMask__wrapper);
         ni_registerModuleMethod(m, "Handle_dispose", &Handle_dispose__wrapper);
         auto signalHandler = ni_registerInterface(m, "SignalHandler");
@@ -376,15 +393,11 @@ namespace TreeView
         signalHandler_customContextMenuRequested = ni_registerInterfaceMethod(signalHandler, "customContextMenuRequested", &SignalHandler_customContextMenuRequested__wrapper);
         signalHandler_windowIconChanged = ni_registerInterfaceMethod(signalHandler, "windowIconChanged", &SignalHandler_windowIconChanged__wrapper);
         signalHandler_windowTitleChanged = ni_registerInterfaceMethod(signalHandler, "windowTitleChanged", &SignalHandler_windowTitleChanged__wrapper);
-        signalHandler_activated = ni_registerInterfaceMethod(signalHandler, "activated", &SignalHandler_activated__wrapper);
-        signalHandler_clicked = ni_registerInterfaceMethod(signalHandler, "clicked", &SignalHandler_clicked__wrapper);
-        signalHandler_doubleClicked = ni_registerInterfaceMethod(signalHandler, "doubleClicked", &SignalHandler_doubleClicked__wrapper);
-        signalHandler_entered = ni_registerInterfaceMethod(signalHandler, "entered", &SignalHandler_entered__wrapper);
-        signalHandler_iconSizeChanged = ni_registerInterfaceMethod(signalHandler, "iconSizeChanged", &SignalHandler_iconSizeChanged__wrapper);
-        signalHandler_pressed = ni_registerInterfaceMethod(signalHandler, "pressed", &SignalHandler_pressed__wrapper);
-        signalHandler_viewportEntered = ni_registerInterfaceMethod(signalHandler, "viewportEntered", &SignalHandler_viewportEntered__wrapper);
-        signalHandler_collapsed = ni_registerInterfaceMethod(signalHandler, "collapsed", &SignalHandler_collapsed__wrapper);
-        signalHandler_expanded = ni_registerInterfaceMethod(signalHandler, "expanded", &SignalHandler_expanded__wrapper);
+        signalHandler_currentChanged = ni_registerInterfaceMethod(signalHandler, "currentChanged", &SignalHandler_currentChanged__wrapper);
+        signalHandler_tabBarClicked = ni_registerInterfaceMethod(signalHandler, "tabBarClicked", &SignalHandler_tabBarClicked__wrapper);
+        signalHandler_tabBarDoubleClicked = ni_registerInterfaceMethod(signalHandler, "tabBarDoubleClicked", &SignalHandler_tabBarDoubleClicked__wrapper);
+        signalHandler_tabCloseRequested = ni_registerInterfaceMethod(signalHandler, "tabCloseRequested", &SignalHandler_tabCloseRequested__wrapper);
+        signalHandler_tabMoved = ni_registerInterfaceMethod(signalHandler, "tabMoved", &SignalHandler_tabMoved__wrapper);
         return 0; // = OK
     }
 }

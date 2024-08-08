@@ -43,6 +43,7 @@ interface SignalHandler {
 }
 
 opaque Handle extends AbstractItemView.Handle {
+    // properties:
     void setAllColumnsShowFocus(bool value);
     void setAnimated(bool value);
     void setAutoExpandDelay(int value);
@@ -54,6 +55,9 @@ opaque Handle extends AbstractItemView.Handle {
     void setSortingEnabled(bool value);
     void setUniformRowHeights(bool value);
     void setWordWrap(bool value);
+
+    // methods:
+    void resizeColumnToContents(int column);
 
     void setSignalMask(SignalMask mask);
 }

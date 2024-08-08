@@ -82,6 +82,7 @@ namespace TreeView
     void Handle_setSortingEnabled(HandleRef _this, bool value);
     void Handle_setUniformRowHeights(HandleRef _this, bool value);
     void Handle_setWordWrap(HandleRef _this, bool value);
+    void Handle_resizeColumnToContents(HandleRef _this, int32_t column);
     void Handle_setSignalMask(HandleRef _this, SignalMask mask);
     void Handle_dispose(HandleRef _this);
     HandleRef create(std::shared_ptr<SignalHandler> handler);

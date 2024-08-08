@@ -15,6 +15,8 @@
 using namespace ::Icon;
 #include "PaintResources.h"
 using namespace ::PaintResources;
+#include "Common.h"
+using namespace ::Common;
 #include "Enums.h"
 using namespace ::Enums;
 
@@ -90,6 +92,7 @@ namespace Variant
     bool Handle_toBool(HandleRef _this);
     std::string Handle_toString2(HandleRef _this);
     int32_t Handle_toInt(HandleRef _this);
+    Common::Size Handle_toSize(HandleRef _this);
     Enums::CheckState Handle_toCheckState(HandleRef _this);
     std::shared_ptr<ServerValue::Base> Handle_toServerValue(HandleRef _this);
     void Handle_dispose(HandleRef _this);
@@ -102,6 +105,7 @@ namespace Variant
         class FromString;
         class FromInt;
         class FromCheckState;
+        class FromSize;
         class FromIcon;
         class FromColor;
 
@@ -112,6 +116,7 @@ namespace Variant
             virtual void onFromString(const FromString* value) = 0;
             virtual void onFromInt(const FromInt* value) = 0;
             virtual void onFromCheckState(const FromCheckState* value) = 0;
+            virtual void onFromSize(const FromSize* value) = 0;
             virtual void onFromIcon(const FromIcon* value) = 0;
             virtual void onFromColor(const FromColor* value) = 0;
         };
@@ -162,6 +167,15 @@ namespace Variant
             FromCheckState(Enums::CheckState value) : value(value) {}
             void accept(Visitor* visitor) override {
                 visitor->onFromCheckState(this);
+            }
+        };
+
+        class FromSize : public Base {
+        public:
+            const Common::Size size;
+            FromSize(Common::Size size) : size(size) {}
+            void accept(Visitor* visitor) override {
+                visitor->onFromSize(this);
             }
         };
 

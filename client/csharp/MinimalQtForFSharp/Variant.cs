@@ -10,6 +10,7 @@ using ModuleHandle = Org.Whatever.MinimalQtForFSharp.Support.ModuleHandle;
 
 using static Org.Whatever.MinimalQtForFSharp.Icon;
 using static Org.Whatever.MinimalQtForFSharp.PaintResources;
+using static Org.Whatever.MinimalQtForFSharp.Common;
 using static Org.Whatever.MinimalQtForFSharp.Enums;
 
 namespace Org.Whatever.MinimalQtForFSharp
@@ -21,6 +22,7 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static ModuleMethodHandle _handle_toBool;
         internal static ModuleMethodHandle _handle_toString2;
         internal static ModuleMethodHandle _handle_toInt;
+        internal static ModuleMethodHandle _handle_toSize;
         internal static ModuleMethodHandle _handle_toCheckState;
         internal static ModuleMethodHandle _handle_toServerValue;
         internal static ModuleMethodHandle _handle_dispose;
@@ -158,6 +160,12 @@ namespace Org.Whatever.MinimalQtForFSharp
                 NativeImplClient.InvokeModuleMethod(_handle_toInt);
                 return NativeImplClient.PopInt32();
             }
+            public Size ToSize()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_toSize);
+                return Size__Pop();
+            }
             public CheckState ToCheckState()
             {
                 Handle__Push(this);
@@ -224,8 +232,9 @@ namespace Org.Whatever.MinimalQtForFSharp
                     2 => FromString.PopDerived(),
                     3 => FromInt.PopDerived(),
                     4 => FromCheckState.PopDerived(),
-                    5 => FromIcon.PopDerived(),
-                    6 => FromColor.PopDerived(),
+                    5 => FromSize.PopDerived(),
+                    6 => FromIcon.PopDerived(),
+                    7 => FromColor.PopDerived(),
                     _ => throw new Exception("Deferred.Pop() - unknown tag!")
                 };
             }
@@ -301,6 +310,21 @@ namespace Org.Whatever.MinimalQtForFSharp
                     return new FromCheckState(value);
                 }
             }
+            public sealed record FromSize(Size Size) : Deferred
+            {
+                public Size Size { get; } = Size;
+                internal override void Push(bool isReturn)
+                {
+                    Size__Push(Size, isReturn);
+                    // kind
+                    NativeImplClient.PushInt32(5);
+                }
+                internal static FromSize PopDerived()
+                {
+                    var size = Size__Pop();
+                    return new FromSize(size);
+                }
+            }
             public sealed record FromIcon(Icon.Deferred Value) : Deferred
             {
                 public Icon.Deferred Value { get; } = Value;
@@ -308,7 +332,7 @@ namespace Org.Whatever.MinimalQtForFSharp
                 {
                     Icon.Deferred__Push(Value, isReturn);
                     // kind
-                    NativeImplClient.PushInt32(5);
+                    NativeImplClient.PushInt32(6);
                 }
                 internal static FromIcon PopDerived()
                 {
@@ -323,7 +347,7 @@ namespace Org.Whatever.MinimalQtForFSharp
                 {
                     Color.Deferred__Push(Value, isReturn);
                     // kind
-                    NativeImplClient.PushInt32(6);
+                    NativeImplClient.PushInt32(7);
                 }
                 internal static FromColor PopDerived()
                 {
@@ -353,6 +377,7 @@ namespace Org.Whatever.MinimalQtForFSharp
             _handle_toBool = NativeImplClient.GetModuleMethod(_module, "Handle_toBool");
             _handle_toString2 = NativeImplClient.GetModuleMethod(_module, "Handle_toString2");
             _handle_toInt = NativeImplClient.GetModuleMethod(_module, "Handle_toInt");
+            _handle_toSize = NativeImplClient.GetModuleMethod(_module, "Handle_toSize");
             _handle_toCheckState = NativeImplClient.GetModuleMethod(_module, "Handle_toCheckState");
             _handle_toServerValue = NativeImplClient.GetModuleMethod(_module, "Handle_toServerValue");
             _handle_dispose = NativeImplClient.GetModuleMethod(_module, "Handle_dispose");

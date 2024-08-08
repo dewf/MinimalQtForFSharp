@@ -11,28 +11,33 @@ using ModuleHandle = Org.Whatever.MinimalQtForFSharp.Support.ModuleHandle;
 using static Org.Whatever.MinimalQtForFSharp.Object;
 using static Org.Whatever.MinimalQtForFSharp.Common;
 using static Org.Whatever.MinimalQtForFSharp.Icon;
+using static Org.Whatever.MinimalQtForFSharp.Widget;
 using static Org.Whatever.MinimalQtForFSharp.Enums;
-using static Org.Whatever.MinimalQtForFSharp.AbstractItemView;
-using static Org.Whatever.MinimalQtForFSharp.ModelIndex;
 
 namespace Org.Whatever.MinimalQtForFSharp
 {
-    public static class TreeView
+    public static class TabBar
     {
         private static ModuleHandle _module;
         internal static ModuleMethodHandle _create;
-        internal static ModuleMethodHandle _handle_setAllColumnsShowFocus;
-        internal static ModuleMethodHandle _handle_setAnimated;
-        internal static ModuleMethodHandle _handle_setAutoExpandDelay;
-        internal static ModuleMethodHandle _handle_setExpandsOnDoubleClick;
-        internal static ModuleMethodHandle _handle_setHeaderHidden;
-        internal static ModuleMethodHandle _handle_setIndentation;
-        internal static ModuleMethodHandle _handle_setItemsExpandable;
-        internal static ModuleMethodHandle _handle_setRootIsDecorated;
-        internal static ModuleMethodHandle _handle_setSortingEnabled;
-        internal static ModuleMethodHandle _handle_setUniformRowHeights;
-        internal static ModuleMethodHandle _handle_setWordWrap;
-        internal static ModuleMethodHandle _handle_resizeColumnToContents;
+        internal static ModuleMethodHandle _handle_setAutoHide;
+        internal static ModuleMethodHandle _handle_setChangeCurrentOnDrag;
+        internal static ModuleMethodHandle _handle_count;
+        internal static ModuleMethodHandle _handle_setCurrentIndex;
+        internal static ModuleMethodHandle _handle_currentIndex;
+        internal static ModuleMethodHandle _handle_setDocumentMode;
+        internal static ModuleMethodHandle _handle_setDrawBase;
+        internal static ModuleMethodHandle _handle_setElideMode;
+        internal static ModuleMethodHandle _handle_setExpanding;
+        internal static ModuleMethodHandle _handle_setIconSize;
+        internal static ModuleMethodHandle _handle_setMovable;
+        internal static ModuleMethodHandle _handle_setSelectionBehaviorOnRemove;
+        internal static ModuleMethodHandle _handle_setShape;
+        internal static ModuleMethodHandle _handle_setTabsClosable;
+        internal static ModuleMethodHandle _handle_setUsesScrollButtons;
+        internal static ModuleMethodHandle _handle_removeAllTabs;
+        internal static ModuleMethodHandle _handle_addTab;
+        internal static ModuleMethodHandle _handle_addTab_overload1;
         internal static ModuleMethodHandle _handle_setSignalMask;
         internal static ModuleMethodHandle _handle_dispose;
         internal static InterfaceHandle _signalHandler;
@@ -41,15 +46,11 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static InterfaceMethodHandle _signalHandler_customContextMenuRequested;
         internal static InterfaceMethodHandle _signalHandler_windowIconChanged;
         internal static InterfaceMethodHandle _signalHandler_windowTitleChanged;
-        internal static InterfaceMethodHandle _signalHandler_activated;
-        internal static InterfaceMethodHandle _signalHandler_clicked;
-        internal static InterfaceMethodHandle _signalHandler_doubleClicked;
-        internal static InterfaceMethodHandle _signalHandler_entered;
-        internal static InterfaceMethodHandle _signalHandler_iconSizeChanged;
-        internal static InterfaceMethodHandle _signalHandler_pressed;
-        internal static InterfaceMethodHandle _signalHandler_viewportEntered;
-        internal static InterfaceMethodHandle _signalHandler_collapsed;
-        internal static InterfaceMethodHandle _signalHandler_expanded;
+        internal static InterfaceMethodHandle _signalHandler_currentChanged;
+        internal static InterfaceMethodHandle _signalHandler_tabBarClicked;
+        internal static InterfaceMethodHandle _signalHandler_tabBarDoubleClicked;
+        internal static InterfaceMethodHandle _signalHandler_tabCloseRequested;
+        internal static InterfaceMethodHandle _signalHandler_tabMoved;
 
         public static Handle Create(SignalHandler handler)
         {
@@ -67,19 +68,12 @@ namespace Org.Whatever.MinimalQtForFSharp
             CustomContextMenuRequested = 1 << 2,
             WindowIconChanged = 1 << 3,
             WindowTitleChanged = 1 << 4,
-            // Frame.SignalMask:
-            // AbstractScrollArea.SignalMask:
-            // AbstractItemView.SignalMask:
-            Activated = 1 << 5,
-            Clicked = 1 << 6,
-            DoubleClickedBit = 1 << 7,
-            Entered = 1 << 8,
-            IconSizeChanged = 1 << 9,
-            Pressed = 1 << 10,
-            ViewportEntered = 1 << 11,
             // SignalMask:
-            Collapsed = 1 << 12,
-            Expanded = 1 << 13
+            CurrentChanged = 1 << 5,
+            TabBarClicked = 1 << 6,
+            TabBarDoubleClicked = 1 << 7,
+            TabCloseRequested = 1 << 8,
+            TabMoved = 1 << 9
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -106,15 +100,11 @@ namespace Org.Whatever.MinimalQtForFSharp
             void CustomContextMenuRequested(Point pos);
             void WindowIconChanged(Icon.Handle icon);
             void WindowTitleChanged(string title);
-            void Activated(ModelIndex.Handle index);
-            void Clicked(ModelIndex.Handle index);
-            void DoubleClicked(ModelIndex.Handle index);
-            void Entered(ModelIndex.Handle index);
-            void IconSizeChanged(Size size);
-            void Pressed(ModelIndex.Handle index);
-            void ViewportEntered();
-            void Collapsed(ModelIndex.Handle index);
-            void Expanded(ModelIndex.Handle index);
+            void CurrentChanged(int index);
+            void TabBarClicked(int index);
+            void TabBarDoubleClicked(int index);
+            void TabCloseRequested(int index);
+            void TabMoved(int fromIndex, int toIndex);
         }
 
         private static Dictionary<SignalHandler, IPushable> __SignalHandlerToPushable = new();
@@ -214,57 +204,35 @@ namespace Org.Whatever.MinimalQtForFSharp
                 NativeImplClient.InvokeInterfaceMethod(_signalHandler_windowTitleChanged, Id);
             }
 
-            public void Activated(ModelIndex.Handle index)
+            public void CurrentChanged(int index)
             {
-                ModelIndex.Handle__Push(index);
-                NativeImplClient.InvokeInterfaceMethod(_signalHandler_activated, Id);
+                NativeImplClient.PushInt32(index);
+                NativeImplClient.InvokeInterfaceMethod(_signalHandler_currentChanged, Id);
             }
 
-            public void Clicked(ModelIndex.Handle index)
+            public void TabBarClicked(int index)
             {
-                ModelIndex.Handle__Push(index);
-                NativeImplClient.InvokeInterfaceMethod(_signalHandler_clicked, Id);
+                NativeImplClient.PushInt32(index);
+                NativeImplClient.InvokeInterfaceMethod(_signalHandler_tabBarClicked, Id);
             }
 
-            public void DoubleClicked(ModelIndex.Handle index)
+            public void TabBarDoubleClicked(int index)
             {
-                ModelIndex.Handle__Push(index);
-                NativeImplClient.InvokeInterfaceMethod(_signalHandler_doubleClicked, Id);
+                NativeImplClient.PushInt32(index);
+                NativeImplClient.InvokeInterfaceMethod(_signalHandler_tabBarDoubleClicked, Id);
             }
 
-            public void Entered(ModelIndex.Handle index)
+            public void TabCloseRequested(int index)
             {
-                ModelIndex.Handle__Push(index);
-                NativeImplClient.InvokeInterfaceMethod(_signalHandler_entered, Id);
+                NativeImplClient.PushInt32(index);
+                NativeImplClient.InvokeInterfaceMethod(_signalHandler_tabCloseRequested, Id);
             }
 
-            public void IconSizeChanged(Size size)
+            public void TabMoved(int fromIndex, int toIndex)
             {
-                Size__Push(size, false);
-                NativeImplClient.InvokeInterfaceMethod(_signalHandler_iconSizeChanged, Id);
-            }
-
-            public void Pressed(ModelIndex.Handle index)
-            {
-                ModelIndex.Handle__Push(index);
-                NativeImplClient.InvokeInterfaceMethod(_signalHandler_pressed, Id);
-            }
-
-            public void ViewportEntered()
-            {
-                NativeImplClient.InvokeInterfaceMethod(_signalHandler_viewportEntered, Id);
-            }
-
-            public void Collapsed(ModelIndex.Handle index)
-            {
-                ModelIndex.Handle__Push(index);
-                NativeImplClient.InvokeInterfaceMethod(_signalHandler_collapsed, Id);
-            }
-
-            public void Expanded(ModelIndex.Handle index)
-            {
-                ModelIndex.Handle__Push(index);
-                NativeImplClient.InvokeInterfaceMethod(_signalHandler_expanded, Id);
+                NativeImplClient.PushInt32(toIndex);
+                NativeImplClient.PushInt32(fromIndex);
+                NativeImplClient.InvokeInterfaceMethod(_signalHandler_tabMoved, Id);
             }
 
             protected override void ReleaseExtra()
@@ -279,7 +247,68 @@ namespace Org.Whatever.MinimalQtForFSharp
                 ServerDispose();
             }
         }
-        public class Handle : AbstractItemView.Handle
+        public enum ButtonPosition
+        {
+            LeftSide,
+            RightSide
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ButtonPosition__Push(ButtonPosition value)
+        {
+            NativeImplClient.PushInt32((int)value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static ButtonPosition ButtonPosition__Pop()
+        {
+            var ret = NativeImplClient.PopInt32();
+            return (ButtonPosition)ret;
+        }
+        public enum SelectionBehavior
+        {
+            SelectLeftTab,
+            SelectRightTab,
+            SelectPreviousTab
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void SelectionBehavior__Push(SelectionBehavior value)
+        {
+            NativeImplClient.PushInt32((int)value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static SelectionBehavior SelectionBehavior__Pop()
+        {
+            var ret = NativeImplClient.PopInt32();
+            return (SelectionBehavior)ret;
+        }
+        public enum Shape
+        {
+            RoundedNorth,
+            RoundedSouth,
+            RoundedWest,
+            RoundedEast,
+            TriangularNorth,
+            TriangularSouth,
+            TriangularWest,
+            TriangularEast
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void Shape__Push(Shape value)
+        {
+            NativeImplClient.PushInt32((int)value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static Shape Shape__Pop()
+        {
+            var ret = NativeImplClient.PopInt32();
+            return (Shape)ret;
+        }
+        public class Handle : Widget.Handle
         {
             internal Handle(IntPtr nativeHandle) : base(nativeHandle)
             {
@@ -293,77 +322,115 @@ namespace Org.Whatever.MinimalQtForFSharp
                     _disposed = true;
                 }
             }
-            public void SetAllColumnsShowFocus(bool value)
+            public void SetAutoHide(bool value)
             {
                 NativeImplClient.PushBool(value);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setAllColumnsShowFocus);
+                NativeImplClient.InvokeModuleMethod(_handle_setAutoHide);
             }
-            public void SetAnimated(bool value)
+            public void SetChangeCurrentOnDrag(bool value)
             {
                 NativeImplClient.PushBool(value);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setAnimated);
+                NativeImplClient.InvokeModuleMethod(_handle_setChangeCurrentOnDrag);
             }
-            public void SetAutoExpandDelay(int value)
+            public int Count()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_count);
+                return NativeImplClient.PopInt32();
+            }
+            public void SetCurrentIndex(int value)
             {
                 NativeImplClient.PushInt32(value);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setAutoExpandDelay);
+                NativeImplClient.InvokeModuleMethod(_handle_setCurrentIndex);
             }
-            public void SetExpandsOnDoubleClick(bool value)
+            public int CurrentIndex()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_currentIndex);
+                return NativeImplClient.PopInt32();
+            }
+            public void SetDocumentMode(bool value)
             {
                 NativeImplClient.PushBool(value);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setExpandsOnDoubleClick);
+                NativeImplClient.InvokeModuleMethod(_handle_setDocumentMode);
             }
-            public void SetHeaderHidden(bool value)
+            public void SetDrawBase(bool value)
             {
                 NativeImplClient.PushBool(value);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setHeaderHidden);
+                NativeImplClient.InvokeModuleMethod(_handle_setDrawBase);
             }
-            public void SetIndentation(int value)
+            public void SetElideMode(TextElideMode mode)
             {
-                NativeImplClient.PushInt32(value);
+                TextElideMode__Push(mode);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setIndentation);
+                NativeImplClient.InvokeModuleMethod(_handle_setElideMode);
             }
-            public void SetItemsExpandable(bool value)
-            {
-                NativeImplClient.PushBool(value);
-                Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setItemsExpandable);
-            }
-            public void SetRootIsDecorated(bool value)
+            public void SetExpanding(bool value)
             {
                 NativeImplClient.PushBool(value);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setRootIsDecorated);
+                NativeImplClient.InvokeModuleMethod(_handle_setExpanding);
             }
-            public void SetSortingEnabled(bool value)
+            public void SetIconSize(Size size)
+            {
+                Size__Push(size, false);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_setIconSize);
+            }
+            public void SetMovable(bool value)
             {
                 NativeImplClient.PushBool(value);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setSortingEnabled);
+                NativeImplClient.InvokeModuleMethod(_handle_setMovable);
             }
-            public void SetUniformRowHeights(bool value)
+            public void SetSelectionBehaviorOnRemove(SelectionBehavior value)
+            {
+                SelectionBehavior__Push(value);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_setSelectionBehaviorOnRemove);
+            }
+            public void SetShape(Shape shape)
+            {
+                Shape__Push(shape);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_setShape);
+            }
+            public void SetTabsClosable(bool value)
             {
                 NativeImplClient.PushBool(value);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setUniformRowHeights);
+                NativeImplClient.InvokeModuleMethod(_handle_setTabsClosable);
             }
-            public void SetWordWrap(bool value)
+            public void SetUsesScrollButtons(bool value)
             {
                 NativeImplClient.PushBool(value);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_setWordWrap);
+                NativeImplClient.InvokeModuleMethod(_handle_setUsesScrollButtons);
             }
-            public void ResizeColumnToContents(int column)
+            public void RemoveAllTabs()
             {
-                NativeImplClient.PushInt32(column);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_resizeColumnToContents);
+                NativeImplClient.InvokeModuleMethod(_handle_removeAllTabs);
+            }
+            public int AddTab(string text)
+            {
+                NativeImplClient.PushString(text);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_addTab);
+                return NativeImplClient.PopInt32();
+            }
+            public int AddTab(Deferred icon, string text)
+            {
+                NativeImplClient.PushString(text);
+                Deferred__Push(icon, false);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_addTab_overload1);
+                return NativeImplClient.PopInt32();
             }
             public void SetSignalMask(SignalMask mask)
             {
@@ -388,21 +455,27 @@ namespace Org.Whatever.MinimalQtForFSharp
 
         internal static void __Init()
         {
-            _module = NativeImplClient.GetModule("TreeView");
+            _module = NativeImplClient.GetModule("TabBar");
             // assign module handles
             _create = NativeImplClient.GetModuleMethod(_module, "create");
-            _handle_setAllColumnsShowFocus = NativeImplClient.GetModuleMethod(_module, "Handle_setAllColumnsShowFocus");
-            _handle_setAnimated = NativeImplClient.GetModuleMethod(_module, "Handle_setAnimated");
-            _handle_setAutoExpandDelay = NativeImplClient.GetModuleMethod(_module, "Handle_setAutoExpandDelay");
-            _handle_setExpandsOnDoubleClick = NativeImplClient.GetModuleMethod(_module, "Handle_setExpandsOnDoubleClick");
-            _handle_setHeaderHidden = NativeImplClient.GetModuleMethod(_module, "Handle_setHeaderHidden");
-            _handle_setIndentation = NativeImplClient.GetModuleMethod(_module, "Handle_setIndentation");
-            _handle_setItemsExpandable = NativeImplClient.GetModuleMethod(_module, "Handle_setItemsExpandable");
-            _handle_setRootIsDecorated = NativeImplClient.GetModuleMethod(_module, "Handle_setRootIsDecorated");
-            _handle_setSortingEnabled = NativeImplClient.GetModuleMethod(_module, "Handle_setSortingEnabled");
-            _handle_setUniformRowHeights = NativeImplClient.GetModuleMethod(_module, "Handle_setUniformRowHeights");
-            _handle_setWordWrap = NativeImplClient.GetModuleMethod(_module, "Handle_setWordWrap");
-            _handle_resizeColumnToContents = NativeImplClient.GetModuleMethod(_module, "Handle_resizeColumnToContents");
+            _handle_setAutoHide = NativeImplClient.GetModuleMethod(_module, "Handle_setAutoHide");
+            _handle_setChangeCurrentOnDrag = NativeImplClient.GetModuleMethod(_module, "Handle_setChangeCurrentOnDrag");
+            _handle_count = NativeImplClient.GetModuleMethod(_module, "Handle_count");
+            _handle_setCurrentIndex = NativeImplClient.GetModuleMethod(_module, "Handle_setCurrentIndex");
+            _handle_currentIndex = NativeImplClient.GetModuleMethod(_module, "Handle_currentIndex");
+            _handle_setDocumentMode = NativeImplClient.GetModuleMethod(_module, "Handle_setDocumentMode");
+            _handle_setDrawBase = NativeImplClient.GetModuleMethod(_module, "Handle_setDrawBase");
+            _handle_setElideMode = NativeImplClient.GetModuleMethod(_module, "Handle_setElideMode");
+            _handle_setExpanding = NativeImplClient.GetModuleMethod(_module, "Handle_setExpanding");
+            _handle_setIconSize = NativeImplClient.GetModuleMethod(_module, "Handle_setIconSize");
+            _handle_setMovable = NativeImplClient.GetModuleMethod(_module, "Handle_setMovable");
+            _handle_setSelectionBehaviorOnRemove = NativeImplClient.GetModuleMethod(_module, "Handle_setSelectionBehaviorOnRemove");
+            _handle_setShape = NativeImplClient.GetModuleMethod(_module, "Handle_setShape");
+            _handle_setTabsClosable = NativeImplClient.GetModuleMethod(_module, "Handle_setTabsClosable");
+            _handle_setUsesScrollButtons = NativeImplClient.GetModuleMethod(_module, "Handle_setUsesScrollButtons");
+            _handle_removeAllTabs = NativeImplClient.GetModuleMethod(_module, "Handle_removeAllTabs");
+            _handle_addTab = NativeImplClient.GetModuleMethod(_module, "Handle_addTab");
+            _handle_addTab_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_addTab_overload1");
             _handle_setSignalMask = NativeImplClient.GetModuleMethod(_module, "Handle_setSignalMask");
             _handle_dispose = NativeImplClient.GetModuleMethod(_module, "Handle_dispose");
             _signalHandler = NativeImplClient.GetInterface(_module, "SignalHandler");
@@ -411,15 +484,11 @@ namespace Org.Whatever.MinimalQtForFSharp
             _signalHandler_customContextMenuRequested = NativeImplClient.GetInterfaceMethod(_signalHandler, "customContextMenuRequested");
             _signalHandler_windowIconChanged = NativeImplClient.GetInterfaceMethod(_signalHandler, "windowIconChanged");
             _signalHandler_windowTitleChanged = NativeImplClient.GetInterfaceMethod(_signalHandler, "windowTitleChanged");
-            _signalHandler_activated = NativeImplClient.GetInterfaceMethod(_signalHandler, "activated");
-            _signalHandler_clicked = NativeImplClient.GetInterfaceMethod(_signalHandler, "clicked");
-            _signalHandler_doubleClicked = NativeImplClient.GetInterfaceMethod(_signalHandler, "doubleClicked");
-            _signalHandler_entered = NativeImplClient.GetInterfaceMethod(_signalHandler, "entered");
-            _signalHandler_iconSizeChanged = NativeImplClient.GetInterfaceMethod(_signalHandler, "iconSizeChanged");
-            _signalHandler_pressed = NativeImplClient.GetInterfaceMethod(_signalHandler, "pressed");
-            _signalHandler_viewportEntered = NativeImplClient.GetInterfaceMethod(_signalHandler, "viewportEntered");
-            _signalHandler_collapsed = NativeImplClient.GetInterfaceMethod(_signalHandler, "collapsed");
-            _signalHandler_expanded = NativeImplClient.GetInterfaceMethod(_signalHandler, "expanded");
+            _signalHandler_currentChanged = NativeImplClient.GetInterfaceMethod(_signalHandler, "currentChanged");
+            _signalHandler_tabBarClicked = NativeImplClient.GetInterfaceMethod(_signalHandler, "tabBarClicked");
+            _signalHandler_tabBarDoubleClicked = NativeImplClient.GetInterfaceMethod(_signalHandler, "tabBarDoubleClicked");
+            _signalHandler_tabCloseRequested = NativeImplClient.GetInterfaceMethod(_signalHandler, "tabCloseRequested");
+            _signalHandler_tabMoved = NativeImplClient.GetInterfaceMethod(_signalHandler, "tabMoved");
             NativeImplClient.SetClientMethodWrapper(_signalHandler_destroyed, delegate(ClientObject __obj)
             {
                 var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
@@ -450,58 +519,36 @@ namespace Org.Whatever.MinimalQtForFSharp
                 var title = NativeImplClient.PopString();
                 inst.WindowTitleChanged(title);
             });
-            NativeImplClient.SetClientMethodWrapper(_signalHandler_activated, delegate(ClientObject __obj)
+            NativeImplClient.SetClientMethodWrapper(_signalHandler_currentChanged, delegate(ClientObject __obj)
             {
                 var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
-                var index = ModelIndex.Handle__Pop();
-                inst.Activated(index);
+                var index = NativeImplClient.PopInt32();
+                inst.CurrentChanged(index);
             });
-            NativeImplClient.SetClientMethodWrapper(_signalHandler_clicked, delegate(ClientObject __obj)
+            NativeImplClient.SetClientMethodWrapper(_signalHandler_tabBarClicked, delegate(ClientObject __obj)
             {
                 var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
-                var index = ModelIndex.Handle__Pop();
-                inst.Clicked(index);
+                var index = NativeImplClient.PopInt32();
+                inst.TabBarClicked(index);
             });
-            NativeImplClient.SetClientMethodWrapper(_signalHandler_doubleClicked, delegate(ClientObject __obj)
+            NativeImplClient.SetClientMethodWrapper(_signalHandler_tabBarDoubleClicked, delegate(ClientObject __obj)
             {
                 var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
-                var index = ModelIndex.Handle__Pop();
-                inst.DoubleClicked(index);
+                var index = NativeImplClient.PopInt32();
+                inst.TabBarDoubleClicked(index);
             });
-            NativeImplClient.SetClientMethodWrapper(_signalHandler_entered, delegate(ClientObject __obj)
+            NativeImplClient.SetClientMethodWrapper(_signalHandler_tabCloseRequested, delegate(ClientObject __obj)
             {
                 var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
-                var index = ModelIndex.Handle__Pop();
-                inst.Entered(index);
+                var index = NativeImplClient.PopInt32();
+                inst.TabCloseRequested(index);
             });
-            NativeImplClient.SetClientMethodWrapper(_signalHandler_iconSizeChanged, delegate(ClientObject __obj)
+            NativeImplClient.SetClientMethodWrapper(_signalHandler_tabMoved, delegate(ClientObject __obj)
             {
                 var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
-                var size = Size__Pop();
-                inst.IconSizeChanged(size);
-            });
-            NativeImplClient.SetClientMethodWrapper(_signalHandler_pressed, delegate(ClientObject __obj)
-            {
-                var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
-                var index = ModelIndex.Handle__Pop();
-                inst.Pressed(index);
-            });
-            NativeImplClient.SetClientMethodWrapper(_signalHandler_viewportEntered, delegate(ClientObject __obj)
-            {
-                var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
-                inst.ViewportEntered();
-            });
-            NativeImplClient.SetClientMethodWrapper(_signalHandler_collapsed, delegate(ClientObject __obj)
-            {
-                var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
-                var index = ModelIndex.Handle__Pop();
-                inst.Collapsed(index);
-            });
-            NativeImplClient.SetClientMethodWrapper(_signalHandler_expanded, delegate(ClientObject __obj)
-            {
-                var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
-                var index = ModelIndex.Handle__Pop();
-                inst.Expanded(index);
+                var fromIndex = NativeImplClient.PopInt32();
+                var toIndex = NativeImplClient.PopInt32();
+                inst.TabMoved(fromIndex, toIndex);
             });
 
             // no static init

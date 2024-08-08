@@ -5,6 +5,7 @@
 
 #include <QVariant>
 #define THIS ((QVariant*)_this)
+#include "util/convert.h"
 
 namespace Variant
 {
@@ -22,6 +23,10 @@ namespace Variant
 
     int32_t Handle_toInt(HandleRef _this) {
         return THIS->toInt();
+    }
+
+    Size Handle_toSize(HandleRef _this) {
+        return toSize(THIS->toSize());
     }
 
     CheckState Handle_toCheckState(HandleRef _this) {
@@ -86,6 +91,10 @@ namespace Variant
 
         void onFromInt(const Deferred::FromInt *value) override {
             variant = value->value;
+        }
+
+        void onFromSize(const Deferred::FromSize *value) override {
+            variant = toQSize(value->size);
         }
 
         void onFromCheckState(const Deferred::FromCheckState *value) override {

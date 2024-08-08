@@ -144,6 +144,10 @@ namespace TreeView
         THIS->setWordWrap(value);
     }
 
+    void Handle_resizeColumnToContents(HandleRef _this, int32_t column) {
+        THIS->resizeColumnToContents(column);
+    }
+
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
         THIS->setSignalMask(mask);
     }

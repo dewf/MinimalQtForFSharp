@@ -17,6 +17,8 @@ namespace Variant
 
     void Handle_toInt__wrapper();
 
+    void Handle_toSize__wrapper();
+
     void Handle_toCheckState__wrapper();
 
     void Handle_toServerValue__wrapper();

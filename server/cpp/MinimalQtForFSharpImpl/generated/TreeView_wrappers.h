@@ -63,6 +63,8 @@ namespace TreeView
 
     void Handle_setWordWrap__wrapper();
 
+    void Handle_resizeColumnToContents__wrapper();
+
     void Handle_setSignalMask__wrapper();
 
     void Handle_dispose__wrapper();

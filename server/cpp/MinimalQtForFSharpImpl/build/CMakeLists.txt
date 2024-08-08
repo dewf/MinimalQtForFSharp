@@ -239,6 +239,10 @@ add_library(MinimalQtForFSharpImpl STATIC
     ../generated/StyleOptionViewItem_wrappers.cpp
     ../StyleOptionViewItem.cpp
 
+    ../generated/TabBar.h
+    ../generated/TabBar_wrappers.cpp
+    ../TabBar.cpp
+
     ../generated/TabWidget.h
     ../generated/TabWidget_wrappers.cpp
     ../TabWidget.cpp

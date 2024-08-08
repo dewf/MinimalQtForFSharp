@@ -2,6 +2,7 @@ module Variant;
 
 import Icon;
 import PaintResources; // for color, brush, etc (deferred)
+import Common;
 import Enums;
 
 sumtype ServerValue {
@@ -25,6 +26,7 @@ opaque Handle {
     bool toBool();
     string toString2(); // toString() is a C# thing
     int toInt();
+    Size toSize();
 
     // convenience function, special values for toInt()
     CheckState toCheckState();
@@ -44,6 +46,7 @@ sumtype Deferred {
     FromString(string value),
     FromInt(int value),
     FromCheckState(CheckState value), // convenience for int 0/1/2
+    FromSize(Size size),
     FromIcon(Icon.Deferred value),
-    FromColor(Color.Deferred value)
+    FromColor(Color.Deferred value),
 }

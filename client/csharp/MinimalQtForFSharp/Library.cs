@@ -70,6 +70,7 @@ public static class Library
         StyleOption.__Init();
         StyleOptionViewItem.__Init();
         StyledItemDelegate.__Init();
+        TabBar.__Init();
         Timer.__Init();
         TreeView.__Init();
     }
@@ -79,6 +80,7 @@ public static class Library
         // module static shutdowns (if any, might be empty)
         TreeView.__Shutdown();
         Timer.__Shutdown();
+        TabBar.__Shutdown();
         StyledItemDelegate.__Shutdown();
         StyleOptionViewItem.__Shutdown();
         StyleOption.__Shutdown();
