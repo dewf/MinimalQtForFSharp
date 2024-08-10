@@ -485,6 +485,19 @@ namespace AbstractItemModel
         Variant::OwnedHandle__push(Handle_data(_this, index, role));
     }
 
+    void Handle_sort__wrapper() {
+        auto _this = Handle__pop();
+        auto column = ni_popInt32();
+        Handle_sort(_this, column);
+    }
+
+    void Handle_sort_overload1__wrapper() {
+        auto _this = Handle__pop();
+        auto column = ni_popInt32();
+        auto order = SortOrder__pop();
+        Handle_sort(_this, column, order);
+    }
+
     int __register() {
         auto m = ni_registerModule("AbstractItemModel");
         ni_registerModuleMethod(m, "Handle_index", &Handle_index__wrapper);
@@ -493,6 +506,8 @@ namespace AbstractItemModel
         ni_registerModuleMethod(m, "Handle_setData_overload1", &Handle_setData_overload1__wrapper);
         ni_registerModuleMethod(m, "Handle_data", &Handle_data__wrapper);
         ni_registerModuleMethod(m, "Handle_data_overload1", &Handle_data_overload1__wrapper);
+        ni_registerModuleMethod(m, "Handle_sort", &Handle_sort__wrapper);
+        ni_registerModuleMethod(m, "Handle_sort_overload1", &Handle_sort_overload1__wrapper);
         auto signalHandler = ni_registerInterface(m, "SignalHandler");
         signalHandler_destroyed = ni_registerInterfaceMethod(signalHandler, "destroyed", &SignalHandler_destroyed__wrapper);
         signalHandler_objectNameChanged = ni_registerInterfaceMethod(signalHandler, "objectNameChanged", &SignalHandler_objectNameChanged__wrapper);

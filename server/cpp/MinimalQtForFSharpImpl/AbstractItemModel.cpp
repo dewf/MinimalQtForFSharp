@@ -41,4 +41,12 @@ namespace AbstractItemModel
         auto value = THIS->data(ModelIndex::fromDeferred(index), (Qt::ItemDataRole)role);
         return (Variant::OwnedHandleRef) new QVariant(value);
     }
+
+    void Handle_sort(HandleRef _this, int32_t column) {
+        THIS->sort(column);
+    }
+
+    void Handle_sort(HandleRef _this, int32_t column, SortOrder order) {
+        THIS->sort(column, (Qt::SortOrder)order);
+    }
 }

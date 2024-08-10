@@ -49,6 +49,8 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static ModuleMethodHandle _handle_setData_overload1;
         internal static ModuleMethodHandle _handle_data;
         internal static ModuleMethodHandle _handle_data_overload1;
+        internal static ModuleMethodHandle _handle_sort;
+        internal static ModuleMethodHandle _handle_sort_overload1;
         internal static InterfaceHandle _signalHandler;
         internal static InterfaceMethodHandle _signalHandler_destroyed;
         internal static InterfaceMethodHandle _signalHandler_objectNameChanged;
@@ -446,6 +448,19 @@ namespace Org.Whatever.MinimalQtForFSharp
                 NativeImplClient.InvokeModuleMethod(_handle_data_overload1);
                 return Variant.OwnedHandle__Pop();
             }
+            public void Sort(int column)
+            {
+                NativeImplClient.PushInt32(column);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_sort);
+            }
+            public void Sort(int column, SortOrder order)
+            {
+                SortOrder__Push(order);
+                NativeImplClient.PushInt32(column);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_sort_overload1);
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -471,6 +486,8 @@ namespace Org.Whatever.MinimalQtForFSharp
             _handle_setData_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_setData_overload1");
             _handle_data = NativeImplClient.GetModuleMethod(_module, "Handle_data");
             _handle_data_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_data_overload1");
+            _handle_sort = NativeImplClient.GetModuleMethod(_module, "Handle_sort");
+            _handle_sort_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_sort_overload1");
             _signalHandler = NativeImplClient.GetInterface(_module, "SignalHandler");
             _signalHandler_destroyed = NativeImplClient.GetInterfaceMethod(_signalHandler, "destroyed");
             _signalHandler_objectNameChanged = NativeImplClient.GetInterfaceMethod(_signalHandler, "objectNameChanged");

@@ -157,6 +157,14 @@ namespace Enums
         auto tag = ni_popInt32();
         return (CheckState)tag;
     }
+    void SortOrder__push(SortOrder value) {
+        ni_pushInt32((int32_t)value);
+    }
+
+    SortOrder SortOrder__pop() {
+        auto tag = ni_popInt32();
+        return (SortOrder)tag;
+    }
     void ItemDataRole__push(ItemDataRole value) {
         ni_pushInt32((int32_t)value);
     }

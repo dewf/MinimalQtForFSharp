@@ -491,6 +491,24 @@ namespace Org.Whatever.MinimalQtForFSharp
             var ret = NativeImplClient.PopInt32();
             return (CheckState)ret;
         }
+        public enum SortOrder
+        {
+            AscendingOrder,
+            DescendingOrder
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void SortOrder__Push(SortOrder value)
+        {
+            NativeImplClient.PushInt32((int)value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static SortOrder SortOrder__Pop()
+        {
+            var ret = NativeImplClient.PopInt32();
+            return (SortOrder)ret;
+        }
         public enum ItemDataRole
         {
             DisplayRole = 0,

@@ -232,6 +232,11 @@ namespace Enums
         Checked
     };
 
+    enum class SortOrder {
+        AscendingOrder,
+        DescendingOrder
+    };
+
     enum class ItemDataRole {
         DisplayRole = 0,
         DecorationRole = 1,

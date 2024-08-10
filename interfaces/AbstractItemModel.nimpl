@@ -71,4 +71,7 @@ opaque Handle extends Object.Handle {
 
     Variant.OwnedHandle data(ModelIndex.Deferred index);
     Variant.OwnedHandle data(ModelIndex.Deferred index, ItemDataRole role);
+
+    void sort(int column);
+    void sort(int column, SortOrder order);
 }

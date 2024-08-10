@@ -223,6 +223,11 @@ enum CheckState {
     Checked
 }
 
+enum SortOrder {
+    AscendingOrder,
+    DescendingOrder
+}
+
 enum ItemDataRole {
     DisplayRole = 0,
     DecorationRole = 1,

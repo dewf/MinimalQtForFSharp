@@ -64,6 +64,9 @@ namespace Enums
     void CheckState__push(CheckState value);
     CheckState CheckState__pop();
 
+    void SortOrder__push(SortOrder value);
+    SortOrder SortOrder__pop();
+
     void ItemDataRole__push(ItemDataRole value);
     ItemDataRole ItemDataRole__pop();
 
