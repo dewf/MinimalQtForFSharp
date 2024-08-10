@@ -41,6 +41,7 @@ interface SignalHandler {
 
 @nodispose
 opaque Handle extends AbstractItemModel.Handle {
+    AbstractItemModel.Handle sourceModel();
     void setSourceModel(AbstractItemModel.Handle sourceModel);
 
     // owned, must be released! (heap allocated copy)

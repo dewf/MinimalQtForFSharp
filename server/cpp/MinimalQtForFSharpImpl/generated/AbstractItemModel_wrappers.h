@@ -64,5 +64,9 @@ namespace AbstractItemModel
 
     void Handle_setData_overload1__wrapper();
 
+    void Handle_data__wrapper();
+
+    void Handle_data_overload1__wrapper();
+
     int __register();
 }

@@ -79,6 +79,9 @@ namespace SortFilterProxyModel
     ni_InterfaceMethodRef signalHandler_sortCaseSensitivityChanged;
     ni_InterfaceMethodRef signalHandler_sortLocaleAwareChanged;
     ni_InterfaceMethodRef signalHandler_sortRoleChanged;
+    ni_InterfaceMethodRef methodDelegate_filterAcceptsColumn;
+    ni_InterfaceMethodRef methodDelegate_filterAcceptsRow;
+    ni_InterfaceMethodRef methodDelegate_lessThan;
     void SignalMask__push(SignalMask value) {
         ni_pushInt32(value);
     }
@@ -609,10 +612,156 @@ namespace SortFilterProxyModel
         auto handler = SignalHandler__pop();
         Handle__push(create(handler));
     }
+    void Interior__push(InteriorRef value) {
+        ni_pushPtr(value);
+    }
+
+    InteriorRef Interior__pop() {
+        return (InteriorRef)ni_popPtr();
+    }
+
+    void Interior_invalidateColumnsFilter__wrapper() {
+        auto _this = Interior__pop();
+        Interior_invalidateColumnsFilter(_this);
+    }
+
+    void Interior_invalidateRowsFilter__wrapper() {
+        auto _this = Interior__pop();
+        Interior_invalidateRowsFilter(_this);
+    }
+
+    void Interior_invalidateFilter__wrapper() {
+        auto _this = Interior__pop();
+        Interior_invalidateFilter(_this);
+    }
+
+    void Interior_dispose__wrapper() {
+        auto _this = Interior__pop();
+        Interior_dispose(_this);
+    }
+    void MethodMask__push(MethodMask value) {
+        ni_pushInt32(value);
+    }
+
+    MethodMask MethodMask__pop() {
+        return ni_popInt32();
+    }
+    static std::map<MethodDelegate*, std::weak_ptr<Pushable>> __methodDelegateToPushable;
+
+    class ServerMethodDelegateWrapper : public ServerObject {
+    public:
+        std::shared_ptr<MethodDelegate> rawInterface;
+    private:
+        ServerMethodDelegateWrapper(std::shared_ptr<MethodDelegate> raw) {
+            this->rawInterface = raw;
+        }
+        void releaseExtra() override {
+            __methodDelegateToPushable.erase(rawInterface.get());
+        }
+    public:
+        static std::shared_ptr<ServerMethodDelegateWrapper> wrapAndRegister(std::shared_ptr<MethodDelegate> raw) {
+            auto ret = std::shared_ptr<ServerMethodDelegateWrapper>(new ServerMethodDelegateWrapper(raw));
+            __methodDelegateToPushable[raw.get()] = ret;
+            return ret;
+        }
+    };
+    class ClientMethodDelegate : public ClientObject, public MethodDelegate {
+    public:
+        ClientMethodDelegate(int id) : ClientObject(id) {}
+        ~ClientMethodDelegate() override {
+            __methodDelegateToPushable.erase(this);
+        }
+        bool filterAcceptsColumn(int32_t sourceColumn, ModelIndex::HandleRef sourceParent) override {
+            ModelIndex::Handle__push(sourceParent);
+            ni_pushInt32(sourceColumn);
+            invokeMethod(methodDelegate_filterAcceptsColumn);
+            return ni_popBool();
+        }
+        bool filterAcceptsRow(int32_t sourceRow, ModelIndex::HandleRef sourceParent) override {
+            ModelIndex::Handle__push(sourceParent);
+            ni_pushInt32(sourceRow);
+            invokeMethod(methodDelegate_filterAcceptsRow);
+            return ni_popBool();
+        }
+        bool lessThan(ModelIndex::HandleRef sourceLeft, ModelIndex::HandleRef sourceRight) override {
+            ModelIndex::Handle__push(sourceRight);
+            ModelIndex::Handle__push(sourceLeft);
+            invokeMethod(methodDelegate_lessThan);
+            return ni_popBool();
+        }
+    };
+
+    void MethodDelegate__push(std::shared_ptr<MethodDelegate> inst, bool isReturn) {
+        if (inst != nullptr) {
+            auto found = __methodDelegateToPushable.find(inst.get());
+            if (found != __methodDelegateToPushable.end()) {
+                auto pushable = found->second.lock();
+                pushable->push(pushable, isReturn);
+            }
+            else {
+                auto pushable = ServerMethodDelegateWrapper::wrapAndRegister(inst);
+                pushable->push(pushable, isReturn);
+            }
+        }
+        else {
+            ni_pushNull();
+        }
+    }
+
+    std::shared_ptr<MethodDelegate> MethodDelegate__pop() {
+        bool isClientID;
+        auto id = ni_popInstance(&isClientID);
+        if (id != 0) {
+            if (isClientID) {
+                auto ret = std::shared_ptr<MethodDelegate>(new ClientMethodDelegate(id));
+                __methodDelegateToPushable[ret.get()] = std::dynamic_pointer_cast<Pushable>(ret);
+                return ret;
+            }
+            else {
+                auto wrapper = std::static_pointer_cast<ServerMethodDelegateWrapper>(ServerObject::getByID(id));
+                return wrapper->rawInterface;
+            }
+        }
+        else {
+            return std::shared_ptr<MethodDelegate>();
+        }
+    }
+
+    void MethodDelegate_filterAcceptsColumn__wrapper(int serverID) {
+        auto wrapper = std::static_pointer_cast<ServerMethodDelegateWrapper>(ServerObject::getByID(serverID));
+        auto inst = wrapper->rawInterface;
+        auto sourceColumn = ni_popInt32();
+        auto sourceParent = ModelIndex::Handle__pop();
+        ni_pushBool(inst->filterAcceptsColumn(sourceColumn, sourceParent));
+    }
+
+    void MethodDelegate_filterAcceptsRow__wrapper(int serverID) {
+        auto wrapper = std::static_pointer_cast<ServerMethodDelegateWrapper>(ServerObject::getByID(serverID));
+        auto inst = wrapper->rawInterface;
+        auto sourceRow = ni_popInt32();
+        auto sourceParent = ModelIndex::Handle__pop();
+        ni_pushBool(inst->filterAcceptsRow(sourceRow, sourceParent));
+    }
+
+    void MethodDelegate_lessThan__wrapper(int serverID) {
+        auto wrapper = std::static_pointer_cast<ServerMethodDelegateWrapper>(ServerObject::getByID(serverID));
+        auto inst = wrapper->rawInterface;
+        auto sourceLeft = ModelIndex::Handle__pop();
+        auto sourceRight = ModelIndex::Handle__pop();
+        ni_pushBool(inst->lessThan(sourceLeft, sourceRight));
+    }
+
+    void createSubclassed__wrapper() {
+        auto handler = SignalHandler__pop();
+        auto methodDelegate = MethodDelegate__pop();
+        auto methodMask = MethodMask__pop();
+        Interior__push(createSubclassed(handler, methodDelegate, methodMask));
+    }
 
     int __register() {
         auto m = ni_registerModule("SortFilterProxyModel");
         ni_registerModuleMethod(m, "create", &create__wrapper);
+        ni_registerModuleMethod(m, "createSubclassed", &createSubclassed__wrapper);
         ni_registerModuleMethod(m, "Handle_setAutoAcceptChildRows", &Handle_setAutoAcceptChildRows__wrapper);
         ni_registerModuleMethod(m, "Handle_setDynamicSortFilter", &Handle_setDynamicSortFilter__wrapper);
         ni_registerModuleMethod(m, "Handle_setFilterCaseSensitivity", &Handle_setFilterCaseSensitivity__wrapper);
@@ -625,6 +774,10 @@ namespace SortFilterProxyModel
         ni_registerModuleMethod(m, "Handle_setSortRole", &Handle_setSortRole__wrapper);
         ni_registerModuleMethod(m, "Handle_setSignalMask", &Handle_setSignalMask__wrapper);
         ni_registerModuleMethod(m, "Handle_dispose", &Handle_dispose__wrapper);
+        ni_registerModuleMethod(m, "Interior_invalidateColumnsFilter", &Interior_invalidateColumnsFilter__wrapper);
+        ni_registerModuleMethod(m, "Interior_invalidateRowsFilter", &Interior_invalidateRowsFilter__wrapper);
+        ni_registerModuleMethod(m, "Interior_invalidateFilter", &Interior_invalidateFilter__wrapper);
+        ni_registerModuleMethod(m, "Interior_dispose", &Interior_dispose__wrapper);
         auto signalHandler = ni_registerInterface(m, "SignalHandler");
         signalHandler_destroyed = ni_registerInterfaceMethod(signalHandler, "destroyed", &SignalHandler_destroyed__wrapper);
         signalHandler_objectNameChanged = ni_registerInterfaceMethod(signalHandler, "objectNameChanged", &SignalHandler_objectNameChanged__wrapper);
@@ -654,6 +807,10 @@ namespace SortFilterProxyModel
         signalHandler_sortCaseSensitivityChanged = ni_registerInterfaceMethod(signalHandler, "sortCaseSensitivityChanged", &SignalHandler_sortCaseSensitivityChanged__wrapper);
         signalHandler_sortLocaleAwareChanged = ni_registerInterfaceMethod(signalHandler, "sortLocaleAwareChanged", &SignalHandler_sortLocaleAwareChanged__wrapper);
         signalHandler_sortRoleChanged = ni_registerInterfaceMethod(signalHandler, "sortRoleChanged", &SignalHandler_sortRoleChanged__wrapper);
+        auto methodDelegate = ni_registerInterface(m, "MethodDelegate");
+        methodDelegate_filterAcceptsColumn = ni_registerInterfaceMethod(methodDelegate, "filterAcceptsColumn", &MethodDelegate_filterAcceptsColumn__wrapper);
+        methodDelegate_filterAcceptsRow = ni_registerInterfaceMethod(methodDelegate, "filterAcceptsRow", &MethodDelegate_filterAcceptsRow__wrapper);
+        methodDelegate_lessThan = ni_registerInterfaceMethod(methodDelegate, "lessThan", &MethodDelegate_lessThan__wrapper);
         return 0; // = OK
     }
 }

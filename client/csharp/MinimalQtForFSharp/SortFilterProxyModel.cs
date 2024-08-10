@@ -46,6 +46,7 @@ namespace Org.Whatever.MinimalQtForFSharp
             return intValues.Select(i => (ItemDataRole)i).ToArray();
         }
         internal static ModuleMethodHandle _create;
+        internal static ModuleMethodHandle _createSubclassed;
         internal static ModuleMethodHandle _handle_setAutoAcceptChildRows;
         internal static ModuleMethodHandle _handle_setDynamicSortFilter;
         internal static ModuleMethodHandle _handle_setFilterCaseSensitivity;
@@ -58,6 +59,10 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static ModuleMethodHandle _handle_setSortRole;
         internal static ModuleMethodHandle _handle_setSignalMask;
         internal static ModuleMethodHandle _handle_dispose;
+        internal static ModuleMethodHandle _interior_invalidateColumnsFilter;
+        internal static ModuleMethodHandle _interior_invalidateRowsFilter;
+        internal static ModuleMethodHandle _interior_invalidateFilter;
+        internal static ModuleMethodHandle _interior_dispose;
         internal static InterfaceHandle _signalHandler;
         internal static InterfaceMethodHandle _signalHandler_destroyed;
         internal static InterfaceMethodHandle _signalHandler_objectNameChanged;
@@ -87,12 +92,25 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static InterfaceMethodHandle _signalHandler_sortCaseSensitivityChanged;
         internal static InterfaceMethodHandle _signalHandler_sortLocaleAwareChanged;
         internal static InterfaceMethodHandle _signalHandler_sortRoleChanged;
+        internal static InterfaceHandle _methodDelegate;
+        internal static InterfaceMethodHandle _methodDelegate_filterAcceptsColumn;
+        internal static InterfaceMethodHandle _methodDelegate_filterAcceptsRow;
+        internal static InterfaceMethodHandle _methodDelegate_lessThan;
 
         public static Handle Create(SignalHandler handler)
         {
             SignalHandler__Push(handler, false);
             NativeImplClient.InvokeModuleMethod(_create);
             return Handle__Pop();
+        }
+
+        public static Interior CreateSubclassed(SignalHandler handler, MethodDelegate methodDelegate, MethodMask methodMask)
+        {
+            MethodMask__Push(methodMask);
+            MethodDelegate__Push(methodDelegate, false);
+            SignalHandler__Push(handler, false);
+            NativeImplClient.InvokeModuleMethod(_createSubclassed);
+            return Interior__Pop();
         }
         [Flags]
         public enum SignalMask
@@ -556,12 +574,192 @@ namespace Org.Whatever.MinimalQtForFSharp
             var ptr = NativeImplClient.PopPtr();
             return ptr != IntPtr.Zero ? new Handle(ptr) : null;
         }
+        public class Interior : Handle
+        {
+            internal Interior(IntPtr nativeHandle) : base(nativeHandle)
+            {
+            }
+            public override void Dispose()
+            {
+                if (!_disposed)
+                {
+                    Interior__Push(this);
+                    NativeImplClient.InvokeModuleMethod(_interior_dispose);
+                    _disposed = true;
+                }
+            }
+            public void InvalidateColumnsFilter()
+            {
+                Interior__Push(this);
+                NativeImplClient.InvokeModuleMethod(_interior_invalidateColumnsFilter);
+            }
+            public void InvalidateRowsFilter()
+            {
+                Interior__Push(this);
+                NativeImplClient.InvokeModuleMethod(_interior_invalidateRowsFilter);
+            }
+            public void InvalidateFilter()
+            {
+                Interior__Push(this);
+                NativeImplClient.InvokeModuleMethod(_interior_invalidateFilter);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void Interior__Push(Interior thing)
+        {
+            NativeImplClient.PushPtr(thing?.NativeHandle ?? IntPtr.Zero);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static Interior Interior__Pop()
+        {
+            var ptr = NativeImplClient.PopPtr();
+            return ptr != IntPtr.Zero ? new Interior(ptr) : null;
+        }
+        [Flags]
+        public enum MethodMask
+        {
+            // MethodMask:
+            FilterAcceptsColumn = 1 << 0,
+            FilterAcceptsRow = 1 << 1,
+            LessThan = 1 << 2
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void MethodMask__Push(MethodMask value)
+        {
+            NativeImplClient.PushInt32((int)value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static MethodMask MethodMask__Pop()
+        {
+            var ret = NativeImplClient.PopInt32();
+            return (MethodMask)ret;
+        }
+
+        public interface MethodDelegate : IDisposable
+        {
+            void IDisposable.Dispose()
+            {
+                // nothing by default
+            }
+            bool FilterAcceptsColumn(int sourceColumn, ModelIndex.Handle sourceParent);
+            bool FilterAcceptsRow(int sourceRow, ModelIndex.Handle sourceParent);
+            bool LessThan(ModelIndex.Handle sourceLeft, ModelIndex.Handle sourceRight);
+        }
+
+        private static Dictionary<MethodDelegate, IPushable> __MethodDelegateToPushable = new();
+        internal class __MethodDelegateWrapper : ClientInterfaceWrapper<MethodDelegate>
+        {
+            public __MethodDelegateWrapper(MethodDelegate rawInterface) : base(rawInterface)
+            {
+            }
+            protected override void ReleaseExtra()
+            {
+                // remove the raw interface from the lookup table, no longer needed
+                __MethodDelegateToPushable.Remove(RawInterface);
+            }
+        }
+
+        internal static void MethodDelegate__Push(MethodDelegate thing, bool isReturn)
+        {
+            if (thing != null)
+            {
+                if (__MethodDelegateToPushable.TryGetValue(thing, out var pushable))
+                {
+                    // either an already-known client thing, or a server thing
+                    pushable.Push(isReturn);
+                }
+                else
+                {
+                    // as-yet-unknown client thing - wrap and add to lookup table
+                    pushable = new __MethodDelegateWrapper(thing);
+                    __MethodDelegateToPushable.Add(thing, pushable);
+                }
+                pushable.Push(isReturn);
+            }
+            else
+            {
+                NativeImplClient.PushNull();
+            }
+        }
+
+        internal static MethodDelegate MethodDelegate__Pop()
+        {
+            NativeImplClient.PopInstanceId(out var id, out var isClientId);
+            if (id != 0)
+            {
+                if (isClientId)
+                {
+                    // we must have sent it over originally, so wrapper must exist
+                    var wrapper = (__MethodDelegateWrapper)ClientObject.GetById(id);
+                    return wrapper.RawInterface;
+                }
+                else // server ID
+                {
+                    var thing = new ServerMethodDelegate(id);
+                    // add to lookup table before returning
+                    __MethodDelegateToPushable.Add(thing, thing);
+                    return thing;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private class ServerMethodDelegate : ServerObject, MethodDelegate
+        {
+            public ServerMethodDelegate(int id) : base(id)
+            {
+            }
+
+            public bool FilterAcceptsColumn(int sourceColumn, ModelIndex.Handle sourceParent)
+            {
+                ModelIndex.Handle__Push(sourceParent);
+                NativeImplClient.PushInt32(sourceColumn);
+                NativeImplClient.InvokeInterfaceMethod(_methodDelegate_filterAcceptsColumn, Id);
+                return NativeImplClient.PopBool();
+            }
+
+            public bool FilterAcceptsRow(int sourceRow, ModelIndex.Handle sourceParent)
+            {
+                ModelIndex.Handle__Push(sourceParent);
+                NativeImplClient.PushInt32(sourceRow);
+                NativeImplClient.InvokeInterfaceMethod(_methodDelegate_filterAcceptsRow, Id);
+                return NativeImplClient.PopBool();
+            }
+
+            public bool LessThan(ModelIndex.Handle sourceLeft, ModelIndex.Handle sourceRight)
+            {
+                ModelIndex.Handle__Push(sourceRight);
+                ModelIndex.Handle__Push(sourceLeft);
+                NativeImplClient.InvokeInterfaceMethod(_methodDelegate_lessThan, Id);
+                return NativeImplClient.PopBool();
+            }
+
+            protected override void ReleaseExtra()
+            {
+                // remove from lookup table
+                __MethodDelegateToPushable.Remove(this);
+            }
+
+            public void Dispose()
+            {
+                // will invoke ReleaseExtra() for us
+                ServerDispose();
+            }
+        }
 
         internal static void __Init()
         {
             _module = NativeImplClient.GetModule("SortFilterProxyModel");
             // assign module handles
             _create = NativeImplClient.GetModuleMethod(_module, "create");
+            _createSubclassed = NativeImplClient.GetModuleMethod(_module, "createSubclassed");
             _handle_setAutoAcceptChildRows = NativeImplClient.GetModuleMethod(_module, "Handle_setAutoAcceptChildRows");
             _handle_setDynamicSortFilter = NativeImplClient.GetModuleMethod(_module, "Handle_setDynamicSortFilter");
             _handle_setFilterCaseSensitivity = NativeImplClient.GetModuleMethod(_module, "Handle_setFilterCaseSensitivity");
@@ -574,6 +772,10 @@ namespace Org.Whatever.MinimalQtForFSharp
             _handle_setSortRole = NativeImplClient.GetModuleMethod(_module, "Handle_setSortRole");
             _handle_setSignalMask = NativeImplClient.GetModuleMethod(_module, "Handle_setSignalMask");
             _handle_dispose = NativeImplClient.GetModuleMethod(_module, "Handle_dispose");
+            _interior_invalidateColumnsFilter = NativeImplClient.GetModuleMethod(_module, "Interior_invalidateColumnsFilter");
+            _interior_invalidateRowsFilter = NativeImplClient.GetModuleMethod(_module, "Interior_invalidateRowsFilter");
+            _interior_invalidateFilter = NativeImplClient.GetModuleMethod(_module, "Interior_invalidateFilter");
+            _interior_dispose = NativeImplClient.GetModuleMethod(_module, "Interior_dispose");
             _signalHandler = NativeImplClient.GetInterface(_module, "SignalHandler");
             _signalHandler_destroyed = NativeImplClient.GetInterfaceMethod(_signalHandler, "destroyed");
             _signalHandler_objectNameChanged = NativeImplClient.GetInterfaceMethod(_signalHandler, "objectNameChanged");
@@ -805,6 +1007,31 @@ namespace Org.Whatever.MinimalQtForFSharp
                 var inst = ((__SignalHandlerWrapper)__obj).RawInterface;
                 var sortRole = ItemDataRole__Pop();
                 inst.SortRoleChanged(sortRole);
+            });
+            _methodDelegate = NativeImplClient.GetInterface(_module, "MethodDelegate");
+            _methodDelegate_filterAcceptsColumn = NativeImplClient.GetInterfaceMethod(_methodDelegate, "filterAcceptsColumn");
+            _methodDelegate_filterAcceptsRow = NativeImplClient.GetInterfaceMethod(_methodDelegate, "filterAcceptsRow");
+            _methodDelegate_lessThan = NativeImplClient.GetInterfaceMethod(_methodDelegate, "lessThan");
+            NativeImplClient.SetClientMethodWrapper(_methodDelegate_filterAcceptsColumn, delegate(ClientObject __obj)
+            {
+                var inst = ((__MethodDelegateWrapper)__obj).RawInterface;
+                var sourceColumn = NativeImplClient.PopInt32();
+                var sourceParent = ModelIndex.Handle__Pop();
+                NativeImplClient.PushBool(inst.FilterAcceptsColumn(sourceColumn, sourceParent));
+            });
+            NativeImplClient.SetClientMethodWrapper(_methodDelegate_filterAcceptsRow, delegate(ClientObject __obj)
+            {
+                var inst = ((__MethodDelegateWrapper)__obj).RawInterface;
+                var sourceRow = NativeImplClient.PopInt32();
+                var sourceParent = ModelIndex.Handle__Pop();
+                NativeImplClient.PushBool(inst.FilterAcceptsRow(sourceRow, sourceParent));
+            });
+            NativeImplClient.SetClientMethodWrapper(_methodDelegate_lessThan, delegate(ClientObject __obj)
+            {
+                var inst = ((__MethodDelegateWrapper)__obj).RawInterface;
+                var sourceLeft = ModelIndex.Handle__Pop();
+                var sourceRight = ModelIndex.Handle__Pop();
+                NativeImplClient.PushBool(inst.LessThan(sourceLeft, sourceRight));
             });
 
             // no static init

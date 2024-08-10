@@ -43,6 +43,7 @@ namespace Org.Whatever.MinimalQtForFSharp
             var intValues = NativeImplClient.PopInt8Array();
             return intValues.Select(i => (ItemDataRole)i).ToArray();
         }
+        internal static ModuleMethodHandle _handle_sourceModel;
         internal static ModuleMethodHandle _handle_setSourceModel;
         internal static ModuleMethodHandle _handle_mapToSource;
         internal static InterfaceHandle _signalHandler;
@@ -383,6 +384,12 @@ namespace Org.Whatever.MinimalQtForFSharp
             internal Handle(IntPtr nativeHandle) : base(nativeHandle)
             {
             }
+            public AbstractItemModel.Handle SourceModel()
+            {
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_sourceModel);
+                return AbstractItemModel.Handle__Pop();
+            }
             public void SetSourceModel(AbstractItemModel.Handle sourceModel)
             {
                 AbstractItemModel.Handle__Push(sourceModel);
@@ -415,6 +422,7 @@ namespace Org.Whatever.MinimalQtForFSharp
         {
             _module = NativeImplClient.GetModule("AbstractProxyModel");
             // assign module handles
+            _handle_sourceModel = NativeImplClient.GetModuleMethod(_module, "Handle_sourceModel");
             _handle_setSourceModel = NativeImplClient.GetModuleMethod(_module, "Handle_setSourceModel");
             _handle_mapToSource = NativeImplClient.GetModuleMethod(_module, "Handle_mapToSource");
             _signalHandler = NativeImplClient.GetInterface(_module, "SignalHandler");

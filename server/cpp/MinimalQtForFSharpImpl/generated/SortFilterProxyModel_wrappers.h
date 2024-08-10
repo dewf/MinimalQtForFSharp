@@ -95,5 +95,30 @@ namespace SortFilterProxyModel
 
     void create__wrapper();
 
+    void Interior__push(InteriorRef value);
+    InteriorRef Interior__pop();
+
+    void Interior_invalidateColumnsFilter__wrapper();
+
+    void Interior_invalidateRowsFilter__wrapper();
+
+    void Interior_invalidateFilter__wrapper();
+
+    void Interior_dispose__wrapper();
+
+    void MethodMask__push(MethodMask value);
+    MethodMask MethodMask__pop();
+
+    void MethodDelegate__push(std::shared_ptr<MethodDelegate> inst, bool isReturn);
+    std::shared_ptr<MethodDelegate> MethodDelegate__pop();
+
+    void MethodDelegate_filterAcceptsColumn__wrapper(int serverID);
+
+    void MethodDelegate_filterAcceptsRow__wrapper(int serverID);
+
+    void MethodDelegate_lessThan__wrapper(int serverID);
+
+    void createSubclassed__wrapper();
+
     int __register();
 }

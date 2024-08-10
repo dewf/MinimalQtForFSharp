@@ -25,5 +25,6 @@ opaque OwnedHandle extends Handle;
 sumtype Deferred {
     Empty,
     FromHandle(Handle handle),
+    // seeing as this is a one-way thing (from client -> server), why do we need a separate case for Owned? it's not going to be taking ownership or anything ...
     FromOwned(OwnedHandle owned)
 }

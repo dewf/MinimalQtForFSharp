@@ -30,6 +30,7 @@ namespace SortFilterProxyModel
 {
 
     struct __Handle; typedef struct __Handle* HandleRef; // extends AbstractProxyModel::HandleRef
+    struct __Interior; typedef struct __Interior* InteriorRef; // extends HandleRef
 
     typedef int32_t SignalMask;
     enum SignalMaskFlags: int32_t {
@@ -112,4 +113,25 @@ namespace SortFilterProxyModel
     void Handle_setSignalMask(HandleRef _this, SignalMask mask);
     void Handle_dispose(HandleRef _this);
     HandleRef create(std::shared_ptr<SignalHandler> handler);
+
+    void Interior_invalidateColumnsFilter(InteriorRef _this);
+    void Interior_invalidateRowsFilter(InteriorRef _this);
+    void Interior_invalidateFilter(InteriorRef _this);
+    void Interior_dispose(InteriorRef _this);
+
+    typedef int32_t MethodMask;
+    enum MethodMaskFlags: int32_t {
+        // MethodMask:
+        FilterAcceptsColumn = 1 << 0,
+        FilterAcceptsRow = 1 << 1,
+        LessThan = 1 << 2
+    };
+
+    class MethodDelegate {
+    public:
+        virtual bool filterAcceptsColumn(int32_t sourceColumn, ModelIndex::HandleRef sourceParent) = 0;
+        virtual bool filterAcceptsRow(int32_t sourceRow, ModelIndex::HandleRef sourceParent) = 0;
+        virtual bool lessThan(ModelIndex::HandleRef sourceLeft, ModelIndex::HandleRef sourceRight) = 0;
+    };
+    InteriorRef createSubclassed(std::shared_ptr<SignalHandler> handler, std::shared_ptr<MethodDelegate> methodDelegate, MethodMask methodMask);
 }

@@ -80,6 +80,7 @@ namespace AbstractProxyModel
         virtual void sourceModelChanged() = 0;
     };
 
+    AbstractItemModel::HandleRef Handle_sourceModel(HandleRef _this);
     void Handle_setSourceModel(HandleRef _this, AbstractItemModel::HandleRef sourceModel);
     ModelIndex::OwnedHandleRef Handle_mapToSource(HandleRef _this, std::shared_ptr<ModelIndex::Deferred::Base> proxyIndex);
 }

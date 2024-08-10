@@ -73,4 +73,24 @@ opaque Handle extends AbstractProxyModel.Handle {
 
 Handle create(SignalHandler handler);
 
-// no subclassing yet
+// subclassing ==============================================
+
+opaque Interior extends Handle {
+    void invalidateColumnsFilter();
+    void invalidateRowsFilter();
+    void invalidateFilter();
+}
+
+namedbits MethodMask {
+    FilterAcceptsColumn,
+    FilterAcceptsRow,
+    LessThan
+}
+
+interface MethodDelegate {
+    bool filterAcceptsColumn(int sourceColumn, ModelIndex.Handle sourceParent);
+    bool filterAcceptsRow(int sourceRow, ModelIndex.Handle sourceParent);
+    bool lessThan(ModelIndex.Handle sourceLeft, ModelIndex.Handle sourceRight);
+}
+
+Interior createSubclassed(SignalHandler handler, MethodDelegate methodDelegate, MethodMask methodMask);

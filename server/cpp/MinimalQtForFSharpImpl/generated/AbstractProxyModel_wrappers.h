@@ -55,6 +55,8 @@ namespace AbstractProxyModel
     void Handle__push(HandleRef value);
     HandleRef Handle__pop();
 
+    void Handle_sourceModel__wrapper();
+
     void Handle_setSourceModel__wrapper();
 
     void Handle_mapToSource__wrapper();

@@ -9,6 +9,10 @@
 
 namespace AbstractProxyModel
 {
+    AbstractItemModel::HandleRef Handle_sourceModel(HandleRef _this) {
+        return (AbstractItemModel::HandleRef)THIS->sourceModel();
+    }
+
     void Handle_setSourceModel(HandleRef _this, AbstractItemModel::HandleRef sourceModel) {
         THIS->setSourceModel((QAbstractItemModel*)sourceModel);
     }

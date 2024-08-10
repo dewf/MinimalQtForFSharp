@@ -47,6 +47,8 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static ModuleMethodHandle _handle_index_overload1;
         internal static ModuleMethodHandle _handle_setData;
         internal static ModuleMethodHandle _handle_setData_overload1;
+        internal static ModuleMethodHandle _handle_data;
+        internal static ModuleMethodHandle _handle_data_overload1;
         internal static InterfaceHandle _signalHandler;
         internal static InterfaceMethodHandle _signalHandler_destroyed;
         internal static InterfaceMethodHandle _signalHandler_objectNameChanged;
@@ -429,6 +431,21 @@ namespace Org.Whatever.MinimalQtForFSharp
                 NativeImplClient.InvokeModuleMethod(_handle_setData_overload1);
                 return NativeImplClient.PopBool();
             }
+            public Variant.OwnedHandle Data(ModelIndex.Deferred index)
+            {
+                ModelIndex.Deferred__Push(index, false);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_data);
+                return Variant.OwnedHandle__Pop();
+            }
+            public Variant.OwnedHandle Data(ModelIndex.Deferred index, ItemDataRole role)
+            {
+                ItemDataRole__Push(role);
+                ModelIndex.Deferred__Push(index, false);
+                Handle__Push(this);
+                NativeImplClient.InvokeModuleMethod(_handle_data_overload1);
+                return Variant.OwnedHandle__Pop();
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -452,6 +469,8 @@ namespace Org.Whatever.MinimalQtForFSharp
             _handle_index_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_index_overload1");
             _handle_setData = NativeImplClient.GetModuleMethod(_module, "Handle_setData");
             _handle_setData_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_setData_overload1");
+            _handle_data = NativeImplClient.GetModuleMethod(_module, "Handle_data");
+            _handle_data_overload1 = NativeImplClient.GetModuleMethod(_module, "Handle_data_overload1");
             _signalHandler = NativeImplClient.GetInterface(_module, "SignalHandler");
             _signalHandler_destroyed = NativeImplClient.GetInterfaceMethod(_signalHandler, "destroyed");
             _signalHandler_objectNameChanged = NativeImplClient.GetInterfaceMethod(_signalHandler, "objectNameChanged");

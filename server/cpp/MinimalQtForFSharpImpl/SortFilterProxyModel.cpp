@@ -213,6 +213,66 @@ namespace SortFilterProxyModel
     HandleRef create(std::shared_ptr<SignalHandler> handler) {
         return (HandleRef) new SortFilterProxyModelWithHandler(std::move(handler));
     }
+
+    // subclass stuff ==================================================
+
+#define SUBTHIS ((Subclassed*)_this)
+
+    class Subclassed : public SortFilterProxyModelWithHandler {
+    private:
+        MethodMask methodMask;
+        std::shared_ptr<MethodDelegate> methodDelegate;
+    public:
+        Subclassed(const std::shared_ptr<SignalHandler> &handler, const std::shared_ptr<MethodDelegate> &methodDelegate, MethodMask methodMask)
+            : SortFilterProxyModelWithHandler(handler), methodMask(methodMask), methodDelegate(methodDelegate) {}
+    protected:
+        [[nodiscard]] bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override {
+            if (methodMask & MethodMaskFlags::FilterAcceptsRow) {
+                return methodDelegate->filterAcceptsRow(source_row, MODELINDEX(source_parent));
+            } else {
+                return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+            }
+        }
+        [[nodiscard]] bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const override {
+            if (methodMask & MethodMaskFlags::FilterAcceptsColumn) {
+                return methodDelegate->filterAcceptsColumn(source_column,MODELINDEX(source_parent));
+            } else {
+                return QSortFilterProxyModel::filterAcceptsColumn(source_column, source_parent);
+            }
+        }
+        [[nodiscard]] bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override {
+            if (methodMask & MethodMaskFlags::LessThan) {
+                return methodDelegate->lessThan(MODELINDEX(source_left), MODELINDEX(source_right));
+            } else {
+                return QSortFilterProxyModel::lessThan(source_left, source_right);
+            }
+        }
+    public:
+        friend void Interior_invalidateColumnsFilter(InteriorRef _this);
+        friend void Interior_invalidateRowsFilter(InteriorRef _this);
+        friend void Interior_invalidateFilter(InteriorRef _this);
+    };
+
+    void Interior_invalidateColumnsFilter(InteriorRef _this) {
+        SUBTHIS->invalidateColumnsFilter();
+    }
+
+    void Interior_invalidateRowsFilter(InteriorRef _this) {
+        SUBTHIS->invalidateRowsFilter();
+    }
+
+    void Interior_invalidateFilter(InteriorRef _this) {
+        SUBTHIS->invalidateFilter();
+    }
+
+    void Interior_dispose(InteriorRef _this) {
+        delete THIS;
+    }
+
+    InteriorRef createSubclassed(std::shared_ptr<SignalHandler> handler, std::shared_ptr<MethodDelegate> methodDelegate, MethodMask methodMask) {
+        return (InteriorRef) new Subclassed(handler, methodDelegate, methodMask);
+    }
+
 }
 
 #include "SortFilterProxyModel.moc"

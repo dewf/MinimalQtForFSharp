@@ -444,6 +444,11 @@ namespace AbstractProxyModel
         return (HandleRef)ni_popPtr();
     }
 
+    void Handle_sourceModel__wrapper() {
+        auto _this = Handle__pop();
+        AbstractItemModel::Handle__push(Handle_sourceModel(_this));
+    }
+
     void Handle_setSourceModel__wrapper() {
         auto _this = Handle__pop();
         auto sourceModel = AbstractItemModel::Handle__pop();
@@ -458,6 +463,7 @@ namespace AbstractProxyModel
 
     int __register() {
         auto m = ni_registerModule("AbstractProxyModel");
+        ni_registerModuleMethod(m, "Handle_sourceModel", &Handle_sourceModel__wrapper);
         ni_registerModuleMethod(m, "Handle_setSourceModel", &Handle_setSourceModel__wrapper);
         ni_registerModuleMethod(m, "Handle_mapToSource", &Handle_mapToSource__wrapper);
         auto signalHandler = ni_registerInterface(m, "SignalHandler");

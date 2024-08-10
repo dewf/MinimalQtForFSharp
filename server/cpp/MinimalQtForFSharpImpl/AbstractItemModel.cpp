@@ -31,4 +31,14 @@ namespace AbstractItemModel
         auto value2 = Variant::fromDeferred(value);
         return THIS->setData(index2, value2, (int)role);
     }
+
+    Variant::OwnedHandleRef Handle_data(HandleRef _this, std::shared_ptr<ModelIndex::Deferred::Base> index) {
+        auto value = THIS->data(ModelIndex::fromDeferred(index));
+        return (Variant::OwnedHandleRef) new QVariant(value);
+    }
+
+    Variant::OwnedHandleRef Handle_data(HandleRef _this, std::shared_ptr<ModelIndex::Deferred::Base> index, ItemDataRole role) {
+        auto value = THIS->data(ModelIndex::fromDeferred(index), (Qt::ItemDataRole)role);
+        return (Variant::OwnedHandleRef) new QVariant(value);
+    }
 }
