@@ -235,6 +235,7 @@ namespace Org.Whatever.MinimalQtForFSharp
                     5 => FromSize.PopDerived(),
                     6 => FromIcon.PopDerived(),
                     7 => FromColor.PopDerived(),
+                    8 => FromAligment.PopDerived(),
                     _ => throw new Exception("Deferred.Pop() - unknown tag!")
                 };
             }
@@ -353,6 +354,21 @@ namespace Org.Whatever.MinimalQtForFSharp
                 {
                     var value = Color.Deferred__Pop();
                     return new FromColor(value);
+                }
+            }
+            public sealed record FromAligment(Alignment Value) : Deferred
+            {
+                public Alignment Value { get; } = Value;
+                internal override void Push(bool isReturn)
+                {
+                    Alignment__Push(Value);
+                    // kind
+                    NativeImplClient.PushInt32(8);
+                }
+                internal static FromAligment PopDerived()
+                {
+                    var value = Alignment__Pop();
+                    return new FromAligment(value);
                 }
             }
         }

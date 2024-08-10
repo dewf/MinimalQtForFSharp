@@ -108,6 +108,7 @@ namespace Variant
         class FromSize;
         class FromIcon;
         class FromColor;
+        class FromAligment;
 
         class Visitor {
         public:
@@ -119,6 +120,7 @@ namespace Variant
             virtual void onFromSize(const FromSize* value) = 0;
             virtual void onFromIcon(const FromIcon* value) = 0;
             virtual void onFromColor(const FromColor* value) = 0;
+            virtual void onFromAligment(const FromAligment* value) = 0;
         };
 
         class Base {
@@ -194,6 +196,15 @@ namespace Variant
             FromColor(std::shared_ptr<PaintResources::Color::Deferred::Base> value) : value(value) {}
             void accept(Visitor* visitor) override {
                 visitor->onFromColor(this);
+            }
+        };
+
+        class FromAligment : public Base {
+        public:
+            const Enums::Alignment value;
+            FromAligment(Enums::Alignment value) : value(value) {}
+            void accept(Visitor* visitor) override {
+                visitor->onFromAligment(this);
             }
         };
     }

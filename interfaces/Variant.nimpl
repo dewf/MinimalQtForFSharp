@@ -49,4 +49,5 @@ sumtype Deferred {
     FromSize(Size size),
     FromIcon(Icon.Deferred value),
     FromColor(Color.Deferred value),
+    FromAligment(Alignment value)
 }

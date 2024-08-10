@@ -179,6 +179,11 @@ namespace Variant
             // kind:
             ni_pushInt32(7);
         }
+        void onFromAligment(const Deferred::FromAligment* fromAligmentValue) override {
+            Alignment__push(fromAligmentValue->value);
+            // kind:
+            ni_pushInt32(8);
+        }
     };
 
     void Deferred__push(std::shared_ptr<Deferred::Base> value, bool isReturn) {
@@ -226,6 +231,11 @@ namespace Variant
         case 7: {
             auto value = Color::Deferred__pop();
             __ret = new Deferred::FromColor(value);
+            break;
+        }
+        case 8: {
+            auto value = Alignment__pop();
+            __ret = new Deferred::FromAligment(value);
             break;
         }
         default:

@@ -108,6 +108,10 @@ namespace Variant
         void onFromColor(const Deferred::FromColor *value) override {
             variant = Color::fromDeferred(value->value);
         }
+
+        void onFromAligment(const Deferred::FromAligment *value) override {
+            variant = value->value;
+        }
     };
 
     QVariant fromDeferred(const std::shared_ptr<Deferred::Base>& deferred) {
