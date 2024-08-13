@@ -43,10 +43,11 @@ interface SignalHandler {
 // confusion reigns re: @nodipose on this, see project notes
 // (as it is, the @nodispose feature needs work for inheritance scenarios)
 opaque Handle extends AbstractItemModel.Handle {
-    Interior getInteriorHandle();
+    void setSignalMask(SignalMask mask);
 }
 
-@nodispose
+// subclass stuff ==========================================================
+
 opaque Interior extends Handle { // this opaque allows the method delegate to call internal methods as if it's a direct subclass
     // signal emission
     void emitDataChanged(ModelIndex.Deferred topLeft, ModelIndex.Deferred bottomRight, Array<ItemDataRole> roles);
@@ -61,11 +62,6 @@ opaque Interior extends Handle { // this opaque allows the method delegate to ca
 
     void beginResetModel();
     void endResetModel();
-
-    // TODO: setSignalMask
-    // but perhaps we need a SubHandle that's one level above this, would be more correct
-    // because in theory you might not actually want/need an Interior handle
-    // or maybe Interior should be SubclassedHandle
 }
 
 flags ItemFlags {
@@ -104,4 +100,4 @@ interface MethodDelegate {
     int columnCount(ModelIndex.Handle parent);
 }
 
-Handle createSubclassed(MethodDelegate methodDelegate, MethodMask mask);
+Interior createSubclassed(SignalHandler handler, MethodDelegate methodDelegate, MethodMask methodMask);

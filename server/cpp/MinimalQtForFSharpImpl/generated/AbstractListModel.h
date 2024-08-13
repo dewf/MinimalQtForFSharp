@@ -81,7 +81,7 @@ namespace AbstractListModel
         virtual void rowsRemoved(ModelIndex::HandleRef parent, int32_t first, int32_t last) = 0;
     };
 
-    InteriorRef Handle_getInteriorHandle(HandleRef _this);
+    void Handle_setSignalMask(HandleRef _this, SignalMask mask);
     void Handle_dispose(HandleRef _this);
 
     void Interior_emitDataChanged(InteriorRef _this, std::shared_ptr<ModelIndex::Deferred::Base> topLeft, std::shared_ptr<ModelIndex::Deferred::Base> bottomRight, std::vector<Enums::ItemDataRole> roles);
@@ -92,6 +92,7 @@ namespace AbstractListModel
     void Interior_endRemoveRows(InteriorRef _this);
     void Interior_beginResetModel(InteriorRef _this);
     void Interior_endResetModel(InteriorRef _this);
+    void Interior_dispose(InteriorRef _this);
 
     typedef int32_t ItemFlags;
     enum ItemFlagsFlags : int32_t {
@@ -124,5 +125,5 @@ namespace AbstractListModel
         virtual bool setData(ModelIndex::HandleRef index, Variant::HandleRef value, Enums::ItemDataRole role) = 0;
         virtual int32_t columnCount(ModelIndex::HandleRef parent) = 0;
     };
-    HandleRef createSubclassed(std::shared_ptr<MethodDelegate> methodDelegate, MethodMask mask);
+    InteriorRef createSubclassed(std::shared_ptr<SignalHandler> handler, std::shared_ptr<MethodDelegate> methodDelegate, MethodMask methodMask);
 }

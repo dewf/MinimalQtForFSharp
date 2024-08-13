@@ -443,9 +443,10 @@ namespace AbstractListModel
         return (HandleRef)ni_popPtr();
     }
 
-    void Handle_getInteriorHandle__wrapper() {
+    void Handle_setSignalMask__wrapper() {
         auto _this = Handle__pop();
-        Interior__push(Handle_getInteriorHandle(_this));
+        auto mask = SignalMask__pop();
+        Handle_setSignalMask(_this, mask);
     }
 
     void Handle_dispose__wrapper() {
@@ -510,6 +511,11 @@ namespace AbstractListModel
     void Interior_endResetModel__wrapper() {
         auto _this = Interior__pop();
         Interior_endResetModel(_this);
+    }
+
+    void Interior_dispose__wrapper() {
+        auto _this = Interior__pop();
+        Interior_dispose(_this);
     }
     void ItemFlags__push(ItemFlags value) {
         ni_pushInt32(value);
@@ -673,15 +679,16 @@ namespace AbstractListModel
     }
 
     void createSubclassed__wrapper() {
+        auto handler = SignalHandler__pop();
         auto methodDelegate = MethodDelegate__pop();
-        auto mask = MethodMask__pop();
-        Handle__push(createSubclassed(methodDelegate, mask));
+        auto methodMask = MethodMask__pop();
+        Interior__push(createSubclassed(handler, methodDelegate, methodMask));
     }
 
     int __register() {
         auto m = ni_registerModule("AbstractListModel");
         ni_registerModuleMethod(m, "createSubclassed", &createSubclassed__wrapper);
-        ni_registerModuleMethod(m, "Handle_getInteriorHandle", &Handle_getInteriorHandle__wrapper);
+        ni_registerModuleMethod(m, "Handle_setSignalMask", &Handle_setSignalMask__wrapper);
         ni_registerModuleMethod(m, "Handle_dispose", &Handle_dispose__wrapper);
         ni_registerModuleMethod(m, "Interior_emitDataChanged", &Interior_emitDataChanged__wrapper);
         ni_registerModuleMethod(m, "Interior_emitHeaderDataChanged", &Interior_emitHeaderDataChanged__wrapper);
@@ -691,6 +698,7 @@ namespace AbstractListModel
         ni_registerModuleMethod(m, "Interior_endRemoveRows", &Interior_endRemoveRows__wrapper);
         ni_registerModuleMethod(m, "Interior_beginResetModel", &Interior_beginResetModel__wrapper);
         ni_registerModuleMethod(m, "Interior_endResetModel", &Interior_endResetModel__wrapper);
+        ni_registerModuleMethod(m, "Interior_dispose", &Interior_dispose__wrapper);
         auto signalHandler = ni_registerInterface(m, "SignalHandler");
         signalHandler_destroyed = ni_registerInterfaceMethod(signalHandler, "destroyed", &SignalHandler_destroyed__wrapper);
         signalHandler_objectNameChanged = ni_registerInterfaceMethod(signalHandler, "objectNameChanged", &SignalHandler_objectNameChanged__wrapper);

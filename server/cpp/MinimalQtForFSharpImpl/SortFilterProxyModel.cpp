@@ -3,12 +3,11 @@
 #include <QSortFilterProxyModel>
 #include <utility>
 #include "util/SignalStuff.h"
+#include "util/Macros.h"
 
 #include "RegularExpressionInternal.h"
 
 #define THIS ((SortFilterProxyModelWithHandler*)_this)
-#define MODELINDEX(x) ((ModelIndex::HandleRef)&x)
-#define PMODELINDEX(x) ((PersistentModelIndex::HandleRef)&x)
 
 namespace SortFilterProxyModel
 {

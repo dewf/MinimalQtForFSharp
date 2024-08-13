@@ -53,7 +53,7 @@ namespace AbstractListModel
     void Handle__push(HandleRef value);
     HandleRef Handle__pop();
 
-    void Handle_getInteriorHandle__wrapper();
+    void Handle_setSignalMask__wrapper();
 
     void Handle_dispose__wrapper();
 
@@ -75,6 +75,8 @@ namespace AbstractListModel
     void Interior_beginResetModel__wrapper();
 
     void Interior_endResetModel__wrapper();
+
+    void Interior_dispose__wrapper();
 
     void ItemFlags__push(ItemFlags value);
     ItemFlags ItemFlags__pop();

@@ -45,7 +45,7 @@ namespace Org.Whatever.MinimalQtForFSharp
                 .ToArray();
         }
         internal static ModuleMethodHandle _createSubclassed;
-        internal static ModuleMethodHandle _handle_getInteriorHandle;
+        internal static ModuleMethodHandle _handle_setSignalMask;
         internal static ModuleMethodHandle _handle_dispose;
         internal static ModuleMethodHandle _interior_emitDataChanged;
         internal static ModuleMethodHandle _interior_emitHeaderDataChanged;
@@ -55,6 +55,7 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static ModuleMethodHandle _interior_endRemoveRows;
         internal static ModuleMethodHandle _interior_beginResetModel;
         internal static ModuleMethodHandle _interior_endResetModel;
+        internal static ModuleMethodHandle _interior_dispose;
         internal static InterfaceHandle _signalHandler;
         internal static InterfaceMethodHandle _signalHandler_destroyed;
         internal static InterfaceMethodHandle _signalHandler_objectNameChanged;
@@ -84,12 +85,13 @@ namespace Org.Whatever.MinimalQtForFSharp
         internal static InterfaceMethodHandle _methodDelegate_setData;
         internal static InterfaceMethodHandle _methodDelegate_columnCount;
 
-        public static Handle CreateSubclassed(MethodDelegate methodDelegate, MethodMask mask)
+        public static Interior CreateSubclassed(SignalHandler handler, MethodDelegate methodDelegate, MethodMask methodMask)
         {
-            MethodMask__Push(mask);
+            MethodMask__Push(methodMask);
             MethodDelegate__Push(methodDelegate, false);
+            SignalHandler__Push(handler, false);
             NativeImplClient.InvokeModuleMethod(_createSubclassed);
-            return Handle__Pop();
+            return Interior__Pop();
         }
         [Flags]
         public enum SignalMask
@@ -409,11 +411,11 @@ namespace Org.Whatever.MinimalQtForFSharp
                     _disposed = true;
                 }
             }
-            public Interior GetInteriorHandle()
+            public void SetSignalMask(SignalMask mask)
             {
+                SignalMask__Push(mask);
                 Handle__Push(this);
-                NativeImplClient.InvokeModuleMethod(_handle_getInteriorHandle);
-                return Interior__Pop();
+                NativeImplClient.InvokeModuleMethod(_handle_setSignalMask);
             }
         }
 
@@ -433,6 +435,15 @@ namespace Org.Whatever.MinimalQtForFSharp
         {
             internal Interior(IntPtr nativeHandle) : base(nativeHandle)
             {
+            }
+            public override void Dispose()
+            {
+                if (!_disposed)
+                {
+                    Interior__Push(this);
+                    NativeImplClient.InvokeModuleMethod(_interior_dispose);
+                    _disposed = true;
+                }
             }
             public void EmitDataChanged(ModelIndex.Deferred topLeft, ModelIndex.Deferred bottomRight, ItemDataRole[] roles)
             {
@@ -696,7 +707,7 @@ namespace Org.Whatever.MinimalQtForFSharp
             _module = NativeImplClient.GetModule("AbstractListModel");
             // assign module handles
             _createSubclassed = NativeImplClient.GetModuleMethod(_module, "createSubclassed");
-            _handle_getInteriorHandle = NativeImplClient.GetModuleMethod(_module, "Handle_getInteriorHandle");
+            _handle_setSignalMask = NativeImplClient.GetModuleMethod(_module, "Handle_setSignalMask");
             _handle_dispose = NativeImplClient.GetModuleMethod(_module, "Handle_dispose");
             _interior_emitDataChanged = NativeImplClient.GetModuleMethod(_module, "Interior_emitDataChanged");
             _interior_emitHeaderDataChanged = NativeImplClient.GetModuleMethod(_module, "Interior_emitHeaderDataChanged");
@@ -706,6 +717,7 @@ namespace Org.Whatever.MinimalQtForFSharp
             _interior_endRemoveRows = NativeImplClient.GetModuleMethod(_module, "Interior_endRemoveRows");
             _interior_beginResetModel = NativeImplClient.GetModuleMethod(_module, "Interior_beginResetModel");
             _interior_endResetModel = NativeImplClient.GetModuleMethod(_module, "Interior_endResetModel");
+            _interior_dispose = NativeImplClient.GetModuleMethod(_module, "Interior_dispose");
             _signalHandler = NativeImplClient.GetInterface(_module, "SignalHandler");
             _signalHandler_destroyed = NativeImplClient.GetInterfaceMethod(_signalHandler, "destroyed");
             _signalHandler_objectNameChanged = NativeImplClient.GetInterfaceMethod(_signalHandler, "objectNameChanged");
